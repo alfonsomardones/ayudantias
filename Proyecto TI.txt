@@ -1,0 +1,220 @@
+Tablas:
+> Nombre tabla		Descripcion
+	Campos de tabla
+	- Opciones para el campo (tipo select option)
+	Ejemplos
+
+----------------------------------------------------
+> instituciones		Listado de Instituciones
+	Campos		id_institucion, nombre_institucion, logo_institucion
+	Ejemplo		045, Universidad Católica de Temuco, Logo
+
+> departamento		Listado de departamento
+	Campos		id_departamento, nombre_departamento
+	Ejemplo		04, Departamento de Matemáticas
+
+> institucion_departamento	Asociar departamento a institucion
+	Campos		id_reg_inst_dep, id_institucion, id_departamento
+	Ejemplo		01, 045(Universidad Católica de Temuco), 04(Departamento de Matemáticas)
+
+> administrador_institucion	Asocia a una institución con el usuario encargado de esta
+	Campos		id_admin_inst, id_usuario, id_institucion
+	Ejemplo:	1, 015(Juanito Perez), 045(Universidad Católica de Temuco)	
+
+> usuarios: 		Datos de todos los usuarios, Datos para sus perfiles
+	Campos		id_usuario, nombres_usuario, apellidos_usuario, rut_usuario, fecha_nacimiento_usuario, sexo_usuario, telefono_usuario, ubicacion_usuario, correo_usuario, clave_usuario, id_tipo_usuario, imagen_usuario,estado_usuario
+	- Estado usuarios: Habilitado, Bloqueado
+	Ejemplo		015, Fernando Andres, Mardones Villablanca, 18546928-0, 12/12/2001, Masculino, 98765432, SuCalle 321, correo@correo.com, clave123, 2 (Simple), Habilitado
+
+> tipo_usuarios 	Define el tipo de usuario y sus permisos
+	Campos		id_tipo_usuario, nombre_tipo_usuario, permiso_control_usuarios, permiso_certificar, permiso_control_asignaturas
+	- nombre_tipo_usuario: Simple, Tutor, Administrador, Administrador Master. 
+	Ejemplo		01, Administrador, si, si, si
+
+> turores		Asocia tutor a lo que enseña
+	Campos		id_tutor, id_usuario, id_reg_inst_dep
+	Ejemplo		01, 015(Juanito Perez), 04(Depto Matemáticas)
+
+> horarios 		Horario de disponibilidad de los usuarios
+	Campos		id_horario, id_usuario , dia, hora_inicio, hora_termino
+	Ejemplo		015, Lunes, 15:00, 18:00
+
+> solicitudes 		Solicitud hacia los tutores
+	Campos		id_solicitud, id_simple, id_tutor, mensaje_solicitud, estado_solicitud
+	- estado_solicitud: Pendiente, Aceptada, Cancelada
+	Ejemplo		042, 015, 0411, Necesito ayuda en matemáticas, Pendiente
+
+> mensajes		Mensaje que envia un usuario, esto puede ser de usuario simple a tutor, respuesta de tutor, o si un administrador o colaborador quisiera contactarse con algún usuario.		
+	Campos		id_mensaje, fecha_mensaje, hora_mensaje, id_usuario_envia, id_usuario_recibe, tipo_mensaje , mensaje, estado_mensaje
+	- tipo_mensaje: Simple, Reclamo, Advertencia
+	- estado_reclamo: Pendiente, Visto
+	Ejemplo		3455, 23/08/2017, 15:00 , 015, 0411, Reclamo , Ayuda en matemáticas por favor necesito aprender las tablas, Pendiente
+
+> valoracion_usuarios	Permite valorar a los tutores
+	Campos		id_valoracion, id_simple, id_tutor, valor, comentario
+	valor: Desde 1 a 5.
+	Ejemplo		022, 015(Juanito Perez), 033(Julio Perez), 4, Buen tutor ayudó mucho.
+
+1 institucion 		> 1 usuario_institucion
+1 institucion 		> N departamentos
+1 usuario_institucion 	> 1 usuarios
+1 usuarios		> 1 tipo_usuarios
+1 usuarios		> 1 tutores
+1 usuarios		> N horarios
+1 datos_tutores 	> 1 usuarios
+N usuarios		> N solicitudes
+1 usuarios		> N mensajes
+1 usuarios		> N valoracion_usuarios
+
+Todo está en distintas tablas, así se hace más facil actualizar despues.
+Por ejemplo:
+	- Si queremos agregar una nueva institución, o asociarle a un administrador se hace directamente a cada tabla.
+	- La tabla usuarios tiene un estado para verificar que estén habilitados o bloqueados, la idea es que si alguien hace un reclamo se pueda bloquear
+		simplemente, así si quiere registrarse denuevo ya existirán sus datos ahí.
+	- Si queremos agregar un nuevo tipo de usuario, con distintos permisos, solo cambiamos esa tabla.
+	- La tabla mensajes permitirá que un usuario simple envia mensaje a tutor, luego de que se haya aceptado, o para comunicarse el administrador
+		con cualquier usuario, para mandarle alguna advertencia, recomendación o algo.
+	- La valoracion de tabla dice quien evalua y a quien.
+	- Para ver los historiales se puede ver desde las solicitudes, ver cuales se han aceptado y listo.
+	- Si queremos que la aplicación tenga tutores no ligados a la u, se puede hacer en la tabla instituciones un registro que se llame 'Independiente',
+		en la tabla usuarios_institucion lo asociamos su id al de un administrador master (o un colaborador encargado), 
+	- existe la tabla instituciones y deparamento, por que ejemplo si existen más instituciones, quizás la catolica tiene departamento de informatica y 
+		la ufro o alguna otra institucion no, entonces es más facil asociar que departamentos tiene cada universidad, por si a futuro existen nuevos
+	- A modo de opinion quizás se pueda hacer una nueva tabla, que se llame materia o asignatura, entonces eso se asocia al departamento, por ejemplo,
+		'quiero buscar a un tutor del departamento de informática que me enseñe base de datos'. porque quizás hayan tutores que estén especializados
+		en ciertas áreas, no en algunas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Maqueta
+	Registrarse
+		Formulario de registro (El usuario automáticamente es un usuario tipo Simple al registrarse).
+
+	Iniciar sesion
+		USUARIO SIMPLE
+			Perfil de usuario			(Modificar Nombres, Apellidos, Correo, Direccion, Número, Imagen, Contraseña)
+			Buscar a los tutores (Por Nombre, Apellido, Institución, Departamento, Ubicación, Horario)
+				Perfl de tutor
+					Ver datos		(Nombres, Apellidos, Correo, Número, Imagen, Institución, Departamento, Certificación)
+					Solicitar		(Enviar solicitud con mensaje o comentario)
+					Valorar			(De 1 a 5 + Comentario)
+					Ver valoración		(Mayor a 3)
+					Ver historial 		(Que tiene con este tutor)
+					Reclamo 		(Reclamo enviado al encargado/a de la institución)
+			Mensajes
+				Ver mensajes
+					Responder
+				Crear nuevo mensaje		(A institución o administración, a tutor solo si acepta solicitud)
+
+			Horario					(Agregar, Modificar y Eliminar)
+			Historial				(Ver historial propio)
+
+		USUARIO TUTOR
+			Perfil de usuario			(Modificar Nombres, Apellidos, Correo, Direccion, Número, Imagen, Contraseña)
+			Mensajes				
+				Ver mensajes
+					Responder
+				Crear nuevo mensaje		(A institución o administración, a usuario simple solo si acepta solicitud)		
+			Ver solicitudes				
+				Ver Perfil usuario		(Nombres, Apellidos, Correo, Número, Imagen)
+				Responder Mensaje
+				Aceptar o Rechazar Solicitud
+				Ver historial 			(Que tiene con este tutor)
+				Reclamo				(Reclamo enviado al encargado/a de la aplicación, institución?)
+			Horario					(Agregar, Modificar, Eliminar)
+			Ver valoración				(Listado de puntajes y comentarios)
+			Historial				(Ver todo el historial propio)
+
+		USUARIO COLABORADOR INSTITUCIÓN
+			Perfil de usuario			(Modificar Nombres, Apellidos, Correo, Direccion, Número, Imagen, Contraseña)
+			Control de tutores de su Institución 	(Agregar, Modificar, Eliminar, Bloquear usuarios cualquiera y a tutores de su institución, Certificar)
+			Control de Departamentos		(Agregar, Modificar y Eliminar)
+			Mensajes				(Enviar, Recibir, a cualquier usuario)
+			Valoración de sus turores		(Ver)
+			Historial de sus tutores		(Revisar los avances que han tenido)
+
+		USUARIO ADMINISTRADOR MASTER
+			Perfil de usuario			(Modificar Nombres, Apellidos, Correo, Direccion, Número, Imagen, Contraseña)
+			Control de Usuarios			(Agregar, Modificar, Eliminar, Bloquear cualquier usuario, Certificar)
+			Control permisos de Usuarios		(Agregar nuevos permisos)
+			Control de Instituciones		(Agregar, Modificar, Eliminar)
+			Control de Departamentos		(Agregar, Modificar, Eliminar)
+			Mensajes				(Enviar, Recibir, a cualquier usuario)
+			Historial de todos			(Revisar los avances que han tenido)
+	Información
+		- Información sobre el proyecto, lo que trata la página.
+
+
+
+
+
+
+
+
+
+
+
+
+TABLAS ORDENADAS
+tabla entidad relacion
+
+> instituciones:	id_institucion, nombre_institucion, logo_institucion, logo_certificado
+
+> departamento:	id_departamento, nombre_departamento
+
+> institucion_departamento:	d_reg_inst_dep, id_institucion, id_departamento
+
+> administrador_institucion:	id_admin_inst, id_usuario, id_institucion
+
+> usuarios: 		id_usuario, nombres_usuario, apellidos_usuario, rut_usuario, fecha_nacimiento_usuario, sexo_usuario, telefono_usuario, ubicacion_usuario, correo_usuario, clave_usuario, id_tipo_usuario, imagen_usuario, estado_usuario
+
+> tipo_usuarios: 	id_tipo_usuario, nombre_tipo_usuario, permiso_control_usuarios, permiso_certificar, permiso_control_asignaturas
+
+> turores:		id_tutor, id_usuario, id_reg_inst_dep
+
+> horarios: 		id_horario, id_usuario , dia, hora_inicio, hora_termino
+
+> solicitudes: 		id_solicitud, id_simple, id_tutor, mensaje_solicitud, estado_solicitud
+
+> mensajes:		id_mensaje, fecha_mensaje, hora_mensaje, id_usuario_envia, id_usuario_recibe, tipo_mensaje , mensaje, estado_mensaje
+
+> valoracion_usuarios:	id_valoracion, id_usuario, id_tutor, valor, comentario
+
+
+1 institucion 		> 1 usuario_institucion
+1 institucion 		> N departamentos
+1 usuario_institucion 	> 1 usuarios
+1 usuarios		> 1 tipo_usuarios
+1 usuarios		> 1 tutores
+1 usuarios		> N horarios
+1 datos_tutores 	> 1 usuarios
+N usuarios		> N solicitudes
+1 usuarios		> N mensajes
+1 usuarios		> N valoracion_usuarios
+
