@@ -1,8 +1,8 @@
 <div class="container">
-  <h2>Registrar Carrera</h2>
     <div class="form-group">
-      <label for="input_institucion">Institución:</label>
-      <input type="text" class="form-control" name="input_institucion" placeholder="Ingrese nombre de Institución" autocomplete="on" autofocus>
+      <label for="input_nombre">Institución:</label>
+      <input type="text" class="form-control" name="input_nombre" id="input_nombre" placeholder="Ingrese nombre de Institución" autocomplete="on" autofocus>
     </div>
-    <button type="submit" class="btn btn-default">Registrar</button>
+    <div id="errorInstitucion"></div>
+    <button type="submit" class="btn btn-primary" onclick="comprobar_registrar_institucion()">Registrar</button>
 </div>

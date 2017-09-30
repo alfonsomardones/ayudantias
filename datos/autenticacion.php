@@ -7,9 +7,8 @@ $usuario 	= $_POST['input_usuario'];
 $usuario 	= strtolower($usuario);
 $clave 		= $_POST['input_clave'];
 $clave 		= md5($clave);
-
 //consultar a la BD
-$sql 			= "SELECT * FROM usuarios WHERE (correo='$usuario' OR rut='$usuario') AND estado='Habilitado'";
+$sql 			= "SELECT * FROM usuarios WHERE correo='$usuario' OR rut='$usuario'";
 $resultado 		= mysqli_query($db,$sql);
 $contador 		= mysqli_num_rows($resultado);
 if($contador>0)
@@ -26,8 +25,6 @@ if($contador>0)
 		$_SESSION['apellidos'] 			= $lista["apellidos"];
 		$_SESSION['rut'] 				= $lista["rut"];
 		$_SESSION['fecha_nacimiento'] 	= $lista["fecha_nacimiento"];
-		list($dia, $mes, $año) = split('[/.-]', $_SESSION['fecha_nacimiento']);
-			$_SESSION['fecha_nacimiento'] = "$año-$mes-$dia";
 		$_SESSION['telefono'] 			= $lista["telefono"];
 		$_SESSION['correo'] 			= $lista["correo"];
 		$_SESSION['id_tipo_usuario'] 	= $lista["id_tipo_usuario"];
@@ -51,5 +48,4 @@ else
 {
 	echo "No existe";
 }
-header ("Location: ../");
 ?>

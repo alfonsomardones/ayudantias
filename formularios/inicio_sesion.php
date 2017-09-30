@@ -9,6 +9,6 @@
       <input type="password" class="form-control" name="input_clave" id="input_clave" placeholder="Su contraseña" autocomplete="on">
     </div>
     <div id="errorIniciarSesion"></div>
-    <button type="submit" class="btn btn-primary" onclick="Iniciar_sesion()">Iniciar</button>
+    <button type="submit" class="btn btn-primary" onclick="comprobar_iniciar_sesion()">Iniciar</button>
 	<!--</form>-->
 </div>

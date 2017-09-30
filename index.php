@@ -21,6 +21,7 @@
 	<body>
 		<?php
 			include("secciones/seccion1.php");
+			include("secciones/seccion2.php");
 		?>
 	</body>
 </html>
