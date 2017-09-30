@@ -23,7 +23,7 @@ if(isset($_SESSION['id_usuario']))
 				$nombre 				= $lista['nombre'];
 				echo "<tr id='filaTablaCarreras".$id_carrera."'>
 					<td><input type='text' value='$id_carrera' name='input_id".$id_carrera."' id='input_id".$id_carrera."' class='sr-only'>
-						<input type='text' value='$nombre' name='input_nombre".$id_carrera."' id='input_nombre".$id_carrera."' class='form-control' >
+						<input type='text' value='$nombre' name='input_nombre".$id_carrera."' id='input_nombre".$id_carrera."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_carrera(".$id_carrera.")'>
 					</td>
 					<td><input type='button' value='Guardar' onclick='comprobar_actualizar_carrera(".$id_carrera.")' class='btn btn-primary'></td>
 					<td><input type='button' value='Borrar' onclick='BorrarCarrera(".$id_carrera.")' class='btn btn-primary'></td>

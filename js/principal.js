@@ -1,6 +1,5 @@
 $(document).ready(function() {
-	verificar();
-	advertirModificaciones();
+	
 });
 
 if (window.XMLHttpRequest) objAjax = new XMLHttpRequest() //para Mozilla
@@ -118,15 +117,12 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			});
 		}
 
-
 		// APELLIDOS
 		var verificar_apellidos = false;
 		var apellidos = document.getElementById("input_apellidos").value;
 		var respuesta = requisitos("apellidos",apellidos);
 		if(respuesta[0]=='si')
-		{
-			verificar_apellidos = true;
-		}
+		{	verificar_apellidos = true;	}
 		else
 		{
 			$('#errorApellidos').html('<div id="alert-danger-apellidos" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica apellidos: </strong>'+respuesta[1]+'</div>');
@@ -140,8 +136,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var rut = document.getElementById("input_rut").value;
 		var respuesta = requisitos("rut",rut);
 		if(respuesta[0]=='si')
-		{
-			var p = verificar('rut',rut);
+		{	var p = verificar('rut',rut);
 			if(p=='si')
 			{
 				$('#errorRut').html('<div id="alert-danger-rut" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica RUT: </strong>Ya está registrado.</div>');
@@ -165,9 +160,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var telefono = document.getElementById("input_telefono").value;
 		var respuesta = requisitos("telefono",telefono);
 		if(respuesta[0]=='si')
-		{
-			verificar_telefono = true;
-		}
+		{	verificar_telefono = true;	}
 		else
 		{
 			$('#errorTelefono').html('<div id="alert-danger-telefono" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica teléfono: </strong>'+respuesta[1]+'</div>');
@@ -176,14 +169,12 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			});
 		}
 
-
 		// CORREO
 		var verificar_correo = false;
 		var correo = document.getElementById("input_correo").value;
 		var respuesta = requisitos("correo",correo);
 		if(respuesta[0]=='si')
-		{
-			var p = verificar('correo',correo);
+		{	var p = verificar('correo',correo);
 			if(p=='si')
 			{
 				$('#errorCorreo').html('<div id="alert-danger-correo" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica correo: </strong>Ya está regitrado.</div>');
@@ -207,7 +198,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var clave = document.getElementById("input_clave").value;
 		var clave2 = document.getElementById("input_clave2").value;
 		var respuesta = requisitos("clave",clave);
-
 		if(clave!=clave2)
 		{
 			$('#errorClave').html('<div id="alert-danger-clave" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica contraseña: </strong>No coinciden.</div>');
@@ -218,9 +208,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		else
 		{
 			if(respuesta[0]=='si')
-			{
-				verificar_clave = true;
-			}
+			{	verificar_clave = true;		}
 			else
 			{
 				$('#errorClave').html('<div id="alert-danger-clave" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica contraseña: </strong>'+respuesta[1]+'</div>');
@@ -230,46 +218,54 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			}
 		}
 
-
 		if(verificar_nombres && verificar_apellidos && verificar_rut && verificar_correo && verificar_telefono && verificar_clave)
-		{
-			RegistrarUsuario();
-		}
+		{	RegistrarUsuario();	}
 	}
 
 	// ACTUALIZA DATOS DEL USUARIO
-	function ActualizarUsuario(x){
-		if(x==0){x='';}
-		var id 			= document.getElementById("input_id"+x).value;
-		var nombres 	= document.getElementById("input_nombres"+x).value;
-		var apellidos 	= document.getElementById("input_apellidos"+x).value;
-		var rut 		= document.getElementById("input_rut"+x).value;
-		var fecha_nac 	= document.getElementById("input_fecha_nac"+x).value;
-		var telefono 	= document.getElementById("input_telefono"+x).value;
-		var correo 		= document.getElementById("input_correo"+x).value;
-		if($("input_clave").length)	{ var clave 		= document.getElementById("input_clave"+x).value; }
-		else {	var clave = ''}
-		var tipo 		= document.getElementById("input_tipo"+x).value;
-		var estado 		= document.getElementById("input_estado"+x).value;
+	function ActualizarUsuario(x,y){
+		if(x==0)
+		{	x = ''; }
+		if(y==1) // SI RUT DESHABILITADO, SOLO TOMA LOS VALORES CORREO, CLAVE, TIPO, Y ESTADO
+		{
+			var id 			= document.getElementById("input_id"+x).value;
+			var telefono 	= document.getElementById("input_telefono"+x).value;
+			var correo 		= document.getElementById("input_correo"+x).value;
+			var tipo 		= document.getElementById("input_tipo"+x).value;
+			var estado 		= document.getElementById("input_estado"+x).value;
+			var url 		="datos/actualizar_usuario.php";
+			$.ajax({
+				type:"POST",
+				url:url,
+				data:{input_id:id, input_rut:"0", input_telefono:telefono, input_correo:correo,	input_tipo:tipo,	input_estado:estado}
+				});
+		}
+		else
+		{
+			var id 			= document.getElementById("input_id"+x).value;
+			var nombres 	= document.getElementById("input_nombres"+x).value;
+			var apellidos 	= document.getElementById("input_apellidos"+x).value;
+			var rut 		= document.getElementById("input_rut"+x).value;
+			var fecha_nac 	= document.getElementById("input_fecha_nac"+x).value;
+			var telefono 	= document.getElementById("input_telefono"+x).value;
+			var correo 		= document.getElementById("input_correo"+x).value;
+			var tipo 		= document.getElementById("input_tipo"+x).value;
+			var estado 		= document.getElementById("input_estado"+x).value;
 
-		var url="datos/actualizar_usuario.php";
-		$.ajax({
-			type:"POST",
-			url:url,
-			data:{
-				input_id:id,
-				input_nombres:nombres, 		input_apellidos:apellidos, 	input_rut:rut,		input_fecha_nac:fecha_nac,
-				input_telefono:telefono,	input_correo:correo, input_clave:clave,	input_tipo:tipo,	input_estado:estado},
-				success: function()
-				{	}	});
+			var url 		="datos/actualizar_usuario.php";
+			$.ajax({
+				type:"POST",
+				url:url,
+				data:{input_id:id,	input_nombres:nombres, 		input_apellidos:apellidos, 	input_rut:rut,		input_fecha_nac:fecha_nac,
+					input_telefono:telefono,	input_correo:correo,	input_tipo:tipo,	input_estado:estado}
+				});
+		}
 	}
 
 	// COMPRUEBA FORMULARIO DATOS DE PERFIL
 	function comprobar_actualizar_usuario(x){
-		if(x==0)
-		{
-			x='';
-		}
+		if(x=='0')
+		{	x='';	}
 		// NOMBRES
 		var verificar_nombres = false;
 		var nombres = document.getElementById("input_nombres"+x).value;
@@ -279,7 +275,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		{	verificar_nombres = true;	}
 		else
 		{	}
-		
 
 		// APELLIDOS
 		var verificar_apellidos = false;
@@ -315,50 +310,26 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		if(respuesta[0]=='si')
 		{	verificar_correo = true;	}
 		else
-		{	}
+		{	}				
 
-		// CONTRASEÑA
-		if($("#input_clave"+x).length)
-		{
-			var verificar_clave = false;
-			var clave = document.getElementById("input_clave"+x).value;
-			var respuesta = requisitos("clave",clave);
-			if(respuesta[0]=='si')
-			{	verificar_clave = true; }
-			else
-			{}
-		}
-		if($("#input_clave"+x).length && $("#input_clave2"+x).length)
-		{
-			var clave = document.getElementById("input_clave"+x).value;
-			var clave2 = document.getElementById("input_clave2"+x).value;
+		var verificar_estado = false;
+		var estado = document.getElementById("input_estado"+x).value;
+		if((estado=="Habilitado") || (estado=="Bloqueado"))
+		{	verificar_estado = true; }
 
-			if(clave==clave2)
-			{
-				var respuesta = requisitos("clave",clave);
-				if(respuesta[0]=='si')
-				{	verificar_clave = true; }
-				else
-				{}
-			}
-			else
-			{
-				$('#errorClave').html('<div id="alert-danger-clave" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica contraseñas: </strong>No coinciden.</div>');
-			$("#alert-danger-clave").fadeTo(2000, 500).slideUp(500, function(){
-	    	$("#alert-danger-clave").slideUp(500);
-			});
-			}
-		}
-		else
-		{
-			verificar_clave = true;
-		}
-				
+		if(verificar_estado==false) 	{$("#input_estado"+x).focus();}
+		if(verificar_correo==false) 	{$("#input_correo"+x).focus();}
+		if(verificar_telefono==false) 	{$("#input_telefono"+x).focus();}
+		if(verificar_rut==false) 		{$("#input_rut"+x).focus();}
+		if(verificar_apellidos==false) 	{$("#input_apellidos"+x).focus();}
+		if(verificar_nombres==false) 	{$("#input_nombres"+x).focus();}
 
-		if(verificar_nombres && verificar_apellidos && verificar_rut && verificar_correo && verificar_telefono && verificar_clave)
+		if(verificar_nombres && verificar_apellidos && verificar_rut && verificar_correo && verificar_telefono && verificar_estado)
 		{	
-			alert('Actualizado');
-			ActualizarUsuario(x);
+			if($("#input_rut"+x).attr("disabled"))
+			{ 	ActualizarUsuario(x,1);	}
+			else
+			{ 	ActualizarUsuario(x,0);	}
 		}
 	}
 
@@ -407,7 +378,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				}
 				else
 				{
-					alert("claves no coninciden");
+					$("#input_clave").focus();
 					$('#errorIniciarSesion').html('<div id="alert-danger-iniciar" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica usuario: </strong>Datos no coinciden.</div>');
 						$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
 					    $("#alert-danger-iniciar").slideUp(500);
@@ -416,7 +387,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			}
 			else
 			{
-				alert("no existe");
+				$("#input_usuario").focus();
 				$('#errorIniciarSesion').html('<div id="alert-danger-iniciar" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica usuario: </strong>No registrado.</div>');
 				$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
 				$("#alert-danger-iniciar").slideUp(500);
@@ -429,6 +400,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
 			$("#alert-danger-iniciar").slideUp(500);
 			});
+			if(usuario.length==0) {$("#input_usuario").focus();}
+			else{$("#input_clave").focus();}
 		}
 	}
 
@@ -444,6 +417,17 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		return respuesta;
 	}
 
+	function obtenerdato_BD(tipo, dato){
+		var respuesta = null;
+		var url="datos/obtener_dato.php";
+		$.ajax({
+			async: false,	type:"POST",	url:url, 	data:{input_tipo:tipo, input_dato:dato},
+			success: function(data)
+			{	respuesta = data;		}
+		})
+		return respuesta;
+	}
+	
 	function requisitos(tipo, dato){
 		var respuesta = ["",""];
 		if(tipo=='nombres' || tipo=='apellidos' || tipo=='carrera' || tipo=='institucion')
@@ -710,6 +694,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			var p = verificar('existe_institucion', nombre);
 			if(p=='si')
 			{
+				$("#input_nombre").focus();
 				$('#errorInstitucion').html('<div id="alert-danger-institucion" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>Ya está registrada.</div>');
 				$("#alert-danger-institucion").fadeTo(2000, 500).slideUp(500, function(){
     			$("#alert-danger-institucion").slideUp(500);
@@ -720,6 +705,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		}
 		else
 		{
+			$("#input_nombre").focus();
 			$('#errorInstitucion').html('<div id="alert-danger-institucion" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>'+respuesta[1]+'</div>');
 				$("#alert-danger-institucion").fadeTo(2000, 500).slideUp(500, function(){
     			$("#alert-danger-institucion").slideUp(500);
@@ -737,7 +723,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var nombre = document.getElementById("input_nombre"+id_institucion).value;
 		if(nombre.length==0)
 		{
-			
+			$("#input_nombre"+x).focus();
 		}
 		else
 		{
@@ -816,6 +802,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		}
 		else
 		{
+			$("#input_nombre").focus();
 			$('#errorCarrera').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica carrera: </strong>'+respuesta[1]+'</div>');
 				$("#alert-danger-carrera").fadeTo(2000, 500).slideUp(500, function(){
     			$("#alert-danger-carrera").slideUp(500);
@@ -834,7 +821,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var respuesta = requisitos("carrera",nombre);
 		if(respuesta[0]=='si')
 		{	verificar_nombre=true; }
-
+		else
+			{ $("#input_nombre"+x).focus();}
 		if(verificar_nombre)
 		{	ActualizarCarrera(id_carrera);	}
 	}

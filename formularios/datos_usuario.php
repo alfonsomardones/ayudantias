@@ -8,15 +8,15 @@
   {
     while ($lista = mysqli_fetch_array($resultado))
     {
-      $id_usuario     = $lista['id_usuario'];
-      $nombres        = $lista['nombres'];
-      $apellidos      = $lista['apellidos'];
-      $rut            = $lista['rut'];
-      $fecha_nac      = $lista['fecha_nacimiento'];
-      $telefono       = $lista['telefono'];
-      $correo       = $lista['correo'];
+      $id_usuario       = $lista['id_usuario'];
+      $nombres 			    = $lista['nombres'];
+      $apellidos      	= $lista['apellidos'];
+      $rut            	= $lista['rut'];
+      $fecha_nac      	= $lista['fecha_nacimiento'];
+      $telefono       	= $lista['telefono'];
+      $correo       	  = $lista['correo'];
       $id_tipo_usuario  = $lista['id_tipo_usuario'];
-      $estado       = $lista['estado'];
+      $estado           = $lista['estado'];
     }
     $sql      = "SELECT * FROM tipo_usuarios WHERE id_tipo_usuario=".$id_tipo_usuario;
     $resultado    = mysqli_query($db,$sql);
@@ -32,50 +32,57 @@
 
 ?>
 <div class="container">
-
     <div class="form-group">
       <input type="text" class="sr-only" name="input_id" id="input_id" value=<?php echo "'".$id_usuario."'"; ?>>
+      <input type="text" class="sr-only" name="input_estado" id="input_estado" value=<?php echo "'".$estado."'"; ?>>
       <label for="input_nombres">Nombres:</label>
-      <input type="text" class="form-control" name="input_nombres" id="input_nombres" placeholder="Ingrese sus Nombres" value=<?php echo "'".$nombres."'"; ?> autocomplete="on" autofocus>
+      <input type="text" class="form-control" name="input_nombres" id="input_nombres" value=<?php echo "'".$nombres."'"; ?> disabled>
     </div>
     <div id="errorNombres"></div>
     <div class="form-group">
       <label for="input_apellidos">Apellidos:</label>
-      <input type="text" class="form-control" name="input_apellidos" id="input_apellidos" placeholder="Ingrese sus Apellidos" value=<?php echo "'". $apellidos."'"; ?> autocomplete="on">
+      <input type="text" class="form-control" name="input_apellidos" id="input_apellidos" value=<?php echo "'". $apellidos."'"; ?> disabled>
     </div>
     <div id="errorApellidos"></div>
     <div class="form-group">
       <label for="input_rut">RUT:</label>
-      <input type="text" class="form-control" name="input_rut" id="input_rut" placeholder="12345678-9" value=<?php echo "'".$rut."'"; ?> autocomplete="on" disabled>
+      <input type="text" class="form-control" name="input_rut" id="input_rut" value=<?php echo "'".$rut."'"; ?> disabled>
     </div>
     <div id="errorRut"></div>
     <div class="form-group">
       <label for="input_fecha_nac">Fecha Nacimiento:</label>
-      <input type="date" class="form-control" name="input_fecha_nac" id="input_fecha_nac" value=<?php echo "'".$fecha_nac."'"; ?>>
+      <input type="date" class="form-control" name="input_fecha_nac" id="input_fecha_nac" value=<?php echo "'".$fecha_nac."'"; ?> disabled>
     </div>
     <div class="form-group">
       <label for="input_telefono">Teléfono:</label>
-      <input type="tel" class="form-control" name="input_telefono" id="input_telefono" placeholder="Ingrese su Teléfono" value=<?php echo "'".$telefono."'"; ?> autocomplete="on">
+      <input type="tel" class="form-control" name="input_telefono" id="input_telefono" placeholder="Ingrese su Teléfono" value=<?php echo "'".$telefono."'"; ?> autocomplete="on" onkeypress="if (event.keyCode == 13) comprobar_actualizar_usuario(0)">
     </div>
     <div id="errorTelefono"></div>
-    <div class="form-group">
-      <label for="input_correo">Tipo de Usuario:</label>
-      <input type="text" class="form-control" name="input_tipo" id="input_tipo" placeholder="Tipo de Usuario" value=<?php echo "'".$tipo_usuario."'"; ?> autocomplete="on" disabled>
-    </div>
+      <?php
+      $sql1      = "SELECT * FROM tipo_usuarios";
+      $resultado1    = mysqli_query($db,$sql1);
+      $contador1     = mysqli_num_rows($resultado1);
+      if($contador1>0)
+      {
+        echo '<div class="form-group">
+          <label for="input_tipo">Tipo de Usuario:</label>
+          <select name="input_tipo" id="input_tipo" class="form-control" disabled>';
+        while ($lista1 = mysqli_fetch_array($resultado1))
+        {
+          $id = $lista1['id_tipo_usuario'];
+          $nombre_t  = $lista1['nombre'];
+          echo '<option value="'.$id.'">'.$nombre_t.'</option>';
+        }
+        echo '</select></div>';
+      }
+      ?>
     <div class="form-group">
       <label for="input_correo">Correo:</label>
-      <input type="email" class="form-control" name="input_correo" id="input_correo" placeholder="ejemplo@ejemplo.cl" value=<?php echo "'".$correo."'"; ?> autocomplete="on" >
+      <input type="email" class="form-control" name="input_correo" id="input_correo" placeholder="ejemplo@ejemplo.cl" value=<?php echo "'".$correo."'"; ?> autocomplete="on" onkeypress="if (event.keyCode == 13) comprobar_actualizar_usuario(0)">
     </div>
     <div id="errorCorreo"></div>
     <div class="form-group">
-      <label for="input_clave">Nueva Contraseña:</label>
-      <input type="password" class="form-control" name="input_clave" id="input_clave" placeholder="Desde 5 a 20 carácteres" autocomplete="on">
+      <label><a href="#">SOLICITAR CAMBIAR CONTRASEÑA</a></label>
     </div>
-    <div class="form-group">
-      <label for="input_clave2">Confirmar contraseña:</label>
-      <input type="password" class="form-control" name="input_clave2" id="input_clave2" placeholder="Confirma tu contraseña">
-    </div>
-    <input type="text" class="sr-only" name="input_estado" id="input_estado" value=<?php echo "'".$estado."'"; ?>>
-    <div id="errorClave"></div>
     <button type="submit" class="btn btn-primary" onclick="comprobar_actualizar_usuario(0)">Actualizar</button>
 </div>

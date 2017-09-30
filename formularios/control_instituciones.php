@@ -29,13 +29,13 @@ if(isset($_SESSION['id_usuario']))
 				echo "<tr id='filaTablaInstitucion".$id_institucion."'>
 					<td>
 						<input type='text' value='$id_institucion' name='input_id".$id_institucion."' id='input_id".$id_institucion."' class='sr-only'>
-						<input type='text' value='$nombre' name='input_nombre".$id_institucion."' id='input_nombre".$id_institucion."' class='form-control'>
+						<input type='text' value='$nombre' name='input_nombre".$id_institucion."' id='input_nombre".$id_institucion."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_institucion(".$id_institucion.")'>
 					</td>
 					<td>
-						<input type='text' value='$logo_institucion' name='input_logo_institucion".$id_institucion."' id='input_logo_institucion".$id_institucion."' class='form-control'>
+						<input type='text' value='$logo_institucion' name='input_logo_institucion".$id_institucion."' id='input_logo_institucion".$id_institucion."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_institucion(".$id_institucion.")'>
 					</td>
 					<td>
-						<input type='text' value='$logo_certificacion' name='input_logo_certificacion".$id_institucion."' id='input_logo_certificacion".$id_institucion."' class='form-control'>
+						<input type='text' value='$logo_certificacion' name='input_logo_certificacion".$id_institucion."' id='input_logo_certificacion".$id_institucion."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_institucion(".$id_institucion.")'>
 					</td>
 					<td><input type='button' value='Guardar' onclick='comprobar_actualizar_institucion(".$id_institucion.")' class='btn btn-primary'></td>
 					<td><input type='button' value='Borrar' onclick='BorrarInstitucion(".$id_institucion.")' class='btn btn-primary'></td>
