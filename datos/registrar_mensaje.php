@@ -1,5 +1,7 @@
 <?php
-    include('conex.inc');
+if(isset($_POST['input_envia']))
+{
+	include('conex.php');
     
     $fecha  		= date('d-m-Y');
 	$hora  			= date('h:i:s');
@@ -14,4 +16,9 @@
     $sql.= "VALUES ('$fecha','$hora',$envia, $recibe, '$tipo_mensaje', '$mensaje', '$estado')";
 
     $insertar = mysqli_query($db,$sql);
+}
+else
+{
+	header("location: error.php");
+}
 ?>

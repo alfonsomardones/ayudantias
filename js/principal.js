@@ -21,7 +21,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	// RELLENA MODAL CON FURMULARIOS DE SECCION 1
 	function ObtenerModalSeccion1(x){
 		document.getElementById("ModalPrincipio").innerHTML = "";
-		document.getElementById("contenidoModal").innerHTML = "";
+		$('#contenidoModal').html('<div id="divImg_cargando" align="center"><img src="img/loading.gif" alt="cargando" id="img_cargando"></div>');
 		if(x==1)
 		{
 			document.getElementById("ModalPrincipio").innerHTML = "Iniciar Sesión";
@@ -97,6 +97,33 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			data:{
 				input_nombres:nombres, 		input_apellidos:apellidos, 	input_rut:rut, 			input_fecha_nac:fecha_nac,
 				input_telefono:telefono, 	input_tipo:tipo, 			input_correo:correo,	input_clave:clave 			}});
+
+		if(tipo=='2' || tipo==2)
+		{
+			var id_usuario = verificar("obtener_id",rut);
+			var institucion_carrera = document.getElementById("input_institucion_carrera").value;
+			var certificacion = "no";
+			if($("#input_certificacion").length>0)
+			{	certificacion = document.getElementById("input_cartificacion").value;		}
+			var url="datos/registrar_ayudante.php";
+			$.ajax({
+				type:"POST",
+				url:url,
+				data:{
+					input_id:id_usuario, input_institucion_carrera:institucion_carrera, input_certificacion:certificacion}});
+		}
+
+		if(tipo=='3' || tipo==3)
+		{
+			var id_usuario = verificar("obtener_id",rut);
+			var institucion = document.getElementById("input_institucion").value;
+			var url="datos/registrar_admin_institucion.php";
+			$.ajax({
+				type:"POST",
+				url:url,
+				data:{
+					input_id:id_usuario, input_institucion:institucion}});
+		}
 	}
 
 	// COMPRUEBA FORMULARIO DE REGISTRAR
@@ -104,69 +131,78 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	{
 		var verificar_nombres = false;
 		var nombres = document.getElementById("input_nombres").value;
+		document.getElementById("input_nombres").value = limpiar("nombres",nombres);
+		nombres = document.getElementById("input_nombres").value;
 		var respuesta = requisitos("nombres",nombres);
 		if(respuesta[0]=='si')
 		{
 			verificar_nombres = true;
+			if($("#alert-danger-nombres").length>0)
+			{$("#alert-danger-nombres").slideUp(500);}
 		}
 		else
 		{
 			$('#errorNombres').html('<div id="alert-danger-nombres" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica nombres: </strong>'+respuesta[1]+'</div>');
-			$("#alert-danger-nombres").fadeTo(2000, 500).slideUp(500, function(){
-	    	$("#alert-danger-nombres").slideUp(500);
-			});
+			$("#alert-danger-nombres").fadeTo(2000, 500);
 		}
 
 		// APELLIDOS
 		var verificar_apellidos = false;
 		var apellidos = document.getElementById("input_apellidos").value;
+		document.getElementById("input_apellidos").value = limpiar("apellidos",apellidos);
+		apellidos = document.getElementById("input_apellidos").value;
 		var respuesta = requisitos("apellidos",apellidos);
 		if(respuesta[0]=='si')
-		{	verificar_apellidos = true;	}
+		{	verificar_apellidos = true;	
+			if($("#alert-danger-apellidos").length>0)
+			{$("#alert-danger-apellidos").slideUp(500);}
+		}
 		else
 		{
 			$('#errorApellidos').html('<div id="alert-danger-apellidos" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica apellidos: </strong>'+respuesta[1]+'</div>');
-			$("#alert-danger-apellidos").fadeTo(2000, 500).slideUp(500, function(){
-	    	$("#alert-danger-apellidos").slideUp(500);
-			});
+			$("#alert-danger-apellidos").fadeTo(2000, 500);
 		}
 
 		// RUT
 		var verificar_rut = false;
 		var rut = document.getElementById("input_rut").value;
+		document.getElementById("input_rut").value = limpiar("rut",rut);
+		rut = document.getElementById("input_rut").value;
 		var respuesta = requisitos("rut",rut);
 		if(respuesta[0]=='si')
-		{	var p = verificar('rut',rut);
+		{	var p = verificar('existe_rut',rut);
 			if(p=='si')
 			{
 				$('#errorRut').html('<div id="alert-danger-rut" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica RUT: </strong>Ya está registrado.</div>');
-				$("#alert-danger-rut").fadeTo(2000, 500).slideUp(500, function(){
-		    	$("#alert-danger-rut").slideUp(500);
-				});
+				$("#alert-danger-rut").fadeTo(2000, 500);
 			}
 			else
-			{ 	verificar_rut = true;	}
+			{ 	verificar_rut = true;	
+				if($("#alert-danger-rut").length>0)
+				{$("#alert-danger-rut").slideUp(500);}
+			}
 		}
 		else
 		{
 			$('#errorRut').html('<div id="alert-danger-rut" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica RUT: </strong>'+respuesta[1]+'</div>');
-			$("#alert-danger-rut").fadeTo(2000, 500).slideUp(500, function(){
-	    	$("#alert-danger-rut").slideUp(500);
-			});
+			$("#alert-danger-rut").fadeTo(2000, 500);
 		}
 
 		// TELEFONO
 		var verificar_telefono = false;
 		var telefono = document.getElementById("input_telefono").value;
+		document.getElementById("input_telefono").value = limpiar("telefono",telefono);
+		telefono = document.getElementById("input_telefono").value;
 		var respuesta = requisitos("telefono",telefono);
 		if(respuesta[0]=='si')
-		{	verificar_telefono = true;	}
+		{	verificar_telefono = true;	
+			if($("#alert-danger-telefono").length>0)
+			{$("#alert-danger-telefono").slideUp(500);}
+		}
 		else
 		{
 			$('#errorTelefono').html('<div id="alert-danger-telefono" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica teléfono: </strong>'+respuesta[1]+'</div>');
-			$("#alert-danger-telefono").fadeTo(2000, 500).slideUp(500, function(){
-	    	$("#alert-danger-telefono").slideUp(500);
-			});
+			$("#alert-danger-telefono").fadeTo(2000, 500);
 		}
 
 		// CORREO
@@ -174,23 +210,22 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var correo = document.getElementById("input_correo").value;
 		var respuesta = requisitos("correo",correo);
 		if(respuesta[0]=='si')
-		{	var p = verificar('correo',correo);
+		{	var p = verificar('existe_correo',correo);
 			if(p=='si')
 			{
 				$('#errorCorreo').html('<div id="alert-danger-correo" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica correo: </strong>Ya está regitrado.</div>');
-				$("#alert-danger-correo").fadeTo(2000, 500).slideUp(500, function(){
-		    	$("#alert-danger-correo").slideUp(500);
-				});
+				$("#alert-danger-correo").fadeTo(2000, 500);
 			}
 			else
-			{ verificar_correo = true; }
+			{ verificar_correo = true;
+				if($("#alert-danger-correo").length>0)
+				{$("#alert-danger-correo").slideUp(500);}
+			}
 		}
 		else
 		{
 			$('#errorCorreo').html('<div id="alert-danger-correo" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica correo: </strong>'+respuesta[1]+'</div>');
-			$("#alert-danger-correo").fadeTo(2000, 500).slideUp(500, function(){
-	    	$("#alert-danger-correo").slideUp(500);
-			});
+			$("#alert-danger-correo").fadeTo(2000, 500);
 		}
 
 		// CONTRASEÑA
@@ -201,24 +236,57 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		if(clave!=clave2)
 		{
 			$('#errorClave').html('<div id="alert-danger-clave" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica contraseña: </strong>No coinciden.</div>');
-				$("#alert-danger-clave").fadeTo(2000, 500).slideUp(500, function(){
-		    	$("#alert-danger-clave").slideUp(500);
-				});
+				$("#alert-danger-clave").fadeTo(2000, 500);
 		}
 		else
 		{
 			if(respuesta[0]=='si')
-			{	verificar_clave = true;		}
+			{	verificar_clave = true;	
+				if($("#alert-danger-clave").length>0)
+				{
+					$("#alert-danger-clave").slideUp(500);
+				}
+			}
 			else
 			{
 				$('#errorClave').html('<div id="alert-danger-clave" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica contraseña: </strong>'+respuesta[1]+'</div>');
-				$("#alert-danger-clave").fadeTo(2000, 500).slideUp(500, function(){
-		    	$("#alert-danger-clave").slideUp(500);
-				});
+				$("#alert-danger-clave").fadeTo(2000, 500);
 			}
 		}
 
-		if(verificar_nombres && verificar_apellidos && verificar_rut && verificar_correo && verificar_telefono && verificar_clave)
+		if(document.getElementById("input_tipo").value == 2 || document.getElementById("input_tipo").value == "2")
+		{
+			if($("#input_institucion").length>0)
+			{
+				var verificar_tipo = false;
+				if($("#input_institucion_carrera").length>0)
+				{
+					if($("#input_institucion_carrera")!=0 || $("#input_institucion_carrera")!='0')
+					{
+						verificar_tipo = true;
+					}
+				}
+				else
+				{
+					$('#errorCarreras').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>Debe tener al menos una carrera asociada.</div>');
+					$("#alert-danger-carrera").fadeTo(2000, 500);
+				}
+			}
+		}
+
+		if(document.getElementById("input_tipo").value == 3 || document.getElementById("input_tipo").value == "3")
+		{
+			if($("#input_institucion").length>0)
+			{
+				var verificar_tipo = true;		
+			}
+			else
+			{
+				alert("no existe intitucion");
+			}
+		}
+
+		if(verificar_nombres && verificar_apellidos && verificar_rut && verificar_correo && verificar_telefono && verificar_clave && verificar_tipo)
 		{	RegistrarUsuario();	}
 	}
 
@@ -269,7 +337,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		// NOMBRES
 		var verificar_nombres = false;
 		var nombres = document.getElementById("input_nombres"+x).value;
-
+		document.getElementById("input_nombres"+x).value = limpiar("nombres",nombres);
+		nombres = document.getElementById("input_nombres"+x).value;
 		var respuesta = requisitos("nombres",nombres);
 		if(respuesta[0]=='si')
 		{	verificar_nombres = true;	}
@@ -279,6 +348,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		// APELLIDOS
 		var verificar_apellidos = false;
 		var apellidos = document.getElementById("input_apellidos"+x).value;
+		document.getElementById("input_apellidos"+x).value = limpiar("apellidos",apellidos);
+		apellidos = document.getElementById("input_apellidos"+x).value;
 		var respuesta = requisitos("apellidos",apellidos);
 		if(respuesta[0]=='si')
 		{ 	verificar_apellidos = true; 	}
@@ -288,6 +359,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		// RUT
 		var verificar_rut = false;
 		var rut = document.getElementById("input_rut"+x).value;
+		document.getElementById("input_rut"+x).value = limpiar("rut",rut);
+		rut = document.getElementById("input_rut"+x).value;
 		var respuesta = requisitos("rut",rut);
 		if(respuesta[0]=='si')
 		{	verificar_rut = true;	}
@@ -297,6 +370,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		// TELEFONO
 		var verificar_telefono = false;
 		var telefono = document.getElementById("input_telefono"+x).value;
+		document.getElementById("input_telefono"+x).value = limpiar("telefono",telefono);
+		telefono = document.getElementById("input_telefono"+x).value;
 		var respuesta = requisitos("telefono",telefono);
 		if(respuesta[0]=='si')
 		{	verificar_telefono = true;	}
@@ -358,6 +433,12 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	function comprobar_iniciar_sesion()
 	{
 		var usuario 	= document.getElementById("input_usuario").value;
+		var cadena = usuario.split("@");
+		if(cadena.length==1)
+		{
+			usuario = limpiar("rut",usuario);
+			document.getElementById("input_usuario").value = usuario;
+		}
 		var clave 		= document.getElementById("input_clave").value;
 		if(usuario.length>0 && clave.length>0)
 		{	var u = verificar('existe_usuario', usuario);
@@ -366,40 +447,35 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				if(c=='si')
 				{	var b = verificar('usuario_habilitado',usuario);
 					if(b=='si')
-					{	Iniciar_sesion();	}
+					{	Iniciar_sesion();	
+						if($("#alert-danger-iniciar").length>0)
+							{	$("#alert-danger-iniciar").slideUp(500);}
+					}
 					else
 					{
 						alert("usuario no habilitado, enviar a funcion iniciar sesion");
 						$('#errorIniciarSesion').html('<div id="alert-danger-iniciar" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica usuario: </strong>Inhabilitado.</div>');
-						$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
-					    $("#alert-danger-iniciar").slideUp(500);
-						});
+						$("#alert-danger-iniciar").fadeTo(2000, 500);
 					}
 				}
 				else
 				{
 					$("#input_clave").focus();
 					$('#errorIniciarSesion').html('<div id="alert-danger-iniciar" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica usuario: </strong>Datos no coinciden.</div>');
-						$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
-					    $("#alert-danger-iniciar").slideUp(500);
-						});
+						$("#alert-danger-iniciar").fadeTo(2000, 500);
 				}
 			}
 			else
 			{
 				$("#input_usuario").focus();
 				$('#errorIniciarSesion').html('<div id="alert-danger-iniciar" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica usuario: </strong>No registrado.</div>');
-				$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
-				$("#alert-danger-iniciar").slideUp(500);
-				});
+				$("#alert-danger-iniciar").fadeTo(2000, 500);
 			}
 		}
 		else
 		{
 			$('#errorIniciarSesion').html('<div id="alert-danger-iniciar" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica usuario: </strong>Complete los campos.</div>');
-			$("#alert-danger-iniciar").fadeTo(2000, 500).slideUp(500, function(){
-			$("#alert-danger-iniciar").slideUp(500);
-			});
+			$("#alert-danger-iniciar").fadeTo(2000, 500);
 			if(usuario.length==0) {$("#input_usuario").focus();}
 			else{$("#input_clave").focus();}
 		}
@@ -427,6 +503,51 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		})
 		return respuesta;
 	}
+
+	function limpiar(tipo,dato)
+	{
+		if(tipo=="rut")
+		{
+			rut = dato;
+			rut = rut.trim();
+			var patron = /[a-z A-Z áéíóúÁÉÍÓÚäëïöüÄËÏÖÜñÑ.-]/g;
+			rut = rut.replace(patron,"");
+			if(rut.length>1)
+			{
+				rut = rut.substring(0,rut.length-1)+"-"+rut.substring(rut.length-1)
+			}
+			dato = rut;
+		}
+		if(tipo=="telefono")
+		{
+			telefono = dato;
+			telefono = telefono.trim();
+			var patron = /[a-z A-Z áéíóúÁÉÍÓÚäëïöüÄËÏÖÜñÑ.-]/g;
+			telefono = telefono.replace(patron,"");
+			dato = telefono;
+		}
+		if(tipo=="nombres" || tipo=="apellidos")
+		{
+			var nombres = dato;
+			var cadena = [];
+			nombres = nombres.trim();
+			cadena = nombres.split(" ");
+			for(i=0;i<cadena.length;i++)
+			{
+				cadena[i] = cadena[i].charAt(0).toUpperCase() + cadena[i].substring(1).toLowerCase();
+			}
+			nombres = cadena.join(" ");
+			dato = nombres;
+		}
+		if(tipo=="carrera" || tipo=="institucion")
+		{
+			var nombres = dato;
+			nombres = nombres.trim();
+			nombres = nombres.toUpperCase();
+			dato = nombres;
+		}
+		return dato;
+	}
 	
 	function requisitos(tipo, dato){
 		var respuesta = ["",""];
@@ -440,7 +561,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				if(nombre.length>2 && nombre.length<30)
 				{
 					// VERIFICAR SOLO CARACTERES VALIDOS
-					patron=/^[a-z A-Z áéíóúÁÉÍÓÚäëïöüÄËÏÖÜñÑ]{2,30}$/;
+					if(tipo == "institucion") { 	patron=/^[a-z A-Z 0-9 áéíóúÁÉÍÓÚäëïöüÄËÏÖÜñÑ]{2,30}$/; }
+					else {	patron=/^[a-z A-Z áéíóúÁÉÍÓÚäëïöüÄËÏÖÜñÑ]{2,30}$/; }
 					if (patron.test(nombre.trim()))
 					{	respuesta = ["si",""];	}
 					else
@@ -533,10 +655,18 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 
 // SECCION 2 -------------------------------------------------------------------------------------
 // SECCION 2 -------------------------------------------------------------------------------------
+// SECCION 2 -------------------------------------------------------------------------------------
+// SECCION 2 -------------------------------------------------------------------------------------
+// SECCION 2 -------------------------------------------------------------------------------------
+// SECCION 2 -------------------------------------------------------------------------------------
+// SECCION 2 -------------------------------------------------------------------------------------
+// SECCION 2 -------------------------------------------------------------------------------------
 
 	//  bBARRA CONTROL
 	function BarraControl(x,y)
 	{
+		document.getElementById("tituloh2Control").innerHTML = "";
+		
 		if(x=='1')
 		{
 			if(y=='1')
@@ -554,7 +684,16 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				objAjax.send(null);	
 			}
 		}
-
+		if(x=='2')
+		{
+			if(y=='1')
+			{
+				document.getElementById("tituloh2Control").innerHTML = "Control de Ayudantes";
+				objAjax.open("POST","formularios/control_ayudantes.php"); 	//Abrir conexion
+				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				objAjax.send(null);
+			}
+		}
 		if(x=='3')
 		{
 			if(y=='1')
@@ -609,8 +748,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		if(tipo=="nombres") 	{ valor = 0;}
 		if(tipo=="apellidos") 	{ valor = 1;}
 		if(tipo=="rut") 		{ valor = 2;}
-		if(tipo=="correo") 		{ valor = 3;}
-		if(tipo=="telefono") 	{ valor = 4;}
 		var input, filter, table, tr, td, i;
 		input = document.getElementById("FiltroUsuarios");
 		filter = input.value.toUpperCase();
@@ -688,6 +825,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		// NOMBRES
 		var verificar_nombre = false;
 		var nombre = document.getElementById("input_nombre").value;
+		document.getElementById("input_nombre").value = limpiar("institucion",nombre);
+		nombre = document.getElementById("input_nombre").value;
 		var respuesta = requisitos("institucion",nombre);
 		if(respuesta[0]=='si')
 		{	
@@ -696,20 +835,19 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			{
 				$("#input_nombre").focus();
 				$('#errorInstitucion').html('<div id="alert-danger-institucion" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>Ya está registrada.</div>');
-				$("#alert-danger-institucion").fadeTo(2000, 500).slideUp(500, function(){
-    			$("#alert-danger-institucion").slideUp(500);
-				});
+				$("#alert-danger-institucion").fadeTo(2000, 500);
 			}
 			else
-			{	verificar_nombre = true;	}
+			{	verificar_nombre = true;
+				if($("#alert-danger-institucion").length>0)
+				{ $("#alert-danger-institucion").slideUp(500);	}
+			}
 		}
 		else
 		{
 			$("#input_nombre").focus();
 			$('#errorInstitucion').html('<div id="alert-danger-institucion" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>'+respuesta[1]+'</div>');
-				$("#alert-danger-institucion").fadeTo(2000, 500).slideUp(500, function(){
-    			$("#alert-danger-institucion").slideUp(500);
-				});
+				$("#alert-danger-institucion").fadeTo(2000, 500);
 		}
 
 		if(verificar_nombre)
@@ -721,6 +859,9 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var id_institucion = x;
 		var verificar_nombre = false;
 		var nombre = document.getElementById("input_nombre"+id_institucion).value;
+		document.getElementById("input_nombre"+id_institucion).value = limpiar("institucion",nombre);
+		nombre = document.getElementById("input_nombre"+id_institucion).value;
+
 		if(nombre.length==0)
 		{
 			$("#input_nombre"+x).focus();
@@ -761,9 +902,12 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	function ActualizarInstitucion(x){
 		var id_institucion = x;
 		var nombre 				= document.getElementById("input_nombre"+x).value;
-		var logo_institucion 	= document.getElementById("input_logo_institucion"+x).value;
-		var logo_certificacion 	= document.getElementById("input_logo_certificacion"+x).value;
 
+		/*var logo_institucion 	= document.getElementById("input_logo_institucion"+x).value;
+		var logo_certificacion 	= document.getElementById("input_logo_certificacion"+x).value;
+		*/
+		var logo_institucion = "-";
+		var logo_certificacion = "-";
 		var url="datos/actualizar_institucion.php";
 		$.ajax({
 			type:"POST", url:url, 
@@ -790,7 +934,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		// NOMBRES
 		var verificar_nombre = false;
 		var nombre = document.getElementById("input_nombre").value;
-
+		document.getElementById("input_nombre").value = limpiar("carrera",nombre);
+		nombre = document.getElementById("input_nombre").value;
 		var respuesta = requisitos("carrera",nombre);
 		if(respuesta[0]=='si')
 		{	
@@ -798,15 +943,17 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			if(p=='si')
 			{	}
 			else
-			{ verificar_nombre = true; }
+			{ 
+				verificar_nombre = true; 
+				if($("#alert-danger-carrera").length>0)
+				{	$("#alert-danger-carrera").slideUp(500);}
+			}
 		}
 		else
 		{
 			$("#input_nombre").focus();
 			$('#errorCarrera').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica carrera: </strong>'+respuesta[1]+'</div>');
-				$("#alert-danger-carrera").fadeTo(2000, 500).slideUp(500, function(){
-    			$("#alert-danger-carrera").slideUp(500);
-				});
+				$("#alert-danger-carrera").fadeTo(2000, 500);
 		}
 
 		if(verificar_nombre)
@@ -818,6 +965,8 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var id_carrera = x;
 		var verificar_nombre = false;
 		var nombre = document.getElementById("input_nombre"+id_carrera).value;
+		document.getElementById("input_nombre"+id_carrera).value = limpiar("carrera",nombre);
+		nombre = document.getElementById("input_nombre"+id_carrera).value;
 		var respuesta = requisitos("carrera",nombre);
 		if(respuesta[0]=='si')
 		{	verificar_nombre=true; }
@@ -876,3 +1025,90 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			{	$("#filaTablaUsuario"+id).removeClass("warning");	}
 		}
 	}
+
+	function obtenerSelect(tipo,dato)
+	{
+		var respuesta = null;
+		var url="datos/select_option.php";
+		if(tipo=="instituciones")
+		{
+			$.ajax({
+			async: false,	type:"POST",	url:url, 	data:{input_tipo:tipo},
+			success: function(data)	{	respuesta = data;		}	});
+		}
+		if(tipo=="carreras")
+		{
+			$.ajax({
+			async: false,	type:"POST",	url:url, 	data:{input_tipo:tipo},
+			success: function(data)	{	respuesta = data;		}	});
+		}
+		if(tipo=="institucion_carrera")
+		{
+			var dato = document.getElementById("input_institucion").value;
+			$.ajax({
+			async: false,	type:"POST",	url:url, 	data:{input_tipo:tipo, input_dato:dato},
+			success: function(data)	{	respuesta = data;		}	});
+		}
+		return respuesta;
+	}
+
+	function listarIntituciones()
+	{
+		if(document.getElementById("input_tipo").value==2 || document.getElementById("input_tipo").value=="2")
+		{
+			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" onchange="listarCarrerasAsociadas()" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
+			listarCarrerasAsociadas();
+		}
+		else
+		{
+			document.getElementById("divInstituciones").innerHTML="";
+			document.getElementById("divCarreras").innerHTML="";
+		}
+	}
+
+	function listarCarrerasAsociadas()
+	{
+		if(document.getElementById("input_tipo").value==2 || document.getElementById("input_tipo").value=="2")
+		{
+			//alert(obtenerSelect("institucion_carrera",document.getElementById("input_institucion").value));
+			$('#divCarreras').html('<div class="form-group"><label for="input_institucion_carrera">Carrera:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-list-alt"></span></span><select id="input_institucion_carrera" class="form-control">'+obtenerSelect("institucion_carrera",document.getElementById("input_institucion").value)+'</select></div></div>');
+			if(document.getElementById("input_institucion_carrera").value==0)
+			{
+				document.getElementById("divCarreras").innerHTML = "";
+				$('#errorCarreras').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica Institución: </strong>Debe tener al menos una carrera asociada.</div>');
+				$("#alert-danger-carrera").fadeTo(2000, 500);
+			}
+			else
+			{
+				if($("#alert-danger-carrera").length>0)
+				{
+					$("#alert-danger-carrera").slideUp(500);
+				}
+			}
+		}
+		else
+		{
+			document.getElementById("divInstituciones").innerHTML ="";
+			document.getElementById("divCarreras").innerHTML ="";
+		}
+	}
+
+	function listarIntituciones()
+	{
+		if(document.getElementById("input_tipo").value==2 || document.getElementById("input_tipo").value=="2")
+		{
+			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" onchange="listarCarrerasAsociadas()" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
+			listarCarrerasAsociadas();
+		}
+		else if(document.getElementById("input_tipo").value==3 || document.getElementById("input_tipo").value=="3")
+		{
+			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
+		}
+		else
+		{
+			document.getElementById("divInstituciones").innerHTML="";
+			document.getElementById("divCarreras").innerHTML="";
+		}
+	}
+
+	

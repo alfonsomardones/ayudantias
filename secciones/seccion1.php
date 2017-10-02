@@ -1,5 +1,5 @@
 <?php
-  include("datos/conex.inc");
+  include("datos/conex.php");
 ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container-fluid">
@@ -24,7 +24,7 @@
                   <a class="nav-link" href="" onclick="ObtenerModalSeccion1(3)" data-toggle="modal" data-target="#ModalSeccion1">Descargas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" onclick="ObtenerModalSeccion1(4)" data-toggle="modal" data-target="#ModalSeccion1">Contacto</a>
+                  <a class="nav-link" href="" onclick="ObtenerModalSeccion1(4)" data-toggle="modal" data-target="#ModalSeccion1">Contacto</a>
                 </li>';
           }
         ?>
@@ -42,12 +42,12 @@
             ?>
           </a>
           <?php
-            echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+            echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="opcionPrincipal">';
             if(isset($_SESSION['correo']))
             {
               echo '
-              <a class="dropdown-item" href="#" onclick="ObtenerModalSeccion1(5)" data-toggle="modal" data-target="#ModalSeccion1">Configurar Perfil</a>
-              <a class="dropdown-item" href="#" onclick="ObtenerModalSeccion1(6)" data-toggle="modal" data-target="#ModalSeccion1">Cerrar Sesión</a>';
+              <a class="dropdown-item" href="" onclick="ObtenerModalSeccion1(5)" data-toggle="modal" data-target="#ModalSeccion1">Configurar Perfil</a>
+              <a class="dropdown-item" href="" onclick="ObtenerModalSeccion1(6)" data-toggle="modal" data-target="#ModalSeccion1">Cerrar Sesión</a>';
             }
             else
             {

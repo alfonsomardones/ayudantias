@@ -1,5 +1,7 @@
 <?php
-    include('conex.inc');
+if(isset($_POST['input_id']))
+{
+	include('conex.php');
     $id_usuario     = $_POST['input_id'];
     $rut            = $_POST['input_rut'];
     if($rut==0 or $rut=="0")
@@ -25,4 +27,9 @@
         $sql.= " WHERE id_usuario=".$id_usuario;
     }
     $actualizar = mysqli_query($db,$sql);
+}
+else
+{
+	header("location: error.php");
+}
 ?>

@@ -1,6 +1,3 @@
-<?php
-	session_start();
-?>
 <div class="container">
 	<div class="form-group">
 		<p>Aquí encontrarás el futuro archivo de descarga, en este momento lo estamos trabajando!!!</p>

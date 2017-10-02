@@ -1,5 +1,7 @@
 <?php
-    include('conex.inc');
+if(isset($_POST['input_tipo']))
+{
+	include('conex.php');
     
 	$tipo  		= $_POST['input_tipo'];
 	$dato  		= $_POST['input_dato'];
@@ -13,6 +15,20 @@
 		if ($contador>0)
 		{
 			$valor='si';
+		}
+	}
+
+	if($tipo=='obtener_id')
+	{
+		$sql 		= "SELECT * FROM usuarios WHERE rut='$dato'";
+		$resultado 	= mysqli_query($db,$sql);
+		$contador 	= mysqli_num_rows($resultado);
+		if ($contador>0)
+		{
+			while ($lista = mysqli_fetch_array($resultado))
+			{
+				$valor = $lista['id_usuario'];
+			}
 		}
 	}
 
@@ -157,4 +173,9 @@
 	}
 
 	echo $valor;
+}
+else
+{
+    header("location: error.php");
+}
 ?>

@@ -1,5 +1,5 @@
 <?php
-include("../datos/conex.inc");
+include("../datos/conex.php");
 session_start();
 //consultar a la BD
 if(isset($_SESSION['id_usuario']))
@@ -11,13 +11,15 @@ if(isset($_SESSION['id_usuario']))
 		$contador 		= mysqli_num_rows($resultado);
 		if($contador>0)
 		{
-			echo "<div class='input-group'><input type='text' id='FiltroInstituciones' onkeyup='FiltroInstituciones()' placeholder='Buscar institución ...' class='form-control'></div>";
-			echo "<table id='TablaInstituciones' class='table'>
+			echo "<div class='input-group-btn'><button class='btn btn-default' type='submit'><i class='glyphicon glyphicon-search'></i></button><input type='text' id='FiltroInstituciones' onkeyup='FiltroInstituciones()' placeholder='Buscar institución ...' class='form-control'></div>";
+			echo "<div class='container-fluid'>
+					<div class='table-responsive'>
+						<table id='TablaInstituciones' class='table table-striped'>
 					<tr>
 						<th>Nombres</th>
 						<th>Logo Institución</th>
 						<th>Logo Certificación</th>
-						<th COLSPAN='2'>Operaciones</th>
+						<th>Operaciones</th>
 					</tr>";
 			while ($lista = mysqli_fetch_array($resultado))
 			{
@@ -32,16 +34,16 @@ if(isset($_SESSION['id_usuario']))
 						<input type='text' value='$nombre' name='input_nombre".$id_institucion."' id='input_nombre".$id_institucion."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_institucion(".$id_institucion.")'>
 					</td>
 					<td>
-						<input type='text' value='$logo_institucion' name='input_logo_institucion".$id_institucion."' id='input_logo_institucion".$id_institucion."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_institucion(".$id_institucion.")'>
+						<input name='subir_logo_institucion' type='file' class='form-control'/>
 					</td>
 					<td>
-						<input type='text' value='$logo_certificacion' name='input_logo_certificacion".$id_institucion."' id='input_logo_certificacion".$id_institucion."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_institucion(".$id_institucion.")'>
+						<input name='subir_logo_certificacion' type='file' class='form-control'/>
 					</td>
-					<td><input type='button' value='Guardar' onclick='comprobar_actualizar_institucion(".$id_institucion.")' class='btn btn-primary'></td>
-					<td><input type='button' value='Borrar' onclick='BorrarInstitucion(".$id_institucion.")' class='btn btn-primary'></td>
+					<td><div class='btn-group'><input type='button' value='Guardar' onclick='comprobar_actualizar_institucion(".$id_institucion.")' class='btn btn-primary'>
+					<input type='button' value='Borrar' onclick='BorrarInstitucion(".$id_institucion.")' class='btn btn-danger'></div></td>
 				</tr>";
 			}
-			echo "</table>";
+			echo "</table></div></div>";
 		}
 		else
 		{

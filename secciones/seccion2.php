@@ -1,5 +1,5 @@
 <?php
-	include("datos/conex.inc");
+	include("datos/conex.php");
 ?>
 <?php
 if(isset($_SESSION['id_usuario']))
@@ -16,7 +16,7 @@ if(isset($_SESSION['id_usuario']))
 				</div>
 
 				<div id="opcionesUsuarios" class="panel-collapse collapse">
-					<li class="list-group-item"><a href="#" onclick="BarraControl(1,1)" rel="nofollow">Control de Usuarios</a></li>
+					<li class="list-group-item"><a href="#" onclick="BarraControl(1,1)">Control de Usuarios</a></li>
 			   		<li class="list-group-item"><a href="#" onclick="BarraControl(1,2)">Agregar Usuario</a></li>
 				</div>
 			</div>';
@@ -30,8 +30,7 @@ if(isset($_SESSION['id_usuario']))
 				</div>
 				<div id="opcionesAyudantes" class="panel-collapse collapse">
 					<li class="list-group-item"><a href="#" onclick="BarraControl(2,1)">Control de Ayudantes</a></li>
-					<li class="list-group-item"><a href="#" onclick="BarraControl(2,2)">Agregar Ayudante</a></li>
-					<li class="list-group-item"><a href="#" onclick="BarraControl(2,3)">Asociar a Carrera</a></li>
+					<li class="list-group-item"><a href="#" onclick="BarraControl(2,2)">Asociar a Carrera</a></li>
 				</div>
 			</div>';
 	}
@@ -45,8 +44,9 @@ if(isset($_SESSION['id_usuario']))
 				<div id="opcionesInstituciones" class="panel-collapse collapse">
 					<li class="list-group-item"><a href="#" onclick="BarraControl(3,1)">Control de Instituciones</a></li>
 					<li class="list-group-item"><a href="#" onclick="BarraControl(3,2)">Agregar Institución</a></li>
-					<li class="list-group-item"><a href="#" onclick="BarraControl(3,3)">Asociar Carreras</a></li>
-					<li class="list-group-item"><a href="#" onclick="BarraControl()">Control Administradores</a></li>
+					<li class="list-group-item"><a href="#" onclick="BarraControl(3,3)">Instituciones-Carreras</a></li>
+					<li class="list-group-item"><a href="#" onclick="BarraControl(3,4)">Asociar Carreras</a></li>
+					<li class="list-group-item"><a href="#" onclick="BarraControl(3,5)">Control Administradores</a></li>
 				</div>
 			</div>';
 	}
@@ -80,7 +80,7 @@ if(isset($_SESSION['id_usuario']))
 		echo '	</div>
 				</div>
 			<div class="col-xs-12 col-md-10" id="divControl">
-				<div id="tituloControl"><h2 id="tituloh2Control">Control de Usuarios</h2></div>
+				<div id="tituloControl"><h2 id="tituloh2Control">Menú de Administración</h2></div>
 				<div id="cuerpoControl"></div>
 			</div>
 		</div>

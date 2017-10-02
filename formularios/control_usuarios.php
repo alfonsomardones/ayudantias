@@ -1,5 +1,5 @@
 <?php
-include("../datos/conex.inc");
+include("../datos/conex.php");
 session_start();
 //consultar a la BD
 if(isset($_SESSION['id_usuario']))
@@ -13,15 +13,17 @@ if(isset($_SESSION['id_usuario']))
 			$contador 		= mysqli_num_rows($resultado);
 			if($contador>0)
 			{
-				echo "<div class='input-group'><input type='text' id='FiltroUsuarios' onkeyup='FiltroUsuarios()' placeholder='Buscar usuario ...' class='form-control'>
+				echo "<div class='input-group-btn'>
+						<button class='btn btn-default' type='submit'><i class='glyphicon glyphicon-search'></i></button>
+						<input type='text' id='FiltroUsuarios' onkeyup='FiltroUsuarios()' placeholder='Buscar usuario ...' class='form-control' >
 				<select id='tipoBuscarUsuario' class='form-control'>
 					<option value='nombres'>Nombres</option>
 					<option value='apellidos'>Apellidos</option>
 					<option value='rut'>Rut</option>
-					<option value='correo'>Correo</option>
-					<option value='telefono'>Teléfono</option>
 				</select></div>";
-				echo "<table id='TablaUsuarios' class='table table-striped'>
+				echo "<div class='container-fluid'>
+						<div class='table-responsive'>
+							<table id='TablaUsuarios' class='table table-striped'>
 						<tr>
 							<th>Nombres</th>
 							<th>Apellidos</th>
@@ -30,7 +32,7 @@ if(isset($_SESSION['id_usuario']))
 							<th>Correo</th>
 							<th>Tipo</th>
 							<th>Estado</th>
-							<th COLSPAN='2'>Operaciones</th>
+							<th>Operaciones</th>
 						</tr>";
 				while ($lista = mysqli_fetch_array($resultado))
 				{
@@ -90,11 +92,13 @@ if(isset($_SESSION['id_usuario']))
 						<input type='text' value='$id_usuario' name='input_id".$id_usuario."' id='input_id".$id_usuario."' class='sr-only'>
 						<input type='text' value='$fecha_nac' name='input_fecha_nac".$id_usuario."' id='input_fecha_nac".$id_usuario."' class='sr-only'>
 						</td>
-						<td><input type='button' value='Guardar' onclick='comprobar_actualizar_usuario(".$id_usuario.")' class='btn btn-primary'></td>
-						<td><input type='button' value='Borrar' onclick='comprobar_borrar(".$id_usuario.")' class='btn btn-primary'></td>
+						<td>
+						<div class='btn-group'>
+						<input type='button' value='Guardar' onclick='comprobar_actualizar_usuario(".$id_usuario.")' class='btn btn-primary'>
+						<input type='button' value='Borrar' onclick='BorrarUsuario(".$id_usuario.")' class='btn btn-danger'></div></td>
 					</tr>";
 				}
-				echo "</table>";
+				echo "</table></div></div>";
 			}
 			else
 			{
