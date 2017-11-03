@@ -6,7 +6,8 @@ if(isset($_POST['input_nombres']))
     $nombres        = $_POST['input_nombres'];
     $apellidos      = $_POST['input_apellidos'];
     $rut            = $_POST['input_rut'];
-    $fecha_nac      = $_POST['input_fecha_nac'];
+    list($año,$mes,$dia)     = explode("-", $_POST['input_fecha_nac']);
+        $fecha_nac        = "$dia-$mes-$año";
     $telefono       = $_POST['input_telefono'];
     $correo         = $_POST['input_correo'];
     $correo         = strtolower($correo);

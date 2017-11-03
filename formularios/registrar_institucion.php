@@ -18,9 +18,12 @@
 	     		<input name='subir_logo_certificacion' type='file' class="form-control"/>
 	     	</div>
 	    </div>
+	    <div class="col-xs-12 col-md-12" >
+	    	<div id="errorInstitucion"></div>
+	    </div>
 	    <div class="col-xs-12  col-md-12" >
 	    	<div class="form-group">
-	      		<button type="submit" class="btn btn-primary" onclick="comprobar_registrar_institucion()">Registrar</button>
+	      		<button type="submit" class="btn btn-warning  btn-block" onclick="comprobar_registrar_institucion()">Registrar</button>
 	      	</div>
 	    </div>
 	</div>

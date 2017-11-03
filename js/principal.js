@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+	setInterval(nuevo_mensaje, 1000);
 });
 
 if (window.XMLHttpRequest) objAjax = new XMLHttpRequest() //para Mozilla
@@ -69,7 +69,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		if(x==6)
 		{
 			document.getElementById("ModalPrincipio").innerHTML = "Cerrar sesión";
-			$('#contenidoModal').html('<p>¿Seguro que desea cerrar su sesión?</p><form action="datos/cerrar_sesion.php"><button type="submit" class="btn btn-primary">Cerrar sesión</button></form>');
+			$('#contenidoModal').html('<p>¿Seguro que desea cerrar su sesión?</p><form action="datos/cerrar_sesion.php"><button type="submit" class="btn btn-warning btn-block">Cerrar sesión</button></form>');
 		}
 	}
 
@@ -96,34 +96,39 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			url:url,
 			data:{
 				input_nombres:nombres, 		input_apellidos:apellidos, 	input_rut:rut, 			input_fecha_nac:fecha_nac,
-				input_telefono:telefono, 	input_tipo:tipo, 			input_correo:correo,	input_clave:clave 			}});
+				input_telefono:telefono, 	input_tipo:tipo, 			input_correo:correo,	input_clave:clave 		}});
+	}
 
-		if(tipo=='2' || tipo==2)
-		{
-			var id_usuario = verificar("obtener_id",rut);
-			var institucion_carrera = document.getElementById("input_institucion_carrera").value;
-			var certificacion = "no";
-			if($("#input_certificacion").length>0)
-			{	certificacion = document.getElementById("input_cartificacion").value;		}
-			var url="datos/registrar_ayudante.php";
-			$.ajax({
-				type:"POST",
-				url:url,
-				data:{
-					input_id:id_usuario, input_institucion_carrera:institucion_carrera, input_certificacion:certificacion}});
-		}
+	function RegistrarAyudante(x){
+		var id_usuario = x;
+		if($("#input_institucion_carrera").length>0)
+		{	var institucion_carrera = document.getElementById("input_institucion_carrera").value;
+			alert("si existe institucion_carrera");	}
+		else
+		{	var institucion_carrera = 0;	}
+		if($("#input_certificacion").length>0)
+		{	var id_certificacion = document.getElementById("input_certificacion").value;
+			alert("si existe certificacion");	}
+		else
+		{	var id_certificacion = 0;	}
+		alert("id: "+id_usuario+" - institucion_carrera: "+institucion_carrera+" certificacion: "+id_certificacion);
+		var url="datos/registrar_ayudante.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{
+				input_id:id_usuario, input_institucion_carrera:institucion_carrera,input_certificacion:id_certificacion}});
+	}
 
-		if(tipo=='3' || tipo==3)
-		{
-			var id_usuario = verificar("obtener_id",rut);
-			var institucion = document.getElementById("input_institucion").value;
-			var url="datos/registrar_admin_institucion.php";
-			$.ajax({
-				type:"POST",
-				url:url,
-				data:{
-					input_id:id_usuario, input_institucion:institucion}});
-		}
+	function RegistrarAdminInstitucion(x){
+		var id_usuario = x;
+		var institucion = document.getElementById("input_institucion").value;
+		var url="datos/registrar_admin_institucion.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{
+				input_id:id_usuario, input_institucion:institucion}});
 	}
 
 	// COMPRUEBA FORMULARIO DE REGISTRAR
@@ -162,7 +167,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			$('#errorApellidos').html('<div id="alert-danger-apellidos" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica apellidos: </strong>'+respuesta[1]+'</div>');
 			$("#alert-danger-apellidos").fadeTo(2000, 500);
 		}
-
 		// RUT
 		var verificar_rut = false;
 		var rut = document.getElementById("input_rut").value;
@@ -204,7 +208,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			$('#errorTelefono').html('<div id="alert-danger-telefono" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica teléfono: </strong>'+respuesta[1]+'</div>');
 			$("#alert-danger-telefono").fadeTo(2000, 500);
 		}
-
 		// CORREO
 		var verificar_correo = false;
 		var correo = document.getElementById("input_correo").value;
@@ -253,41 +256,67 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				$("#alert-danger-clave").fadeTo(2000, 500);
 			}
 		}
+		var verificar_tipo = false;
+		var tipo = document.getElementById("input_tipo").value;
+		if(tipo==1 || tipo == "1")
+		{	var verificar_tipo = true;	}
 
-		if(document.getElementById("input_tipo").value == 2 || document.getElementById("input_tipo").value == "2")
+		if(tipo == 2 || tipo == "2")
 		{
-			if($("#input_institucion").length>0)
+			// SI EXISTEN LOS DOS ES PORQUE ERES ADMINISTRADOR
+			if(($("#input_institucion").length>0 && $("#input_institucion_carrera").length>0))
 			{
-				var verificar_tipo = false;
-				if($("#input_institucion_carrera").length>0)
-				{
-					if($("#input_institucion_carrera")!=0 || $("#input_institucion_carrera")!='0')
-					{
-						verificar_tipo = true;
-					}
-				}
-				else
-				{
+				if(document.getElementById("input_institucion_carrera").value!=0)
+				{	verificar_tipo = true;
+					alert("eres aministrador y correcto");	}
+				else{
+					verificar_tipo = false;
+					alert("eres aministrador y false");
 					$('#errorCarreras').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>Debe tener al menos una carrera asociada.</div>');
 					$("#alert-danger-carrera").fadeTo(2000, 500);
 				}
 			}
-		}
-
-		if(document.getElementById("input_tipo").value == 3 || document.getElementById("input_tipo").value == "3")
-		{
-			if($("#input_institucion").length>0)
-			{
-				var verificar_tipo = true;		
-			}
 			else
 			{
-				alert("no existe intitucion");
+				if(($("#input_institucion").length>0 && $("#input_institucion_carrera").length==0))
+				{	verificar_tipo = false;
+					alert("NO eres aministrador y false2");
+					$('#errorCarreras').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica institución: </strong>Debe tener al menos una carrera asociada.</div>');
+					$("#alert-danger-carrera").fadeTo(2000, 500);		}
+				else
+				{	verificar_tipo = true;
+					alert("NO eres aministrador y correcto2");		}
 			}
 		}
+		if(tipo == 3 || tipo == "3")
+		{
+			if($("#input_institucion").length>0)
+			{	var verificar_tipo = true;		}
+			else
+			{	var verificar_tipo = false;		}
+		}
+		if(tipo == 4 || tipo == "4")
+		{	var verificar_tipo = true;		}
 
 		if(verificar_nombres && verificar_apellidos && verificar_rut && verificar_correo && verificar_telefono && verificar_clave && verificar_tipo)
-		{	RegistrarUsuario();	}
+		{	RegistrarUsuario();
+			if(tipo==2 || tipo=="2")
+			{
+				var id = verificar("obtener_id",rut);
+				RegistrarAyudante(id);
+			}
+			if(tipo==3 || tipo=="3")
+			{
+				var id = verificar("obtener_id",rut);
+				RegistrarAdminInstitucion(id);
+			}
+			if($("#alert-danger-clave").length>0)
+			{ $("#alert-danger-clave").slideUp(500);
+				document.getElementById("errorClave").innerHTML = "";
+			}
+			$('#errorClave').html('<div id="alert-success-clave" class="alert alert-success alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>'+document.getElementById("input_nombres").value+' '+document.getElementById("input_apellidos").value+'</strong> - Usuario registrado con <strong>éxito</strong>.</div>');
+			$("#alert-success-clave").fadeTo(2000, 500);
+		}
 	}
 
 	// ACTUALIZA DATOS DEL USUARIO
@@ -297,6 +326,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		if(y==1) // SI RUT DESHABILITADO, SOLO TOMA LOS VALORES CORREO, CLAVE, TIPO, Y ESTADO
 		{
 			var id 			= document.getElementById("input_id"+x).value;
+			var fecha_nac 	= document.getElementById("input_fecha_nac"+x).value;
 			var telefono 	= document.getElementById("input_telefono"+x).value;
 			var correo 		= document.getElementById("input_correo"+x).value;
 			var tipo 		= document.getElementById("input_tipo"+x).value;
@@ -305,7 +335,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			$.ajax({
 				type:"POST",
 				url:url,
-				data:{input_id:id, input_rut:"0", input_telefono:telefono, input_correo:correo,	input_tipo:tipo,	input_estado:estado}
+				data:{input_id:id, input_rut:"0", input_fecha_nac:fecha_nac,input_telefono:telefono, input_correo:correo,	input_tipo:tipo,input_estado:estado}
 				});
 		}
 		else
@@ -319,7 +349,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			var correo 		= document.getElementById("input_correo"+x).value;
 			var tipo 		= document.getElementById("input_tipo"+x).value;
 			var estado 		= document.getElementById("input_estado"+x).value;
-
 			var url 		="datos/actualizar_usuario.php";
 			$.ajax({
 				type:"POST",
@@ -405,14 +434,19 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			{ 	ActualizarUsuario(x,1);	}
 			else
 			{ 	ActualizarUsuario(x,0);	}
+			if(x!='')
+			{	BarraControl(1,1);	}
 		}
 	}
 
 	// BORRA AL USUARIO
 	function BorrarUsuario(x){
-		objAjax.open("POST","datos/borrar_usuario.php"); 	//Abrir conexion
-		objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		objAjax.send('cod='+x);
+		var url="datos/borrar_usuario.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{cod:x}});
+		BarraControl(1,1);
 	}
 
 	function Iniciar_sesion()
@@ -546,6 +580,10 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			nombres = nombres.toUpperCase();
 			dato = nombres;
 		}
+		if(tipo=="texto")
+		{
+			dato = dato.trim();
+		}
 		return dato;
 	}
 	
@@ -650,6 +688,25 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				{	respuesta = ["no","Cantidad de datos incorrecta."];	}
 			}
 		}
+		if(tipo=='texto')
+		{
+			if(dato.length==0)
+			{	respuesta = ["no","No hay datos."];	}
+			else
+			{
+				if(dato.length>2 && dato.length<30)
+				{
+					// VERIFICAR SOLO CARACTERES VALIDOS
+					patron=/^[a-z A-Z 0-9 áéíóúÁÉÍÓÚäëïöüÄËÏÖÜñÑ]{3,200}$/; 
+					if (patron.test(dato.trim()))
+					{	respuesta = ["si",""];	}
+					else
+					{	respuesta = ["no","No cumple requisitos."]; }
+				}
+				else
+				{	respuesta = ["no","Cantidad de datos incorrecta."];	}
+			}
+		}
 		return respuesta;
 	}
 
@@ -665,20 +722,21 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	//  bBARRA CONTROL
 	function BarraControl(x,y)
 	{
-		document.getElementById("tituloh2Control").innerHTML = "";
-		
+		$('#contenedorSeccion2').html("<div id='tituloControl'><h2 id='textoTitulo'></h2></div><div id='cuerpoControl'></div>");
+		$('#cuerpoControl').html('<div id="divImg_cargando" align="center"><img src="img/loading.gif" alt="cargando" id="img_cargando"></div>');
 		if(x=='1')
 		{
 			if(y=='1')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Control de Usuarios";
+				var titulo = "Control de Usuarios";
 				objAjax.open("POST","formularios/control_usuarios.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);
+				document.getElementById("ModalPrincipio").innerHTML = "";
 			}
 			if(y=='2')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Registrar Usuario";
+				var titulo = "Registrar Usuario";
 				objAjax.open("POST","formularios/registrar_usuario.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);	
@@ -688,7 +746,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		{
 			if(y=='1')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Control de Ayudantes";
+				var titulo = "Control de Ayudantes";
 				objAjax.open("POST","formularios/control_ayudantes.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);
@@ -698,7 +756,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		{
 			if(y=='1')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Control de Instituciones";
+				var titulo = "Control de Instituciones";
 				objAjax.open("POST","formularios/control_instituciones.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);	
@@ -706,8 +764,15 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 
 			if(y=='2')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Registrar Institución";
+				var titulo = "Registrar Institución";
 				objAjax.open("POST","formularios/registrar_institucion.php"); 	//Abrir conexion
+				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				objAjax.send(null);	
+			}
+			if(y=='5')
+			{
+				var titulo = "Control de Administradores";
+				objAjax.open("POST","formularios/control_administradores_instituciones.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);	
 			}
@@ -717,7 +782,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		{
 			if(y=='1')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Control Carreras";
+				var titulo = "Control Carreras";
 				objAjax.open("POST","formularios/control_carreras.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);	
@@ -725,13 +790,23 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 
 			if(y=='2')
 			{
-				document.getElementById("tituloh2Control").innerHTML = "Registrar Carrera";
+				var titulo = "Registrar Carrera";
 				objAjax.open("POST","formularios/registrar_carrera.php"); 	//Abrir conexion
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);	
 			}
 		}
-
+		if(x=='10')
+		{
+			if(y=='1')
+			{
+				var titulo = "Mensajes";
+				objAjax.open("POST","formularios/mensajes.php"); 	//Abrir conexion
+				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				objAjax.send(null);	
+			}
+		}
+		document.getElementById("textoTitulo").innerHTML = titulo;
 		objAjax.onreadystatechange = MostrarResultadosSeccion2;
 	}
 
@@ -819,6 +894,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var url="datos/registrar_institucion.php";
 		$.ajax({
 			type:"POST", url:url, data:{	input_nombre:nombre}	});
+		BarraControl(3,1);
 	}
 
 	function comprobar_registrar_institucion(){
@@ -851,7 +927,14 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		}
 
 		if(verificar_nombre)
-		{	RegistrarInstitucion();	}
+		{	RegistrarInstitucion();
+			if($("#alert-danger-institucion").length>0)
+			{ $("#alert-danger-institucion").slideUp(500);
+				document.getElementById("errorInstitucion").innerHTML = "";	}
+			$('#errorInstitucion').html('<div id="alert-success-institucion" class="alert alert-success alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>'+document.getElementById("input_nombre").value+'</strong> - Institución registrada con <strong>éxito</strong>.</div>');
+			$("#alert-success-institucion").fadeTo(2000, 500);
+			document.getElementById("input_nombre").value = "";
+		}
 	}
 
 	function comprobar_actualizar_institucion(x){
@@ -861,7 +944,6 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var nombre = document.getElementById("input_nombre"+id_institucion).value;
 		document.getElementById("input_nombre"+id_institucion).value = limpiar("institucion",nombre);
 		nombre = document.getElementById("input_nombre"+id_institucion).value;
-
 		if(nombre.length==0)
 		{
 			$("#input_nombre"+x).focus();
@@ -902,23 +984,20 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	function ActualizarInstitucion(x){
 		var id_institucion = x;
 		var nombre 				= document.getElementById("input_nombre"+x).value;
-
-		/*var logo_institucion 	= document.getElementById("input_logo_institucion"+x).value;
-		var logo_certificacion 	= document.getElementById("input_logo_certificacion"+x).value;
-		*/
 		var logo_institucion = "-";
-		var logo_certificacion = "-";
 		var url="datos/actualizar_institucion.php";
 		$.ajax({
 			type:"POST", url:url, 
-				data:{ input_id:x, input_nombre:nombre, input_logo_institucion:logo_institucion, input_logo_certificacion:logo_certificacion}
+				data:{ input_id:x, input_nombre:nombre, input_logo_institucion:logo_institucion}
 		});
+		BarraControl(3,1);
 	}
 
 	function BorrarInstitucion(x){
-		objAjax.open("POST","datos/borrar_institucion.php"); 	//Abrir conexion
-		objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		objAjax.send('cod='+x);
+		var url="datos/borrar_institucion.php";
+		$.ajax({
+			type:"POST", url:url,	data:{ cod:x}});
+		BarraControl(3,1);
 	}
 
 
@@ -928,6 +1007,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var url="datos/registrar_carrera.php";
 		$.ajax({
 			type:"POST", url:url, data:{ input_nombre:nombre }	});
+		BarraControl(4,1);
 	}
 
 	function comprobar_registrar_carrera(){
@@ -941,7 +1021,10 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		{	
 			var p = verificar('existe_carrera', nombre);
 			if(p=='si')
-			{	}
+			{	$("#input_nombre").focus();
+				$('#errorCarrera').html('<div id="alert-danger-carrera" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Verifica carrera: </strong>Ya existe.</div>');
+				$("#alert-danger-carrera").fadeTo(2000, 500);
+			}
 			else
 			{ 
 				verificar_nombre = true; 
@@ -957,7 +1040,15 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		}
 
 		if(verificar_nombre)
-		{	RegistrarCarrera(); 	}
+		{	RegistrarCarrera(); 	
+			if($("#alert-danger-carrera").length>0)
+			{ $("#alert-danger-carrera").slideUp(500);
+				document.getElementById("errorCarrera").innerHTML = "";
+			}
+			$('#errorCarrera').html('<div id="alert-success-carrera" class="alert alert-success alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>'+document.getElementById("input_nombre").value+'</strong> - Carrera registrada con <strong>éxito</strong>.</div>');
+			$("#alert-success-carrera").fadeTo(2000, 500);
+			document.getElementById("input_nombre").value = "";
+		}
 	}
 
 	function comprobar_actualizar_carrera(x){
@@ -982,13 +1073,15 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		var url="datos/actualizar_carrera.php";
 		$.ajax({
 			type:"POST", url:url, data:{ input_id:x, input_nombre:nombre}, success: function(){	}
-		})
+		});
+		BarraControl(4,1);
 	}
 
 	function BorrarCarrera(x){
-		objAjax.open("POST","datos/borrar_carrera.php"); 	//Abrir conexion
-		objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		objAjax.send('cod='+x);
+		var url="datos/borrar_carrera.php";
+		$.ajax({
+			type:"POST", url:url, data:{ cod:x}});
+		BarraControl(4,1);
 	}
 
 	function advertirModificaciones(tabla,x)
@@ -1059,6 +1152,10 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" onchange="listarCarrerasAsociadas()" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
 			listarCarrerasAsociadas();
 		}
+		if(document.getElementById("input_tipo").value==3 || document.getElementById("input_tipo").value=="3")
+		{
+			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
+		}
 		else
 		{
 			document.getElementById("divInstituciones").innerHTML="";
@@ -1081,9 +1178,7 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			else
 			{
 				if($("#alert-danger-carrera").length>0)
-				{
-					$("#alert-danger-carrera").slideUp(500);
-				}
+				{	$("#alert-danger-carrera").slideUp(500);	}
 			}
 		}
 		else
@@ -1093,22 +1188,100 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		}
 	}
 
-	function listarIntituciones()
+	
+	function desasociar_institucion_carrera(x)
 	{
-		if(document.getElementById("input_tipo").value==2 || document.getElementById("input_tipo").value=="2")
-		{
-			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" onchange="listarCarrerasAsociadas()" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
-			listarCarrerasAsociadas();
-		}
-		else if(document.getElementById("input_tipo").value==3 || document.getElementById("input_tipo").value=="3")
-		{
-			$('#divInstituciones').html('<div class="form-group"><label for="input_institucion">Institución:</label><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span><select id="input_institucion" class="form-control">'+obtenerSelect("instituciones",0)+'</select></div></div>');
-		}
+		objAjax.open("POST","datos/borrar_institucion_carrera.php"); 	//Abrir conexion
+		objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		objAjax.send('cod='+x);
+	}
+
+	function comprobar_mensaje()
+	{
+		var remitente 	= document.getElementById("input_remitente").value;
+		var verificar_remitente = false;
+		var respuesta = requisitos("correo",remitente);
+		if(respuesta[0]=="si")
+		{	var verificar_remitente = true;		}
 		else
+		{	alert(respuesta[1]);	}
+
+		var mensaje 	= document.getElementById("input_mensaje").value;
+		mensaje = limpiar("texto",mensaje);
+		var verificar_mensaje = false;
+		var respuesta = requisitos("texto",mensaje);
+		if(respuesta[0]=="si")
+		{	var verificar_mensaje = true;	}
+		
+		if(verificar_remitente && verificar_mensaje)
+		{	enviar_mensaje();	}
+	}
+
+	function enviar_mensaje()
+	{
+		var remitente 	= document.getElementById("input_remitente").value;
+		var recibe 		= document.getElementById("input_recibe").value;
+		var tipo 		= document.getElementById("input_tipo").value;
+		var mensaje 	= document.getElementById("input_mensaje").value;
+
+		var url="datos/registrar_mensaje.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{input_remitente:remitente, input_recibe:recibe, input_tipo:tipo, 	input_mensaje:mensaje}});
+	}
+
+	function nuevo_mensaje()
+	{
+		if($('#seccion1-mensajes').length>0)
 		{
-			document.getElementById("divInstituciones").innerHTML="";
-			document.getElementById("divCarreras").innerHTML="";
+			//$('#idenNuevoMsj').html('<span class="badge badge-pill badge-warning">'+nuevo+'</span>');
+			var nuevo = verificar("nuevo_mensaje");
+			var usuario = verificar("nombre_usuario");
+			if(nuevo!=0 || nuevo!="0")
+			{
+				var texto1 = 'Mensajes <span class="badge badge-pill badge-warning">'+nuevo+'</span>';	
+				var texto2 = usuario+' <span class="badge badge-pill badge-warning"><span class="glyphicon glyphicon-envelope"></span></span>';
+			}
+			else
+			{	
+				var texto1 = "Mensajes"
+				var texto2 = usuario;
+			}
+			document.getElementById('seccion1-mensajes').innerHTML = texto1;
+			document.getElementById('btn-InicioSesion').innerHTML = texto2;
 		}
 	}
 
-	
+	function desasociar_ayudante(x)
+	{
+		var id 	= x;
+
+		var url="datos/desasociar_ayudante.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{input_id:id}});
+		BarraControl(2,1);
+	}
+
+	function BorrarAdminInstitucion(x)
+	{
+		var id 	= x;
+		var url = "datos/borrar_admin_institucion.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{input_id:id}});
+		BarraControl(3,5);
+	}
+
+	function listarMensajes(x)
+	{
+		var usuario = x;
+		var url = "datos/listar_mensajes.php";
+		$.ajax({
+			async: false,	type:"POST",	url:url, 	data:{input_id:usuario},
+			success: function(data)	{	respuesta = data;		}	});
+		document.getElementById('contenidoMensaje').innerHTML = respuesta;
+	}

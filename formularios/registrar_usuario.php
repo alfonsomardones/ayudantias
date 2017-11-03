@@ -42,42 +42,42 @@
     <?php
     session_start();
     include("../datos/conex.php");
-		if(isset($_SESSION['id_usuario']) && $_SESSION['control_usuarios']=='si')
-		{
-			echo '<div class="form-group">
-			      <label for="input_tipo">Tipo de Usuario:</label>
+	if(isset($_SESSION['id_usuario']) && $_SESSION['control_usuarios']=='si')
+	{
+		echo '<div class="form-group">
+	  	<label for="input_tipo">Tipo de Usuario:</label>
             <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-briefcase"></span></span>
-			      <select class="form-control" name="input_tipo" id="input_tipo" onchange="listarIntituciones()">';
-			      	$sql 			= "SELECT * FROM tipo_usuarios";
-    					$resultado 		= mysqli_query($db,$sql);
-    					$contador 		= mysqli_num_rows($resultado);
-    					if($contador>0)
-    					{
-    						while ($lista = mysqli_fetch_array($resultado))
-    						{
-    							$id_tipo 	= $lista['id_tipo_usuario'];
-    							$nombre 	= $lista['nombre'];
-    							echo "<option value='$id_tipo'>$nombre</option>";
-    						}
-    					}
-              else
-              {
-                echo "<option value='0'>No hay datos.</option>";
-              }
-					echo '</select></div></div>';
-		}
-		else
-		{
-			echo "<div class='form-group'>
+			<select class="form-control" name="input_tipo" id="input_tipo" onchange="listarIntituciones()">';
+			$sql 			= "SELECT * FROM tipo_usuarios";
+    		$resultado 		= mysqli_query($db,$sql);
+    		$contador 		= mysqli_num_rows($resultado);
+    		if($contador>0)
+    		{
+    			while ($lista = mysqli_fetch_array($resultado))
+    			{
+    				$id_tipo 	= $lista['id_tipo_usuario'];
+    				$nombre 	= $lista['nombre'];
+    				echo "<option value='$id_tipo'>$nombre</option>";
+    			}
+    		}
+            else
+            {
+            	echo "<option value='0'>No hay datos.</option>";
+            }
+			echo '</select></div></div>';
+	}
+	else
+	{
+		echo "<div class='form-group'>
       				<label for='input_tipo'>Tipo de Usuario:</label>
               <div class='input-group'>
             <span class='input-group-addon'><span class='glyphicon glyphicon-briefcase'></span></span>
-      			<select class='form-control' name='input_tipo' id='input_tipo' onchange='listarIntituciones()'>
+      			<select class='form-control' name='input_tipo' id='input_tipo'>
 					<option value='1'>Estudiante</option>
 					<option value='2'>Ayudante</option>
 				</select></div></div>";
-		}
+	}
     ?>
     <div id="errorTipoUsuario"></div>
     <div id="divInstituciones"></div>
@@ -107,5 +107,5 @@
       </div>
     </div>
     <div id="errorClave"></div>
-    <button type="submit" class="btn btn-primary" onclick="comprobar_registrar_usuario()">Registrar</button>
+    <button type="submit" class="btn btn-warning btn-block" onclick="comprobar_registrar_usuario()">Registrar</button>
 </div>

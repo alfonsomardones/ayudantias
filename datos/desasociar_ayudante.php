@@ -1,11 +1,10 @@
 <?php
-	include('conex.php');
-    $id_usuario  				   = $_POST['input_id'];
-    $id_institucion_carrera        = $_POST['input_institucion_carrera'];
-    $id_certificacion              = $_POST['input_certificacion'];
-    if($id_institucion_carrera==0 || $id_institucion_carrera=='0')
-    {
-        $sql1           = "SELECT * FROM instituciones WHERE nombre='Independiente'";
+if(isset($_POST['input_id']))
+{
+    include('conex.php');
+   	$id_ayudante     = $_POST['input_id'];
+    
+   		$sql1           = "SELECT * FROM instituciones WHERE nombre='Independiente'";
         $resultado1     = mysqli_query($db,$sql1);
         $contador1      = mysqli_num_rows($resultado1);
         if($contador1>0)
@@ -33,9 +32,13 @@
             while ($lista3 = mysqli_fetch_array($resultado3))
             {   $id_institucion_carrera     = $lista3['id_institucion_carrera'];   }
         }    
-    }
+    $sql = "UPDATE ayudantes SET id_institucion_carrera='$id_institucion_carrera', id_certificacion=0";
+    $sql.= " WHERE id_ayudante=".$id_ayudante;
 
-    $sql = "INSERT INTO ayudantes (id_usuario, id_institucion_carrera, descripcion, id_certificacion) ";
-    $sql.= "VALUES ($id_usuario, $id_institucion_carrera,'',$id_certificacion)";
-    $insertar = mysqli_query($db,$sql);
+    $actualizar = mysqli_query($db,$sql);
+}
+else
+{
+	header("location: error.php");
+}
 ?>

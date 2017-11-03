@@ -8,7 +8,7 @@ if(isset($_SESSION['id_usuario']))
 	{	
 		if($_SESSION['control_usuarios']=='si')
 		{
-			$sql 			= "SELECT * FROM usuarios";
+			$sql 			= "SELECT * FROM usuarios ORDER BY nombres ASC";
 			$resultado 		= mysqli_query($db,$sql);
 			$contador 		= mysqli_num_rows($resultado);
 			if($contador>0)
@@ -40,7 +40,8 @@ if(isset($_SESSION['id_usuario']))
 					$nombres 			= $lista['nombres'];
 					$apellidos 			= $lista['apellidos'];
 					$rut 				= $lista['rut'];
-					$fecha_nac 			= $lista['fecha_nacimiento'];
+					list($dia,$mes,$año) 	= explode("-", $lista['fecha_nacimiento']);
+					$fecha_nac 			= "$año-$mes-$dia";
 					$telefono 			= $lista['telefono'];
 					$correo 			= $lista['correo'];
 					$id_tipo_usuario 	= $lista['id_tipo_usuario'];
@@ -48,7 +49,7 @@ if(isset($_SESSION['id_usuario']))
 
 					echo "<tr id='filaTablaUsuarios".$id_usuario."'>
 						<td>
-							<input type='text' value='$nombres' name='input_nombres".$id_usuario."' id='input_nombres".$id_usuario."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>
+							<input type='text' value='$nombres' name='input_nombres".$id_usuario."' id='input_nombres".$id_usuario."' class='form-control input-sm' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>
 						</td>
 						<td>
 							<input type='text' value='$apellidos' name='input_apellidos".$id_usuario."' id='input_apellidos".$id_usuario."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>

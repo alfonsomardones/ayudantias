@@ -2,9 +2,10 @@
 if(isset($_POST['input_tipo']))
 {
 	include('conex.php');
-    
-	$tipo  		= $_POST['input_tipo'];
-	$dato  		= $_POST['input_dato'];
+	if(isset($_POST['input_tipo']))
+	{$tipo  		= $_POST['input_tipo'];}
+	if(isset($_POST['input_dato']))
+	{$dato  		= $_POST['input_dato'];}
 	$valor		= 'no';
 
 	if($tipo=='existe_usuario')
@@ -41,10 +42,8 @@ if(isset($_POST['input_tipo']))
 		$sql 		= "SELECT * FROM usuarios WHERE rut='$usuario' OR correo='$usuario'";
 		$resultado 	= mysqli_query($db,$sql);
 		$contador 	= mysqli_num_rows($resultado);
-		$valor = "entro al if";
 		if ($contador>0)
 		{
-			$valor = "entro al contador";
 			while ($lista = mysqli_fetch_array($resultado))
 			{
 				$claveBD = $lista['clave'];
@@ -110,33 +109,15 @@ if(isset($_POST['input_tipo']))
 		}
 	}
 
-	elseif($tipo=='existe_telefono')
-	{
-		$sql 		= "SELECT * FROM usuarios WHERE telefono='$dato'";
-		$resultado 	= mysqli_query($db,$sql);
-		$contador 	= mysqli_num_rows($resultado); 
-		if ($contador>0) {
-			$valor = 'si';
-		}
-	}
 
 	elseif($tipo=='existe_institucion')
 	{
 		$institucion = $dato;
-		$institucion = strtolower($institucion);
-		$sql 		= "SELECT * FROM instituciones";
+		$sql 		= "SELECT * FROM instituciones WHERE nombre='$institucion'";
 		$resultado 	= mysqli_query($db,$sql);
 		$contador 	= mysqli_num_rows($resultado); 
 		if ($contador>0) {
-			while ($lista = mysqli_fetch_array($resultado))
-			{
-				$instituciones 	= $lista['nombre'];
-				$instituciones = strtolower($instituciones);
-				if($institucion==$instituciones)
-				{
-					$valor = 'si';
-				}
-			}
+			$valor = 'si';
 		}
 	}
 
@@ -155,21 +136,41 @@ if(isset($_POST['input_tipo']))
 	elseif($tipo=='existe_carrera')
 	{
 		$carrera = $dato;
-		$carrera = strtolower($carrera);
-		$sql 		= "SELECT * FROM carreras";
+		$sql 		= "SELECT * FROM carreras WHERE nombre='$carrera'";
 		$resultado 	= mysqli_query($db,$sql);
 		$contador 	= mysqli_num_rows($resultado); 
 		if ($contador>0) {
-			while ($lista = mysqli_fetch_array($resultado))
-			{
-				$carreras 	= $lista['nombre'];
-				$carreras = strtolower($carreras);
-				if($carrera==$carreras)
-				{
-					$valor = 'si';
-				}
-			}
+			$valor = 'si';
 		}
+	}
+
+	elseif($tipo=='nombre_tipo_usuario')
+	{
+		session_start();
+		if(isset($_SESSION['nombre_tipo_usuario']))
+		{
+			$valor = $_SESSION['nombre_tipo_usuario'];
+		}
+	}
+
+	elseif($tipo=='nuevo_mensaje')
+	{
+		session_start();
+		$sql      = "SELECT * FROM mensajes WHERE id_usuario_recibe=".$_SESSION['id_usuario']." AND estado='Pendiente'";
+		$resultado 	= mysqli_query($db,$sql);
+		$contador 	= mysqli_num_rows($resultado);
+		$valor = $contador;
+	}
+
+	elseif($tipo=='nombre_usuario')
+	{
+		session_start();
+		$valor = $_SESSION['nombre_apellido'];
+	}
+	elseif($tipo=='id_usuario')
+	{
+		session_start();
+		$valor = $_SESSION['id_usuarui'];
 	}
 
 	echo $valor;

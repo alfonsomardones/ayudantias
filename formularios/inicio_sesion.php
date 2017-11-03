@@ -14,5 +14,5 @@
       </div>
     </div>
     <div id="errorIniciarSesion"></div>
-    <button type="submit" class="btn btn-primary" onclick="comprobar_iniciar_sesion()">Iniciar</button>
+    <button type="submit" class="btn btn-warning btn-block" onclick="comprobar_iniciar_sesion()">Iniciar</button>
 </div>
