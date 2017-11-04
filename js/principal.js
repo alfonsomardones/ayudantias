@@ -820,9 +820,10 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 	function FiltroUsuarios() {
 		var valor;
 		var tipo = document.getElementById("tipoBuscarUsuario").value;
-		if(tipo=="nombres") 	{ valor = 0;}
-		if(tipo=="apellidos") 	{ valor = 1;}
-		if(tipo=="rut") 		{ valor = 2;}
+		if(tipo=="id") 	{ valor = 0;}
+		if(tipo=="nombres") 	{ valor = 1;}
+		if(tipo=="apellidos") 	{ valor = 2;}
+		if(tipo=="rut") 		{ valor = 3;}
 		var input, filter, table, tr, td, i;
 		input = document.getElementById("FiltroUsuarios");
 		filter = input.value.toUpperCase();
@@ -1265,6 +1266,18 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 		BarraControl(2,1);
 	}
 
+	function borrarAyudante(x)
+	{
+		var id 	= x;
+
+		var url="datos/borrar_ayudante.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{input_id:id}});
+		BarraControl(2,1);
+	}
+
 	function BorrarAdminInstitucion(x)
 	{
 		var id 	= x;
@@ -1284,4 +1297,20 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 			async: false,	type:"POST",	url:url, 	data:{input_id:usuario},
 			success: function(data)	{	respuesta = data;		}	});
 		document.getElementById('contenidoMensaje').innerHTML = respuesta;
+	}
+
+	function actualizar_ayudante(x,y,z)
+	{
+		var id_usuario 	= x;
+		var id_ayudante = y;
+		var id_institucion = z;
+		var estado 				= document.getElementById('input_estado'+x).value;
+		var id_carrera 			= document.getElementById('input_carrera'+x).value;
+		var id_certificacion 	= document.getElementById('input_certificacion'+x).value;
+		var url = "datos/actualizar_ayudante.php";
+		$.ajax({
+			type:"POST",
+			url:url,
+			data:{input_id:id_usuario, input_id_ayudante:id_ayudante, input_estado:estado, input_institucion:id_institucion, input_carrera:id_carrera, input_certificacion:id_certificacion}});
+		BarraControl(2,1);
 	}

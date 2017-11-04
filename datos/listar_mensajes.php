@@ -19,7 +19,13 @@ if(isset($_SESSION['id_usuario']))
         $id_usuario_recibe = $lista['id_usuario_recibe'];
         $mensaje = $lista['mensaje'];
         $estado = $lista['estado'];
-        echo $id_mensaje."-".$fecha."-".$hora."-".$id_usuario_envia."-".$id_usuario_recibe."-".$mensaje.$id_mensaje."-".$estado."<br>";
+        /*echo $id_mensaje."-".$fecha."-".$hora."-".$id_usuario_envia."-".$id_usuario_recibe."-".$mensaje.$id_mensaje."-".$estado."<br>";*/
+        echo '<h3 data-toggle="popover" data-trigger="hover" data-placement="top" data-content="'.$fecha.' / '.$hora.'" style="float:';
+        if($id_usuario_envia!=$_SESSION['id_usuario'])
+        { echo "left";}
+        else
+        { echo "right";}
+          echo '">'.$mensaje.'</h3><br>';
       }
     }
   else

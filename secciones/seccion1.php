@@ -61,7 +61,11 @@
 								echo '<a class="dropdown-item" href="#" onclick="BarraControl(4,1)">Control de Carreras</a>';
 								echo '<a class="dropdown-item" href="#" onclick="BarraControl(4,2)">Agregar Carrera</a>';
 							}
-							
+							if ($_SESSION['nombre_tipo_usuario']=="Administrador Máster")
+							{
+								echo '<h6 class="dropdown-header">BASE DE DATOS</h6>';
+								echo '<a class="dropdown-item" href="http://pillan.inf.uct.cl/~fvelasquez/bd/adminbd/?server=db.inf.uct.cl&username=fvelasquez&db=fvelasquez">BD pillan</a>';
+							}
 							echo '</div>';
 						}
 						else

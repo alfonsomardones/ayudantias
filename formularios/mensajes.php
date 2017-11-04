@@ -20,6 +20,8 @@ if(isset($_SESSION['id_usuario']))
       while ($lista = mysqli_fetch_array($resultado))
       {
         $id_usuario_envia = $lista['id_usuario_envia'];
+
+        echo '<div class="list-group">';
         if($id_usuario_envia!=$_SESSION['id_usuario'])
         {
           $sql1 			= "SELECT * FROM usuarios WHERE id_usuario=".$id_usuario_envia;
@@ -29,13 +31,16 @@ if(isset($_SESSION['id_usuario']))
           {
             $lista1 = mysqli_fetch_array($resultado1);
             $nombre = $lista1['nombres'];
-            echo "<h2 onclick='listarMensajes(".$id_usuario_envia.")'>".$nombre."</h2>";
+            /*echo "<h2 onclick='listarMensajes(".$id_usuario_envia.")'>".$nombre."</h2>";*/
+            echo '<a href="#" class="list-group-item list-group-item-action" onclick="listarMensajes('.$id_usuario_envia.')">'.$nombre.'</a>';
           }
         }
+
+        echo '</div>';
       }
     }
     echo '</div>';
-    echo '<div class="col-md-9" id="contenidoMensaje">contenido</div>';
+    echo '<div class="col-md-9" id="contenidoMensaje"><h2>Selecciona algún usuario para conversar.</h2></div>';
     echo '</div>
         </div>';
   }

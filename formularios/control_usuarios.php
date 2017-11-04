@@ -17,6 +17,7 @@ if(isset($_SESSION['id_usuario']))
 						<button class='btn btn-default' type='submit'><i class='glyphicon glyphicon-search'></i></button>
 						<input type='text' id='FiltroUsuarios' onkeyup='FiltroUsuarios()' placeholder='Buscar usuario ...' class='form-control' >
 				<select id='tipoBuscarUsuario' class='form-control'>
+					<option value='id'>ID</option>
 					<option value='nombres'>Nombres</option>
 					<option value='apellidos'>Apellidos</option>
 					<option value='rut'>Rut</option>
@@ -25,6 +26,7 @@ if(isset($_SESSION['id_usuario']))
 						<div class='table-responsive'>
 							<table id='TablaUsuarios' class='table table-striped'>
 						<tr>
+							<th>ID</th>
 							<th>Nombres</th>
 							<th>Apellidos</th>
 							<th>Rut</th>
@@ -48,6 +50,7 @@ if(isset($_SESSION['id_usuario']))
 					$estado 			= $lista['estado'];
 
 					echo "<tr id='filaTablaUsuarios".$id_usuario."'>
+						<td><input type='text' value='".$id_usuario."' class='form-control' disabled></td>
 						<td>
 							<input type='text' value='$nombres' name='input_nombres".$id_usuario."' id='input_nombres".$id_usuario."' class='form-control input-sm' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>
 						</td>
