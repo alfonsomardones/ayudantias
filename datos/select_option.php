@@ -58,7 +58,7 @@ if(isset($_POST['input_tipo']))
 				while ($lista = mysqli_fetch_array($resultado))
 				{
 					$id_institucion_carrera = $lista['id_institucion_carrera'];
-					$id_carrera = $lista['id_carrera'];
+					$id_carrera 			= $lista['id_carrera'];
 
 					$sql1 		= "SELECT * FROM carreras WHERE id_carrera=".$id_carrera;
 					$resultado1 	= mysqli_query($db,$sql1);

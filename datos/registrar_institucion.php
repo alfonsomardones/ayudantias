@@ -5,9 +5,8 @@ if(isset($_POST['input_nombre']))
     
     $nombre  		= $_POST['input_nombre'];
     $logo_institucion = "-";
-    $logo_certificacion = "-";
-    $sql = "INSERT INTO instituciones (nombre, logo_institucion, logo_certificacion) ";
-    $sql.= "VALUES ('$nombre','$logo_institucion','$logo_certificacion')";
+    $sql = "INSERT INTO instituciones (nombre, logo_institucion) ";
+    $sql.= "VALUES ('$nombre','$logo_institucion')";
 
     $insertar = mysqli_query($db,$sql);
 }

@@ -23,11 +23,12 @@ if(isset($_POST['input_usuario']))
 		if (($usuario==$correoBD && $clave==$claveBD) || ($usuario==$rutBD && $clave==$claveBD))
 		{
 			$_SESSION['id_usuario'] 		= $lista["id_usuario"];
-			$_SESSION['nombres'] 			= $lista["nombres"];
-			$_SESSION['apellidos'] 			= $lista["apellidos"];
+			$nombres = explode(" ", $lista["nombres"]);
+			$nombre1 = $nombres[0];
+			$apellidos = explode(" ", $lista["apellidos"]);
+			$apellido1 = $apellidos[0];
+			$_SESSION['nombre_apellido'] 	= "$nombre1 $apellido1";
 			$_SESSION['rut'] 				= $lista["rut"];
-			$_SESSION['fecha_nacimiento'] 	= $lista["fecha_nacimiento"];
-			$_SESSION['telefono'] 			= $lista["telefono"];
 			$_SESSION['correo'] 			= $lista["correo"];
 			$_SESSION['id_tipo_usuario'] 	= $lista["id_tipo_usuario"];
 			$_SESSION['estado'] 			= $lista["estado"];

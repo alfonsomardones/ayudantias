@@ -54,9 +54,9 @@ if(isset($_SESSION['id_usuario']))
 				echo "<div class='input-group-btn'><button class='btn btn-default' type='submit'><i class='glyphicon glyphicon-search'></i></button><input type='text' id='FiltroCarreras' onkeyup='FiltroCarreras()' placeholder='Buscar carrera ...' class='form-control'></div>";
 				echo "<div class='container-fluid'>
 							<div class='table-responsive'>
-							<table id='TablaCarreras' class='table table-striped'>
+					<table id='TablaCarreras' class='table table-striped'>
 						<tr>
-							<th>Nombre</th>
+							<th>Carreras</th>
 							<th>Operaciones</th>
 						</tr>";
 				while ($lista = mysqli_fetch_array($resultado))
@@ -73,21 +73,26 @@ if(isset($_SESSION['id_usuario']))
 						{
 							$nombre 		= $lista1['nombre'];
 							echo "<tr id='filaTablaCarreras".$id_carrera."'>
-							<td><input type='text' value='$id_institucion_carrera' name='input_institucion_carrera".$id_institucion_carrera."' id='input_institucion_carrera".$id_institucion_carrera."' class='sr-only'>
-								<input type='text' value='$nombre' name='input_nombre".$id_carrera."' id='input_nombre".$id_carrera."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_carrera(".$id_carrera.")'>
+							<td><input type='text' value='$nombre' id='input_carrera' class='form-control' disabled>
 							</td>
 							<td>
-								<div class='btn-group'>
-									<input type='button' value='Guardar' onclick='comprobar_actualizar_carrera(".$id_carrera.")' class='btn btn-primary'>
-									<input type='button' value='Borrar' onclick='BorrarCarrera(".$id_carrera.")' class='btn btn-danger'>
-								</div>
+								<input type='button' value='Desasociar' class='btn btn-danger' onclick='desasociar_institucion_carrera(".$id_institucion_carrera.")'>
+
 							</td>
 						</tr>";
 						}
 					}
 					else
 					{
-						echo "No datos carreras.";
+						echo "<tr>
+								<td><input value='No datos carreras.' disabled></td>
+								<td>
+									<div class='btn-group'>
+										<input type='button' value='Guardar' class='btn btn-primary' disabled>
+										<input type='button' value='Desasociar' class='btn btn-danger' disabled>
+									</div>
+							</td>
+							</tr>";
 					}
 				}
 				echo "</table></div></div>";

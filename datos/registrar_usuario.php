@@ -6,7 +6,8 @@ if(isset($_POST['input_nombres']))
     $nombres        = $_POST['input_nombres'];
     $apellidos      = $_POST['input_apellidos'];
     $rut            = $_POST['input_rut'];
-    $fecha_nac      = $_POST['input_fecha_nac'];
+    list($año,$mes,$dia)     = explode("-", $_POST['input_fecha_nac']);
+        $fecha_nac        = "$dia-$mes-$año";
     $telefono       = $_POST['input_telefono'];
     $correo         = $_POST['input_correo'];
     $correo         = strtolower($correo);
@@ -16,8 +17,8 @@ if(isset($_POST['input_nombres']))
     $imagen         = "-";
     $estado         = "Habilitado";
 
-    $sql = "INSERT INTO usuarios (nombres, apellidos, rut, fecha_nacimiento, telefono, correo, clave, id_tipo_usuario, imagen, estado) ";
-    $sql.= "VALUES ('$nombres','$apellidos','$rut','$fecha_nac','$telefono','$correo','$clave',$tipo,'$imagen','$estado')";
+    $sql = "INSERT INTO usuarios (nombres, apellidos, rut, fecha_nacimiento, telefono, correo, clave, id_tipo_usuario, imagen, estado, año_registro, mes_registro, dia_registro) ";
+    $sql.= "VALUES ('$nombres','$apellidos','$rut','$fecha_nac','$telefono','$correo','$clave',$tipo,'$imagen','$estado',".date("Y").",".date("m").",".date("d").")";
 
     $insertar = mysqli_query($db,$sql);
 }

@@ -17,7 +17,8 @@
       $nombres 			    = $lista['nombres'];
       $apellidos      	= $lista['apellidos'];
       $rut            	= $lista['rut'];
-      $fecha_nac      	= $lista['fecha_nacimiento'];
+      list($dia,$mes,$año)     = explode("-", $lista['fecha_nacimiento']);
+      $fecha_nac 		= "$año-$mes-$dia";
       $telefono       	= $lista['telefono'];
       $correo       	  = $lista['correo'];
       $id_tipo_usuario  = $lista['id_tipo_usuario'];
@@ -67,7 +68,7 @@
       <label for="input_fecha_nac">Fecha Nacimiento:</label>
       <div class="input-group">
         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        <input type="date" class="form-control" name="input_fecha_nac" id="input_fecha_nac" value=<?php echo "'".$fecha_nac."'"; ?> disabled>
+        <input type="date" class="form-control" name="input_fecha_nac" id="input_fecha_nac" value=<?php echo "'".$fecha_nac."'"; ?>>
       </div>
     </div>
     <div class="form-group">
@@ -112,5 +113,5 @@
     <div class="form-group">
       <label><a href="#">SOLICITAR CAMBIAR CONTRASEÑA</a></label>
     </div>
-    <button type="submit" class="btn btn-primary" onclick="comprobar_actualizar_usuario(0)">Actualizar</button>
+    <button type="submit" class="btn btn-warning" onclick="comprobar_actualizar_usuario(0)">Actualizar</button>
 </div>

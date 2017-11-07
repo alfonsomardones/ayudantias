@@ -18,6 +18,7 @@ if(isset($_SESSION['id_usuario']))
 					<tr>
 						<th>Nombres</th>
 						<th>Logo Institución</th>
+						<th>Logo Certificación</th>
 						<th>Operaciones</th>
 					</tr>";
 			while ($lista = mysqli_fetch_array($resultado))
@@ -25,6 +26,7 @@ if(isset($_SESSION['id_usuario']))
 				$id_institucion 		= $lista['id_institucion'];
 				$nombre 				= $lista['nombre'];
 				$logo_institucion 		= $lista['logo_institucion'];
+				$logo_certificacion 	= $lista['logo_certificacion'];
 
 				echo "<tr id='filaTablaInstitucion".$id_institucion."'>
 					<td>
@@ -34,6 +36,9 @@ if(isset($_SESSION['id_usuario']))
 					<td>
 						<input name='subir_logo_institucion' type='file' class='form-control'/>
 					</td>
+					<td>
+						<input name='subir_logo_certificacion' type='file' class='form-control'/>
+					</td>
 					<td><div class='btn-group'><input type='button' value='Guardar' onclick='comprobar_actualizar_institucion(".$id_institucion.")' class='btn btn-primary'>
 					<input type='button' value='Borrar' onclick='BorrarInstitucion(".$id_institucion.")' class='btn btn-danger'></div></td>
 				</tr>";
@@ -42,7 +47,6 @@ if(isset($_SESSION['id_usuario']))
 		}
 		else
 		{
-			echo "</table></div></div>";
 			echo '<div id="alert-danger-institucion" class="alert alert-danger alert-dismissable"><a class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>No existen instituciones registradas.</strong></div>';
 		}
 	}

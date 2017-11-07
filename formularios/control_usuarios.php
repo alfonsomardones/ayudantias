@@ -8,7 +8,7 @@ if(isset($_SESSION['id_usuario']))
 	{	
 		if($_SESSION['control_usuarios']=='si')
 		{
-			$sql 			= "SELECT * FROM usuarios";
+			$sql 			= "SELECT * FROM usuarios ORDER BY nombres ASC";
 			$resultado 		= mysqli_query($db,$sql);
 			$contador 		= mysqli_num_rows($resultado);
 			if($contador>0)
@@ -17,6 +17,7 @@ if(isset($_SESSION['id_usuario']))
 						<button class='btn btn-default' type='submit'><i class='glyphicon glyphicon-search'></i></button>
 						<input type='text' id='FiltroUsuarios' onkeyup='FiltroUsuarios()' placeholder='Buscar usuario ...' class='form-control' >
 				<select id='tipoBuscarUsuario' class='form-control'>
+					<option value='id'>ID</option>
 					<option value='nombres'>Nombres</option>
 					<option value='apellidos'>Apellidos</option>
 					<option value='rut'>Rut</option>
@@ -25,6 +26,7 @@ if(isset($_SESSION['id_usuario']))
 						<div class='table-responsive'>
 							<table id='TablaUsuarios' class='table table-striped'>
 						<tr>
+							<th>ID</th>
 							<th>Nombres</th>
 							<th>Apellidos</th>
 							<th>Rut</th>
@@ -40,15 +42,17 @@ if(isset($_SESSION['id_usuario']))
 					$nombres 			= $lista['nombres'];
 					$apellidos 			= $lista['apellidos'];
 					$rut 				= $lista['rut'];
-					$fecha_nac 			= $lista['fecha_nacimiento'];
+					list($dia,$mes,$año) 	= explode("-", $lista['fecha_nacimiento']);
+					$fecha_nac 			= "$año-$mes-$dia";
 					$telefono 			= $lista['telefono'];
 					$correo 			= $lista['correo'];
 					$id_tipo_usuario 	= $lista['id_tipo_usuario'];
 					$estado 			= $lista['estado'];
 
 					echo "<tr id='filaTablaUsuarios".$id_usuario."'>
+						<td><input type='text' value='".$id_usuario."' class='form-control' disabled></td>
 						<td>
-							<input type='text' value='$nombres' name='input_nombres".$id_usuario."' id='input_nombres".$id_usuario."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>
+							<input type='text' value='$nombres' name='input_nombres".$id_usuario."' id='input_nombres".$id_usuario."' class='form-control input-sm' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>
 						</td>
 						<td>
 							<input type='text' value='$apellidos' name='input_apellidos".$id_usuario."' id='input_apellidos".$id_usuario."' class='form-control' onkeypress='if (event.keyCode == 13) comprobar_actualizar_usuario(".$id_usuario.")'>
