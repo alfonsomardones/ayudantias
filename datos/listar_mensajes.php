@@ -39,7 +39,7 @@ if(isset($_SESSION['id_usuario']))
         { echo $nombres[0]." ".$apellidos[0].": ";}
         echo "</strong>";
         echo $mensaje."</p>";
-        $sql = "UPDATE mensajes SET estado='Visto' WHERE id_mensaje=".$id_mensaje." AND estado='Pendiente'";
+        $sql = "UPDATE mensajes SET estado='Visto' WHERE id_mensaje=".$id_mensaje." AND id_usuario_recibe=".$_SESSION['id_usuario']." AND estado='Pendiente'";
         $actualizar = mysqli_query($db,$sql);
       }
     }

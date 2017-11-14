@@ -48,6 +48,7 @@
 								echo '<a class="dropdown-item" href="#" onclick="BarraControl(3,1)">Control de Instituciones</a>';
 								echo '<a class="dropdown-item" href="#" onclick="BarraControl(3,2)">Agregar Institución</a>';
 								echo '<a class="dropdown-item" href="#" onclick="BarraControl(3,5)">Control de Administradores</a>';
+								echo '<a class="dropdown-item" href="#" onclick="BarraControl(3,3)">Asociar Carreras a Institución</a>';
 							}
 
 							if ($_SESSION['nombre_tipo_usuario']=="Administrador Institución" AND $_SESSION['control_carreras']=='si')
@@ -92,7 +93,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="ModalSeccion1" tabindex="-1" role="dialog" aria-labelledby="ModalPrincipio" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ModalPrincipio"></h5>

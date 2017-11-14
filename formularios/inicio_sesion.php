@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="divInicioSesion">
     <div class="form-group">
       <label for="input_usuario">Usuario:</label>
       <div class="input-group">

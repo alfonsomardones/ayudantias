@@ -6,6 +6,7 @@
 	<head>
 		<title>HelpMe App</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="theme-color" content="#2FC4D0" />
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<!--
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">-->
@@ -17,6 +18,8 @@
 		<script type="text/javascript" src="js/principal.js"></script>
 		<!--<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">-->
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
+		<link rel="stylesheet" type="text/css" href="css/chartist.css">
+		<link rel="stylesheet" type="text/css" href="css/chartist.min.css">
 
 	</head>
 	<body>

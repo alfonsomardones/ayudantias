@@ -6,8 +6,8 @@ if(isset($_POST['input_id']))
     $rut            = $_POST['input_rut'];
     if($rut==0 or $rut=="0")
     {
-        list($año,$mes,$dia)     = explode("-", $_POST['input_fecha_nac']);
-        $fecha_nac        = "$dia-$mes-$año";
+        //list($año,$mes,$dia)     = explode("-", $_POST['input_fecha_nac']);
+        $fecha_nac        = $_POST['input_fecha_nac'];
         $telefono       = $_POST['input_telefono'];
         $correo         = $_POST['input_correo'];
         $correo         = strtolower($correo);

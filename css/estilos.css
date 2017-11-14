@@ -3,16 +3,20 @@ body{
   background-color: #2FC4D0;
 }
 
+#divRegistrarUsuario, #divRegistrarInstitucion, #divRegistrarCarrera{
+  margin: 0 auto;
+  width:600px;
+}
 /* logo imagenes */
 #img_cargando
 {width: 60px;height: 60px;}
 
 #divImg_cargando
-{	margin-top: : 100px; margin-bottom: 100px;}
+{	margin-top: 100px; margin-bottom: 100px;}
 
 .imagen-logo
 {
-	height: 80px;
+	height: 120px;
 	margin: 0px;
 	margin-left: 30px;
 }
@@ -43,6 +47,8 @@ body{
 	background-color: rgba(47, 196, 208, 0.9);
 	border-color: rgba(7, 156, 168, 1);
 	color: #FFF;
+  margin: 0 auto;
+  width: 200px;
 }
 .btn-warning:hover
 {  background-color: #F9D110;  border-color: #FFA700;}
@@ -71,7 +77,7 @@ body{
 	background-position: center;
 	height: auto;
 	background-size: cover;
-	padding-bottom: 50px;
+	padding-bottom: 70px;
 }
 
 #bodyControl{
@@ -84,7 +90,7 @@ body{
 	background-color: rgba(255,255,255,0);
 	background-image: url("../img/pintura.png");
 	background-repeat: no-repeat;
-	background-position: 0 105px;
+	background-position: 0 145px;
 	background-size: 100% 35%;
 	background-attachment: fixed;
 }
@@ -105,15 +111,19 @@ body{
   font: "Segoe Script";
 }
 
+#divInicioSesion{
+	width: 400px;
+}
 #tituloControl{
   width: 100%;
-  height: 280px;
+  height: 320px;
   text-align: center;
   background-image: url("../img/cinta.png");
   background-repeat: no-repeat;
-  background-size: 600px;
-  background-position: 50% 120px;
-  padding-top: 170px;
+  background-size: 550px;
+  background-position: 50% 150px;
+  padding-top: 190px;
+  margin-bottom: 10px;
 }
 
 #textoTitulo{
@@ -140,13 +150,16 @@ body{
 .logo-colaborador
 {
   height: 150px;
-  margin: auto;
+  margin: 0 auto;
 }
-
+#infoWeb{
+	text-align: center;
+}
 @media only screen and (max-width: 767px) {
 	.imagen-logo {
-		height: 40px;
-		margin: auto;
+		height: 50px;
+		margin: 0 auto;
+		text-align: center;
 	}
 	.navbar{
 		position:fixed;
@@ -158,6 +171,9 @@ body{
 	#seccion2{
     background-image: url("../img/fondo2.png");	}
 
+    .navbar-brand{
+		width: 50%;
+	}
 	.nav-item{
 		text-align: center;	}
 
@@ -208,6 +224,10 @@ body{
   }
   .table input, .table select{
     width: 120px;
+  }
+  #divRegistrarUsuario
+  {
+    width: auto;
   }
 }
 

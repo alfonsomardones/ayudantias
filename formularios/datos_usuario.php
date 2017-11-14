@@ -17,8 +17,9 @@
       $nombres 			    = $lista['nombres'];
       $apellidos      	= $lista['apellidos'];
       $rut            	= $lista['rut'];
-      list($dia,$mes,$año)     = explode("-", $lista['fecha_nacimiento']);
-      $fecha_nac 		= "$año-$mes-$dia";
+      //list($año,$mes,$día)     = explode("-", $lista['fecha_nacimiento']);
+      //$fecha_nac 		= "$día-$mes-$año";
+      $fecha_nac 		= $lista['fecha_nacimiento'];
       $telefono       	= $lista['telefono'];
       $correo       	  = $lista['correo'];
       $id_tipo_usuario  = $lista['id_tipo_usuario'];

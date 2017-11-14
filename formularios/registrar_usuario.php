@@ -1,3 +1,4 @@
+<div id="divRegistrarUsuario">
 <div class="container">
     <div class="form-group">
       <label for="input_nombres">Nombres:</label>
@@ -108,4 +109,5 @@
     </div>
     <div id="errorClave"></div>
     <button type="submit" class="btn btn-warning btn-block" onclick="comprobar_registrar_usuario()">Registrar</button>
+</div>
 </div>

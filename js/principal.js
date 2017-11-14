@@ -789,6 +789,13 @@ else if (window.ActiveXObject) objAjax = new ActiveXObject("Microsoft.XMLHTTP") 
 				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				objAjax.send(null);	
 			}
+			if(y=='3')
+			{
+				var titulo = "Asociar Institución a Carrera";
+				objAjax.open("POST","formularios/asociar_institucion_carreras.php"); 	//Abrir conexion
+				objAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				objAjax.send(null);	
+			}
 			if(y=='5')
 			{
 				var titulo = "Control de Administradores";

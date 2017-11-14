@@ -33,6 +33,11 @@ if(isset($_POST['input_usuario']))
 			$_SESSION['id_tipo_usuario'] 	= $lista["id_tipo_usuario"];
 			$_SESSION['estado'] 			= $lista["estado"];
 
+
+			$sql = "INSERT INTO actividades (id_usuario, actividad, filtro, valor,fecha) ";
+	    	$sql.= "VALUES (".$_SESSION['id_usuario'].",'Inicio de sesión', 'Web','','".date("Y-m-d H:i:s")."')";
+	    	$insertar = mysqli_query($db,$sql);
+
 			$sql 			= "SELECT * FROM tipo_usuarios WHERE id_tipo_usuario=".$_SESSION['id_tipo_usuario'];
 			$resultado 		= mysqli_query($db,$sql);
 			$contador 		= mysqli_num_rows($resultado);

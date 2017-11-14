@@ -10,6 +10,8 @@ if(isset($_SESSION['id_usuario']))
   if($contador>0)
   {
     $sql      = "SELECT DISTINCT id_usuario_envia, estado FROM mensajes WHERE id_usuario_envia=".$_SESSION['id_usuario']." OR id_usuario_recibe=".$_SESSION['id_usuario']. " ORDER BY SUBSTRING(fecha, 7) DESC,SUBSTRING(fecha, 4,2) DESC, SUBSTRING(fecha, 1,2) DESC, hora DESC";
+    //$sql      = "SELECT * FROM mensajes WHERE id_usuario_envia=".$_SESSION['id_usuario']." OR id_usuario_recibe=".$_SESSION['id_usuario']. " ORDER BY SUBSTRING(fecha, 7) DESC,SUBSTRING(fecha, 4,2) DESC, SUBSTRING(fecha, 1,2) DESC, hora DESC";
+
     $resultado    = mysqli_query($db,$sql);
     $contador     = mysqli_num_rows($resultado);
     if($contador>0)
@@ -17,7 +19,7 @@ if(isset($_SESSION['id_usuario']))
       while ($lista = mysqli_fetch_array($resultado))
       {
         $id_usuario_envia 	= $lista['id_usuario_envia'];
-        $estado 			= $lista['estado'];
+        $estado 			      = $lista['estado'];
 
         if($id_usuario_envia!=$_SESSION['id_usuario'])
         {
@@ -28,12 +30,11 @@ if(isset($_SESSION['id_usuario']))
           {
             $lista1 = mysqli_fetch_array($resultado1);
             $nombre = $lista1['nombres'];
-            if($estado=="Pendiente"){ echo "<strong>";}
+            //if($estado=="Pendiente"){ echo "<strong>";}
             echo '<a href="#" class="list-group-item list-group-item-action" onclick="cambiarUsuario('.$id_usuario_envia.')">'.$nombre.'</a>';
-            if($estado=="Pendiente"){ echo "</strong>";}
+            //if($estado=="Pendiente"){ echo "</strong>";}
           }
         }
-        
       }
     }
   }
