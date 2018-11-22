@@ -1,0 +1,32 @@
+/* BARRA */
+.nav-item{text-align: center;}
+.transparente{background-color: rgba(0,0,0,.2);}
+.avatar_img{width: 25px}
+
+/* LOGIN */
+.formLoginCont{background-color: rgb(40,40,40); background-image: url('../img/fondos/f1.jpg');background-repeat: no-repeat;background-position: center center;background-attachment: fixed;background-size: auto;background-position: cover;}
+.formLogin{height: 900px;display: table;}
+.vertical-center {display: table-cell; vertical-align: middle;}
+
+/* FORMULARIOS */
+.from-1{background-color: rgba(0,0,0,0);border:0;border-bottom: 1px solid rgba(255,255,255,.0);border-radius: 0px;color: white}
+.from-1:focus{background-color: rgba(0,0,0,0);border:none;border-bottom: 2px solid white;color: white}
+.from-1::placeholder{color: rgba(255,255,255,0.8);text-align: center;}
+.from-1:focus::placeholder{color: rgba(255,255,255,0.4);}
+.error{border: 1px solid red;}
+/* SECCIONES */
+.titulo-seccion{padding: 10px;text-align: center;}
+.contenido-seccion{padding-top: 10px;padding-bottom: 10px;}
+.sub-seccion{padding-top: 5px;padding-bottom: 5px;}
+/* BOTONES */
+.place-letras-separadas::placeholder{letter-spacing: 2px;}
+/* OTROS */
+@media only screen and (max-width: 1500px) {
+	.formLogin{height: 600px;display: table;}
+}
+
+
+@media only screen and (max-width: 767px) {
+	.formLogin{height: 500px;display: table;}
+	.transparente{background-color: rgba(0,0,0,.8);}
+}
