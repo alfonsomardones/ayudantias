@@ -1,38 +1,93 @@
 <?php
-if(isset($_POST['input_id']))
+if(!isset($_SESSION))
+{session_start();}
+$e = 0;
+if(isset($_SESSION['id_usuario']))
 {
-	include('conex.php');
-    $id_usuario     = $_POST['input_id'];
-    $rut            = $_POST['input_rut'];
-    if($rut==0 or $rut=="0")
+    if($_SESSION['tipo_usuario']=="ADMINISTRADOR SUPERIOR")
     {
-        list($año,$mes,$dia)     = explode("-", $_POST['input_fecha_nac']);
-        $fecha_nac        = "$dia-$mes-$año";
-        $telefono       = $_POST['input_telefono'];
-        $correo         = $_POST['input_correo'];
-        $correo         = strtolower($correo);
-        $id_tipo_usuario = $_POST['input_tipo'];
-        $estado        = $_POST['input_estado'];
-        $sql = "UPDATE usuarios SET fecha_nacimiento='$fecha_nac', telefono='$telefono', correo='$correo', id_tipo_usuario=".$id_tipo_usuario.", estado='$estado' WHERE id_usuario=".$id_usuario;
+        if(isset($_POST['id']) && isset($_POST['nombres']) && isset($_POST['apellidos']) && isset($_POST['rut']) && isset($_POST['correo']) && isset($_POST['tipo']))
+        {
+            include('conexion.php');
+            include('validar.php');
+            $id             = trim($_POST['id']);
+            $nombres        = todoMayuscula(trim($_POST['nombres']));
+            $apellidos      = todoMayuscula(trim($_POST['apellidos']));
+            $rut            = todoMayuscula(trim($_POST['rut']));
+            $fecha_nac      = todoMayuscula(trim($_POST['fecha_nac']));
+            if(strlen($fecha_nac)==0)
+            {$fecha_nac = '2000-01-01';}
+
+            $sexo = '';
+            if(isset($_POST['sexo']))
+            {$sexo = todoMayuscula(trim($_POST['sexo']));}
+
+            $telefono = '';
+            if(isset($_POST['telefono']))
+            {$telefono       = trim($_POST['telefono']);}
+        
+            $correo         = todoMayuscula(trim($_POST['correo']));
+            $tipo           = trim($_POST['tipo']);
+
+            $direccion = '';
+            if(isset($_POST['direccion']))
+            {$direccion      = todoMayuscula(trim($_POST['direccion']));}
+
+            $region = '';
+            if(isset($_POST['region']))
+            {$region         = todoMayuscula(trim($_POST['region']));}
+
+            $comuna = '';
+            if(isset($_POST['comuna']))
+            {$comuna         = todoMayuscula(trim($_POST['comuna']));}
+            if(isset($_POST['img']))
+            {$img = $_POST['img'];}
+            else
+            {$img          = '';}
+
+            $estado = 'PENDIENTE';
+            if(isset($_POST['estado']))
+            {$estado         = todoMayuscula(trim($_POST['estado']));}
+            if(validarNombre($nombres) && validarNombre($apellidos) && validarRut($rut) && validarCorreo($correo) && validarTipoUsuario($tipo))
+            {
+                $sql  = "SELECT rut,correo FROM usuarios WHERE (rut='".$rut."' AND id_usuario<>".$id.") OR (correo='".$correo."' AND id_usuario<>".$id.")";
+                $resultado    = mysqli_query($db,$sql);
+                $contador     = mysqli_num_rows($resultado);
+                if($contador>0)
+                {
+                	$lista = mysqli_fetch_array($resultado);
+                	$r = $lista["rut"];
+                	$c = $lista["correo"];
+                	if($r==$rut && $c==$correo)
+                	{ $e = -57;}
+                	else
+                	{
+                		if($r==$rut)
+                		{ $e = -5; }
+                		else
+                		{ $e = -6;}
+                    }
+                }
+                else
+                {
+                    $actual = date("Y-m-d H:i:s");
+                	$sql = "UPDATE usuarios SET nombres='".$nombres."', apellidos='".$apellidos."', rut='".$rut."',fecha_nacimiento='".$fecha_nac."', sexo='".$sexo."', telefono='".$telefono."', correo='".$correo."', id_tipo_usuario=".$tipo.", direccion='".$direccion."', region='".$region."', comuna='".$comuna."',estado='".$estado."' WHERE id_usuario=".$id;
+                    if($actualizar = mysqli_query($db,$sql))
+                    { $e = 3; }
+                    else
+                    {$e = -102;}
+                }
+            }
+            else
+            {$e = -56;}
+        }
+        else
+        {$e = -53;}
     }
     else
-    {
-        $nombres        = $_POST['input_nombres'];
-        $apellidos      = $_POST['input_apellidos'];
-        list($año,$mes,$dia)     = explode("-", $_POST['input_fecha_nac']);
-        $fecha_nac        = "$dia-$mes-$año";
-        $telefono       = $_POST['input_telefono'];
-        $correo         = $_POST['input_correo'];
-        $correo         = strtolower($correo);
-        $id_tipo_usuario = $_POST['input_tipo'];
-        $estado        = $_POST['input_estado'];
-        $sql = "UPDATE usuarios SET nombres='$nombres', apellidos='$apellidos', rut='$rut', fecha_nacimiento='$fecha_nac', telefono='$telefono', correo='$correo', id_tipo_usuario=$id_tipo_usuario, estado='$estado'";
-        $sql.= " WHERE id_usuario=".$id_usuario;
-    }
-    $actualizar = mysqli_query($db,$sql);
+    {$e = -52;}
 }
 else
-{
-	header("location: error.php");
-}
+{$e = -51;}
+echo $e;
 ?>

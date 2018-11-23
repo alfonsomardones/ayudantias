@@ -20,27 +20,27 @@ if(isset($_SESSION['id_usuario']))
 				<div class="row">
 					<div class="col-12 col-md-4">
 						<div class="form-group">
-							<input type="text" class="form-control" id="nombres" placeholder="NOMBRES" title="NOMBRES">
+							<input type="text" class="form-control" id="nombres" placeholder="NOMBRES" title="NOMBRES" onkeypress="return soloLetras(event)">
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="form-group">
-							<input type="text" class="form-control" id="apellidos" placeholder="APELLIDOS" title="APELLIDOS">
+							<input type="text" class="form-control" id="apellidos" placeholder="APELLIDOS" title="APELLIDOS" onkeypress="return soloLetras(event)">
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="form-group">
-							<input type="text" class="form-control" id="rut" placeholder="RUT" title="RUT"  onkeypress="return limpiarRut(event)" onkeyup="formateaRut(this)">
+							<input type="text" class="form-control" id="rut" placeholder="RUT" title="RUT" onkeypress="return limpiarRut(event)" onkeyup="formateaRut(this)">
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="form-group">
-							<input type="text" class="form-control" id="correo" placeholder="CORREO" title="CORREO">
+							<input type="text" class="form-control" id="correo" placeholder="CORREO" title="CORREO" onkeypress="return soloCorreoClave(event)" >
 						</div>
 					</div>
 					<div class="col-6 col-md-4">
 						<div class="form-group">
-							<input type="text" class="form-control" id="telefono" placeholder="TELÉFONO" title="TELÉFONO">
+							<input type="text" class="form-control" id="telefono" placeholder="TELÉFONO" title="TELÉFONO" onkeypress="return soloTelefono(event)" >
 						</div>
 					</div>
 					<div class="col-6 col-md-4">
@@ -119,8 +119,8 @@ if(isset($_SESSION['id_usuario']))
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-info" onclick="registrarUsuario()">REGISTRAR</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+			<button type="button" class="btn btn-info" onclick="registrarUsuario()" title="REGISTRAR USUARIO">REGISTRAR</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal" title="CANCELAR">CANCELAR</button>
 			
 		</div>';
 	}

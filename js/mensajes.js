@@ -25,11 +25,13 @@ function listadoMensajes(i){
     {descripcion = 'ACTUALIZADO CORRECTAMENTE';}
     else if(i==4)
     {descripcion = 'BORRADO CORRECTAMENTE';}
+    else if(i==5)
+    {descripcion = 'CUENTA ACTIVADA CORRECTAMENTE';}
     // ALERTA
     else if(i==-1)
     {descripcion = 'USUARIO O CONTRASEÑA INCORRECTOS';}
     else if(i==-2)
-    {descripcion = 'COMPLETE LOS CAMPOS';}
+    {descripcion = 'COMPLETE TODOS LOS CAMPOS';}
     else if(i==-3)
     {descripcion = 'USUARIO NO REGISTRADO';}
     else if(i==-4)
@@ -51,12 +53,18 @@ function listadoMensajes(i){
     else if(i==-54)
     {descripcion = 'TU USUARIO NO ES ADMINISTRADOR, DEBES INICIAR SESIÓN DESDE LA APLICACIÓN';}
     else if(i==-55)
-    {descripcion = 'SERVIDOR NO RECIBE ID DE USUARIO';}
+    {descripcion = 'SERVIDOR NO RECIBE ID';}
     else if(i==-56)
     {descripcion = 'HAY DATOS INGRESADOS QUE NO SON VÁLIDOS';}
     else if(i==-57)
     {descripcion = 'ESTE USUARIO YA ESTÁ REGISTRADO';}
-
+    else if(i==-58)
+    {descripcion = 'ESTA INSTITUCIÓN YA ESTÁ REGISTRADA';}
+    else if(i==-59)
+    {descripcion = 'ESTA FACULTAD YA ESTÁ REGISTRADA';}
+    else if(i==-60)
+    {descripcion = 'ESTA CARRERA YA ESTÁ REGISTRADA';}
+    
 
     else if(i==-100)
     {descripcion = 'ERROR CONSULTA A BD';}
@@ -70,5 +78,7 @@ function listadoMensajes(i){
     {descripcion = 'TIPO DE USUARIO NO ENCONTRADO';}
     else if(i==-107)
     {descripcion = 'ERROR AL ELIMINAR DE BD';}
+    else if(i==-108)
+    {descripcion = 'ERROR AL ACTUALIZAR EN BD';}
     return [i,descripcion]
 }

@@ -1,34 +1,45 @@
 <?php
-if(isset($_POST['input_nombre']))
+if(!isset($_SESSION))
+{session_start();}
+$e = 0;
+if(isset($_SESSION['id_usuario']))
 {
-	session_start();
-	include('conex.php');
-    
-    $nombre  	= $_POST['input_nombre'];
-    $sql 		= "INSERT INTO carreras (nombre) ";
-    $sql	.= "VALUES ('$nombre')";
-    $insertar = mysqli_query($db,$sql);
-
-    if(isset($_SESSION['id_institucion']))
-	{
-		$sql 		= "SELECT * FROM carreras WHERE nombre='$nombre'";
-		$resultado 	= mysqli_query($db,$sql);
-		if(!$resultado){echo mysqli_error($db);	}
-		$contador 	= mysqli_num_rows($resultado);
-		if ($contador>0)
-		{
-			while ($lista = mysqli_fetch_array($resultado))
-			{
-				$id_carrera 	= $lista['id_carrera'];
-			}
-		    $sql = "INSERT INTO institucion_carrera (id_institucion, id_carrera) ";
-		    $sql.= "VALUES (".$_SESSION['id_institucion'].",".$id_carrera.")";
-		    $insertar = mysqli_query($db,$sql);
-		}
-	}
+    if($_SESSION['tipo_usuario']=="ADMINISTRADOR SUPERIOR")
+    {
+        if(isset($_POST['nombre']))
+        {
+            include('conexion.php');
+            include('validar.php');
+            $nombre  = todoMayuscula(trim($_POST['nombre']));
+            
+            if(validarNombre($nombre))
+            {
+                $sql  = "SELECT * FROM carreras WHERE nombre='".$nombre."'";
+                $resultado    = mysqli_query($db,$sql);
+                $contador     = mysqli_num_rows($resultado);
+                if($contador>0)
+                {$e = -60;}
+                else
+                {
+                    $actual = date("Y-m-d H:i:s");
+                	$sql = 'INSERT INTO carreras (nombre, fecha_registro)';
+                    $sql.= "VALUES ('".$nombre."', '".$actual."')";
+                    if($insertar = mysqli_query($db,$sql))
+                    { $e = 2; }
+                    else
+                    {$e = -102;}
+                }
+            }
+            else
+            {$e = -56;}
+        }
+        else
+        {$e = -53;}
+    }
+    else
+    {$e = -52;}
 }
 else
-{
-	header("location: error.php");
-}
+{$e = -51;}
+echo $e;
 ?>

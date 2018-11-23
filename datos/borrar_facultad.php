@@ -9,12 +9,12 @@ if(isset($_SESSION['id_usuario']))
 		if(isset($_POST['id']))
 		{
 		    include('conexion.php');
-		    $sql 	= "SELECT rut FROM usuarios WHERE id_usuario=".$_POST['id'];
+		    $sql 	= "SELECT nombre FROM facultades WHERE id_facultad=".$_POST['id'];
 		    $resultado 	= mysqli_query($db,$sql);
 			$contador 	= mysqli_num_rows($resultado);
 			if($contador==1)
 			{
-				$sql1 = "DELETE FROM usuarios WHERE id_usuario=".$_POST['id'];
+				$sql1 = "DELETE FROM facultades WHERE id_facultad=".$_POST['id'];
 				if($eliminar = mysqli_query($db,$sql1))
 				{$e = 4;}
 				else

@@ -6,25 +6,26 @@ if(isset($_SESSION['id_usuario']))
 {
     if($_SESSION['tipo_usuario']=="ADMINISTRADOR SUPERIOR")
     {
-        if(isset($_POST['id']) && isset($_POST['nombre']))
+        if(isset($_POST['nombre']))
         {
             include('conexion.php');
             include('validar.php');
-            $id             = trim($_POST['id']);
-            $nombre        = todoMayuscula(trim($_POST['nombre']));
+            $nombre  = todoMayuscula(trim($_POST['nombre']));
+            
             if(validarNombre($nombre))
             {
-                $sql  = "SELECT * FROM instituciones WHERE nombre='".$nombre."' AND id_institucion<>".$id;
+                $sql  = "SELECT * FROM facultades WHERE nombre='".$nombre."'";
                 $resultado    = mysqli_query($db,$sql);
                 $contador     = mysqli_num_rows($resultado);
                 if($contador>0)
-                {$e = -58;}
+                {$e = -59;}
                 else
                 {
                     $actual = date("Y-m-d H:i:s");
-                	$sql = "UPDATE instituciones SET nombre='".$nombre."' WHERE id_institucion=".$id;
-                    if($actualizar = mysqli_query($db,$sql))
-                    { $e = 3; }
+                	$sql = 'INSERT INTO facultades (nombre, fecha_registro)';
+                    $sql.= "VALUES ('".$nombre."', '".$actual."')";
+                    if($insertar = mysqli_query($db,$sql))
+                    { $e = 2; }
                     else
                     {$e = -102;}
                 }

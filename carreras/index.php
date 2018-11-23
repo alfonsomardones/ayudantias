@@ -12,7 +12,7 @@ else
 <!DOCTYPE html>
 	<html lang="es">
 	<head>
-		<title>HelpMeApp - Usuarios</title>
+		<title>HelpMeApp - Carreras</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- VERSIÓN MOVIL -->
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -31,21 +31,21 @@ else
 		<div class="container-fluid">
 			<div class="row titulo-seccion">
 				<div class="col-12 ">
-					<h1>Control de Usuarios</h1>
+					<h1>Control de Carreras</h1>
 				</div>
 			</div>
 			<div class="row contenido-seccion">
 				<div class="col-0 col-md-8"></div>
 				<div class="col-6 col-md-2">
-					<button type="button" class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#modalUsuario" onclick="modalUsuario(1)" title="REGISTRAR NUEVO USUARIO"><span class="glyphicon glyphicon-user d-block d-md-none"></span><span class="d-none d-md-block"> NUEVO</span></button></div>
+					<button type="button" class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#modalCarrera" onclick="modalCarrera(1)" title="REGISTRAR NUEVA CARRERA"><span class="glyphicon glyphicon-user d-block d-md-none"></span><span class="d-none d-md-block"> NUEVA</span></button></div>
 				<div class="col-6 col-md-2">
-					<button type="button" class="btn btn-outline-info btn-block"  data-toggle="collapse" data-target="#menuUsuarios" aria-expanded="false" aria-controls="menuUsuarios" title="FILTROS DE BÚSQUEDA"><span class="glyphicon glyphicon-filter d-block d-md-none"></span><span class="d-none d-md-block"> FILTROS</span></button>
+					<button type="button" class="btn btn-outline-info btn-block"  data-toggle="collapse" data-target="#menuCarreras" aria-expanded="false" aria-controls="menuCarreras" title="FILTROS DE BÚSQUEDA"><span class="glyphicon glyphicon-filter d-block d-md-none"></span><span class="d-none d-md-block"> FILTROS</span></button>
 				</div>
 			</div>
-			<div class="row collapse " id="menuUsuarios">
+			<div class="row collapse " id="menuCarreras">
 				<?php include('menu.php');?>
 			</div>
-			<div class="row sub-seccion" id="controlUsuarios">
+			<div class="row sub-seccion" id="controlCarreras">
 				<?php include('control.php');?>
 			</div>
 		</div>			

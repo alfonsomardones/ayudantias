@@ -5,9 +5,6 @@ $(document).ready(function() {
 function formRegistroUsuario()
 {
 	bandera = true;
-	nom = ''; ape = ''; rut = ''; fecha_nac = ''; sexo = '';
-	tel = ''; correo = ''; tipo = ''; direccion = '';
-	region = ''; comuna = ''; img = ''; estado = '';
 	if($('#nombres').length){
 		if (validarNombre($('#nombres').val()) == false)
 		{
@@ -56,7 +53,59 @@ function formRegistroUsuario()
 			{$('#correo').removeClass('error');}
 		}
 	}
+	$('#infoRegistroUsuario').html(mostrarMensaje(listadoMensajes(-2)));
 	return bandera
+}
+
+function formRegistroInstitucion(){
+	bandera = true;
+	if($('#nombre').length){
+		if (validarNombre($('#nombre').val()) == false)
+		{
+			bandera = false;
+			$('#nombre').addClass('error');
+		}
+		else
+		{
+			if($('#nombre').hasClass('error'))
+			{$('#nombre').removeClass('error');}
+		}
+	}
+	return bandera;
+}
+
+function formRegistroFacultad(){
+	bandera = true;
+	if($('#nombre').length){
+		if (validarNombre($('#nombre').val()) == false)
+		{
+			bandera = false;
+			$('#nombre').addClass('error');
+		}
+		else
+		{
+			if($('#nombre').hasClass('error'))
+			{$('#nombre').removeClass('error');}
+		}
+	}
+	return bandera;
+}
+
+function formRegistroCarrera(){
+	bandera = true;
+	if($('#nombre').length){
+		if (validarNombre($('#nombre').val()) == false)
+		{
+			bandera = false;
+			$('#nombre').addClass('error');
+		}
+		else
+		{
+			if($('#nombre').hasClass('error'))
+			{$('#nombre').removeClass('error');}
+		}
+	}
+	return bandera;
 }
 
 function soloLetras(e){
@@ -91,7 +140,7 @@ function soloTelefono(e){
 
 
 function validarNombre(x){
-	if(x == null || x.length < 3 || x.length > 30 || /^\s+$/.test(x))
+	if(x == null || x.length < 3 || x.length > 50 || /^\s+$/.test(x))
 	{return false;}
  	else
  	{return true;}
@@ -129,3 +178,26 @@ function validarClave(x){
 	var regex = /^[.-_a-zA-Z 0-9]+$/;
     return regex.test(x) ? true : false;
 }
+
+function focusIdUsuario()	{	$('#id').focus();		}
+function focusNombres()		{	$('#nombres').focus();	}
+function focusApellidos()	{	$('#apellidos').focus();}
+function focusCorreo()		{	$('#correo').focus();	}
+function focusSexo()		{	$('#sexo').focus();		}
+
+function focusBuscIdUser()			{	$('#b_id').focus();	}
+function focusBuscNombresUser()		{	$('#b_nombres').focus();	}
+function focusBuscApellidosUser()	{	$('#b_apellidos').focus();	}
+function focusBuscCorreoUser()		{	$('#b_correo').focus();	}
+
+
+
+
+// .(key==0) BORRAR (key==46) - (key==45) _ (key==95) @ (key ==64) especio (key==32) delete (key==32)
+// NUMEROS (key >= 48 && key <= 57)
+// LETRAS (key >= 65 && key <= 90) MINUSCULAS (key >= 97 && key <= 122)
+// ÁÉÍÓÚ  (key==193 || key==201 || key==205 || key==211 || key==218) áéíóú (key==225 || key==233 || key==237 || key==243 || key==250) 
+// ÄËÏÖÜ (key== 196 || key== 203 || key== 207 || key== 214 || key== 220) äëïöü (key== 196 || key== 203 || key== 207 || key== 214 || key== 220)
+// Ññ (key==209 || key==241) 
+
+// http://www.theasciicode.com.ar/extended-ascii-code/spanish-enye-capital-letter-n-tilde-enie-uppercase-ascii-code-165.html

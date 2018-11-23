@@ -5,11 +5,11 @@
 			<div class="vertical-center">
 				<div class="container-fluid" id="formLog">
 					<div class="form-group">
-						<input type="email" class="form-control from-1 place-letras-separadas" id="usuario" placeholder="Ingresar correo" utocomplete="on">
+						<input type="email" class="form-control from-1 place-letras-separadas" id="usuario" placeholder="Ingresar correo" autocomplete="on" onkeypress="if (event.keyCode == 13) focusClave()">
 					</div>
 
 					<div class="form-group">
-						<input type="password" class="form-control from-1 place-letras-separadas" id="password" placeholder="Contraseña">
+						<input type="password" class="form-control from-1 place-letras-separadas" id="password" placeholder="Contraseña" onkeypress="if (event.keyCode == 13) iniciar_sesion()">
 					</div>
 				</div>
 				<div class="form-group" id="infosesion">

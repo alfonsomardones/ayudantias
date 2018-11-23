@@ -1,17 +1,45 @@
 <?php
-if(isset($_POST['input_nombre']))
+if(!isset($_SESSION))
+{session_start();}
+$e = 0;
+if(isset($_SESSION['id_usuario']))
 {
-	include('conex.php');
-    
-    $nombre  		= $_POST['input_nombre'];
-    $logo_institucion = "-";
-    $sql = "INSERT INTO instituciones (nombre, logo_institucion) ";
-    $sql.= "VALUES ('$nombre','$logo_institucion')";
-
-    $insertar = mysqli_query($db,$sql);
+    if($_SESSION['tipo_usuario']=="ADMINISTRADOR SUPERIOR")
+    {
+        if(isset($_POST['nombre']))
+        {
+            include('conexion.php');
+            include('validar.php');
+            $nombre  = todoMayuscula(trim($_POST['nombre']));
+            
+            if(validarNombre($nombre))
+            {
+                $sql  = "SELECT * FROM instituciones WHERE nombre='".$nombre."'";
+                $resultado    = mysqli_query($db,$sql);
+                $contador     = mysqli_num_rows($resultado);
+                if($contador>0)
+                {$e = -58;}
+                else
+                {
+                    $actual = date("Y-m-d H:i:s");
+                	$sql = 'INSERT INTO instituciones (nombre, fecha_registro)';
+                    $sql.= "VALUES ('".$nombre."', '".$actual."')";
+                    if($insertar = mysqli_query($db,$sql))
+                    { $e = 2; }
+                    else
+                    {$e = -102;}
+                }
+            }
+            else
+            {$e = -56;}
+        }
+        else
+        {$e = -53;}
+    }
+    else
+    {$e = -52;}
 }
 else
-{
-	header("location: error.php");
-}
+{$e = -51;}
+echo $e;
 ?>

@@ -83,7 +83,7 @@ function registrarUsuario(){
 				$('#infoRegistroUsuario').html(mostrarMensaje(listadoMensajes(data)));
 				if(data == 2){
             		mostrarUsuarios();
-            		setTimeout(ocultarModal,100);
+            		setTimeout(ocultarModal1,100);
             	}
 			}
 		});
@@ -121,11 +121,10 @@ function actualizarUsuario(x){
 				direccion:direccion, region:region, comuna:comuna},
 			success: function(data)
 			{
-
-				$('#infoRegistroUsuario').html(mostrarMensaje(listadoMensajes(data)));
-				if(data == 1){
+				$('#infoEditarUsuario').html(mostrarMensaje(listadoMensajes(data)));
+				if(data == 3){
             		mostrarUsuarios();
-            		setTimeout(ocultarModal,500);
+            		setTimeout(ocultarModal1,500);
             	}
 			}
 		});
@@ -170,13 +169,10 @@ function borrarUsuario(x){
 			$('.modal-body').html(mostrarMensaje(listadoMensajes(data)));
             if(data == 4){
             	mostrarUsuarios()
-            	setTimeout(ocultarModal,500);}
+            	setTimeout(ocultarModal1,500);}
             else{$('.modal-footer').html('<button type="button" class="btn btn-secondary" data-dismiss="modal">SALIR</button>')}
 		}
 	});
 }
 
-function ocultarModal(x){
-	if(!x){x='#modalUsuario'}
-	$(x).modal('toggle');
-}
+function ocultarModal1(){$('#modalUsuario').modal('toggle');}

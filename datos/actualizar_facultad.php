@@ -14,15 +14,15 @@ if(isset($_SESSION['id_usuario']))
             $nombre        = todoMayuscula(trim($_POST['nombre']));
             if(validarNombre($nombre))
             {
-                $sql  = "SELECT * FROM instituciones WHERE nombre='".$nombre."' AND id_institucion<>".$id;
+                $sql  = "SELECT * FROM facultades WHERE nombre='".$nombre."' AND id_facultad<>".$id;
                 $resultado    = mysqli_query($db,$sql);
                 $contador     = mysqli_num_rows($resultado);
                 if($contador>0)
-                {$e = -58;}
+                {$e = -59;}
                 else
                 {
                     $actual = date("Y-m-d H:i:s");
-                	$sql = "UPDATE instituciones SET nombre='".$nombre."' WHERE id_institucion=".$id;
+                	$sql = "UPDATE facultades SET nombre='".$nombre."' WHERE id_facultad=".$id;
                     if($actualizar = mysqli_query($db,$sql))
                     { $e = 3; }
                     else

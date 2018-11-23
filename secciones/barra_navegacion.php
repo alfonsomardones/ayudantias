@@ -39,11 +39,12 @@ echo '
               echo '
               <a class="dropdown-item" href="'.$dir.'usuarios/">Usuarios</a>
               <a class="dropdown-item" href="'.$dir.'instituciones/">Instituciones</a>
+              <a class="dropdown-item" href="'.$dir.'facultades/">Facultades</a>
               <a class="dropdown-item" href="'.$dir.'carreras/">Carreras</a>
               <a class="dropdown-item" href="'.$dir.'ayudantes/">Ayudantes</a>
               <a class="dropdown-item" href="'.$dir.'reportes/">Reportes</a>';
             }
-            elseif ($_SESSION['tipo_usuario']='ADMINISTRADOR DE INSTITUCIÓN') {
+            elseif ($_SESSION['tipo_usuario']=='ADMINISTRADOR DE INSTITUCIÓN') {
               echo '
               <a class="dropdown-item" href="'.$dir.'ayudantes/">Ayudantes</a>
               <a class="dropdown-item" href="'.$dir.'reportes/">Reportes</a>';

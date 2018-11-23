@@ -171,7 +171,7 @@ if(isset($_SESSION['id_usuario']))
 		</div>
 		<div class="col-12 col-md-2">
 			<div class="form-group">
-				<button class="btn btn-info btn-block btn-sm" title="REALIZAR BÚSQUEDA BUSCAR" onclick="mostrarUsuarios()"><span class="glyphicon glyphicon-search d-block d-md-none"></span><span class="d-none d-md-block"> BUSCAR</span></button>
+				<button class="btn btn-info btn-block btn-sm" title="REALIZAR BÚSQUEDA" onclick="mostrarUsuarios()"><span class="glyphicon glyphicon-search d-block d-md-none"></span><span class="d-none d-md-block"> BUSCAR</span></button>
 			</div>
 		</div>
 		';

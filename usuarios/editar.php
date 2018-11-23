@@ -42,27 +42,27 @@ if(isset($_SESSION['id_usuario']))
 						<div class="row">
 							<div class="col-12 col-md-4">
 								<div class="form-group">
-									<input type="text" class="form-control" id="nombres" placeholder="NOMBRES" title="NOMBRES" value="'.$nombres.'">
+									<input type="text" class="form-control" id="nombres" placeholder="NOMBRES" title="NOMBRES" value="'.$nombres.'" onkeypress="return soloLetras(event)">
 								</div>
 							</div>
 							<div class="col-12 col-md-4">
 								<div class="form-group">
-									<input type="text" class="form-control" id="apellidos" placeholder="APELLIDOS" title="APELLIDOS" value="'.$apellidos.'">
+									<input type="text" class="form-control" id="apellidos" placeholder="APELLIDOS" title="APELLIDOS" value="'.$apellidos.'" onkeypress="return soloLetras(event)">
 								</div>
 							</div>
 							<div class="col-12 col-md-4">
 								<div class="form-group">
-									<input type="text" class="form-control" id="rut" placeholder="RUT" title="RUT"  onkeypress="return limpiarRut(event)" onkeyup="formateaRut()" value="'.$rut.'">
+									<input type="text" class="form-control" id="rut" placeholder="RUT" title="RUT"  onkeypress="return limpiarRut(event)" onkeyup="formateaRut(this)" value="'.$rut.'">
 								</div>
 							</div>
 							<div class="col-12 col-md-4">
 								<div class="form-group">
-									<input type="text" class="form-control" id="correo" placeholder="CORREO" title="CORREO" value="'.$correo.'">
+									<input type="text" class="form-control" id="correo" placeholder="CORREO" title="CORREO" value="'.$correo.'" onkeypress="return soloCorreoClave(event)">
 								</div>
 							</div>
 							<div class="col-6 col-md-4">
 								<div class="form-group">
-									<input type="text" class="form-control" id="telefono" placeholder="TELÉFONO" title="TELÉFONO" value="'.$telefono.'">
+									<input type="text" class="form-control" id="telefono" placeholder="TELÉFONO" title="TELÉFONO" value="'.$telefono.'" onkeypress="return soloTelefono(event)" >
 								</div>
 							</div>
 							<div class="col-6 col-md-4">
@@ -112,7 +112,7 @@ if(isset($_SESSION['id_usuario']))
 							</div>
 							<div class="col-12 col-md-4">
 								<div class="form-group">
-									<select class="form-control" id="tipo_usuario" title="TIPO DE USUARIO">
+									<select class="form-control" id="tipo" title="TIPO DE USUARIO">
 										<option value=""';
 										if($tipo=='')
 										{echo ' selected';}
@@ -224,7 +224,7 @@ if(isset($_SESSION['id_usuario']))
 								listCom('.$comuna.');
 								</script>
 							</div>
-							<div class="col-6 col-md-4" id="infoEditarUsuario"></div>
+							<div class="col-12" id="infoEditarUsuario"></div>
 						</div>
 					</div>
 				</div>
