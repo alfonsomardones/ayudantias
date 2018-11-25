@@ -35,7 +35,7 @@ function validarRut($rut)
 function validarNombre($nombre)
 {
     $valido = False;
-    if(strlen($nombre)>=3 && strlen($nombre)<=50)
+    if(strlen($nombre)>=3 && strlen($nombre)<=100)
     {
          if (preg_match("/[a-zA-Z ñÑáÁéÉíÍóÓúÚüÜ]{3}/", $nombre)) { 
             $valido = True;

@@ -9,14 +9,31 @@ if(isset($_SESSION['id_usuario']))
 		if(isset($_POST['id']))
 		{
 		    include('conexion.php');
-		    $sql 	= "SELECT rut FROM usuarios WHERE id_usuario=".$_POST['id'];
+		    $sql 	= "SELECT id_tipo_usuario FROM usuarios WHERE id_usuario=".$_POST['id'];
 		    $resultado 	= mysqli_query($db,$sql);
 			$contador 	= mysqli_num_rows($resultado);
 			if($contador==1)
 			{
-				$sql1 = "DELETE FROM usuarios WHERE id_usuario=".$_POST['id'];
-				if($eliminar = mysqli_query($db,$sql1))
-				{$e = 4;}
+
+				$lista = mysqli_fetch_assoc($resultado);
+				$tipo = $lista['id_tipo_usuario'];
+
+				$sql = "DELETE FROM usuarios WHERE id_usuario=".$_POST['id'];
+				if($eliminar = mysqli_query($db,$sql))
+				{
+					
+					$sql = "DELETE FROM ayudantes WHERE id_usuario=".$_POST['id'];
+					if($eliminar = mysqli_query($db,$sql))
+					{
+						$sql = "DELETE FROM administradores_instituciones WHERE id_usuario=".$_POST['id'];
+						if($eliminar = mysqli_query($db,$sql))
+						{$e = 4;}
+						else
+						{$e = -107;}
+					}
+					else
+					{$e = -107;}
+				}
 				else
 				{$e = -107;}
 			}

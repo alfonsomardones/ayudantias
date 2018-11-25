@@ -22,8 +22,8 @@ if(isset($_SESSION['id_usuario']))
                 else
                 {
                     $actual = date("Y-m-d H:i:s");
-                	$sql = 'INSERT INTO facultades (nombre, fecha_registro)';
-                    $sql.= "VALUES ('".$nombre."', '".$actual."')";
+                	$sql = 'INSERT INTO facultades (nombre, id_usuario,fecha_registro)';
+                    $sql.= "VALUES ('".$nombre."', ".$_SESSION['id_usuario'].", '".$actual."')";
                     if($insertar = mysqli_query($db,$sql))
                     { $e = 2; }
                     else

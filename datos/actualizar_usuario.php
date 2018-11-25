@@ -48,6 +48,15 @@ if(isset($_SESSION['id_usuario']))
             $estado = 'PENDIENTE';
             if(isset($_POST['estado']))
             {$estado         = todoMayuscula(trim($_POST['estado']));}
+
+            $institucion = '';
+            if(isset($_POST['institucion']))
+            {$institucion         = trim($_POST['institucion']);}
+            $unidad = '';
+            if(isset($_POST['unidad']))
+            {$unidad         = trim($_POST['unidad']);}
+
+
             if(validarNombre($nombres) && validarNombre($apellidos) && validarRut($rut) && validarCorreo($correo) && validarTipoUsuario($tipo))
             {
                 $sql  = "SELECT rut,correo FROM usuarios WHERE (rut='".$rut."' AND id_usuario<>".$id.") OR (correo='".$correo."' AND id_usuario<>".$id.")";
@@ -70,12 +79,35 @@ if(isset($_SESSION['id_usuario']))
                 }
                 else
                 {
-                    $actual = date("Y-m-d H:i:s");
-                	$sql = "UPDATE usuarios SET nombres='".$nombres."', apellidos='".$apellidos."', rut='".$rut."',fecha_nacimiento='".$fecha_nac."', sexo='".$sexo."', telefono='".$telefono."', correo='".$correo."', id_tipo_usuario=".$tipo.", direccion='".$direccion."', region='".$region."', comuna='".$comuna."',estado='".$estado."' WHERE id_usuario=".$id;
-                    if($actualizar = mysqli_query($db,$sql))
-                    { $e = 3; }
+                    if($tipo==2 || $tipo==3)
+                    {
+                        if($institucion!='' && $unidad!='')
+                        {
+                            $actual = date("Y-m-d H:i:s");
+                            $sql = "UPDATE usuarios SET nombres='".$nombres."', apellidos='".$apellidos."', rut='".$rut."',fecha_nacimiento='".$fecha_nac."', sexo='".$sexo."', telefono='".$telefono."', correo='".$correo."', id_tipo_usuario=".$tipo.", direccion='".$direccion."', region='".$region."', comuna='".$comuna."',estado='".$estado."' WHERE id_usuario=".$id;
+                            if($actualizar = mysqli_query($db,$sql))
+                            {
+                                $sql = "UPDATE administradores_instituciones SET id_institucion=".$institucion.", id_unidad=".$unidad." WHERE id_usuario=".$id;
+                                if($actualizar = mysqli_query($db,$sql))
+                                {$e = 3;}
+                                else
+                                {$e = -102;}
+                            }
+                            else
+                            {$e = -102;}
+                        }
+                        else
+                        {$e = -2;}
+                    }
                     else
-                    {$e = -102;}
+                    {
+                        $actual = date("Y-m-d H:i:s");
+                        $sql = "UPDATE usuarios SET nombres='".$nombres."', apellidos='".$apellidos."', rut='".$rut."',fecha_nacimiento='".$fecha_nac."', sexo='".$sexo."', telefono='".$telefono."', correo='".$correo."', id_tipo_usuario=".$tipo.", direccion='".$direccion."', region='".$region."', comuna='".$comuna."',estado='".$estado."' WHERE id_usuario=".$id;
+                        if($actualizar = mysqli_query($db,$sql))
+                        {$e = 3;}
+                        else
+                        {$e = -102;}
+                    }
                 }
             }
             else

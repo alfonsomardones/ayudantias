@@ -18,6 +18,11 @@ if(isset($_SESSION['id_usuario']))
 		<div class="modal-body">
 			<div class="container-fluid">
 				<div class="row">
+					<div class="col-12 my-2">
+						<h5>DATOS PERSONALES</h5>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col-12 col-md-4">
 						<div class="form-group">
 							<input type="text" class="form-control" id="nombres" placeholder="NOMBRES" title="NOMBRES" onkeypress="return soloLetras(event)">
@@ -58,20 +63,9 @@ if(isset($_SESSION['id_usuario']))
 							</select>
 						</div>
 					</div>
-
-					<div class="col-6 col-md-4">
-						<div class="form-group">
-							<select class="form-control" id="estado" title="ESTADO PENDIENTE POR DEFECTO">
-								<option value="PENDIENTE">ESTADO (PENDIENTE POR DEFECTO)</option>
-								<option value="PENDIENTE">PENDIENTE</option>
-								<option value="HABILITADO">HABILITADO</option>
-								<option value="DESHABILITADO">DESHABILITADO</option>
-							</select>
-						</div>
-					</div>
 					<div class="col-12 col-md-4">
 						<div class="form-group">
-							<select class="form-control" id="tipo" title="TIPO DE USUARIO">
+							<select class="form-control" id="tipo" title="TIPO DE USUARIO" onchange="opcionesTipoUsuario(this)">
 								<option value="">TIPO USUARIO</option>
 								<option value="1">ADMINISTRADOR SUPERIOR</option>
 								<option value="2">ADMINISTRADOR DE INSTITUCIÓN</option>
@@ -82,6 +76,17 @@ if(isset($_SESSION['id_usuario']))
 							</select>
 						</div>
 					</div>
+					<div class="col-6 col-md-4">
+						<div class="form-group">
+							<select class="form-control" id="estado" title="ESTADO PENDIENTE POR DEFECTO">
+								<option value="PENDIENTE">ESTADO</option>
+								<option value="PENDIENTE">PENDIENTE</option>
+								<option value="HABILITADO">HABILITADO</option>
+								<option value="DESHABILITADO">DESHABILITADO</option>
+							</select>
+						</div>
+					</div>
+					
 
 					<div class="col-12 col-md-4">
 						<div class="form-group">
@@ -114,6 +119,29 @@ if(isset($_SESSION['id_usuario']))
 						<div class="form-group"><select class="form-control" id="comuna"><option value="">SELECCIONE COMUNA</option></select></div>
 						<script>listCom()</script>
 					</div>
+					<div class="col-12">
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="imagen" required  accept="image/*">
+							<label class="custom-file-label" for="imagen">IMAGEN DE PERFIL</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 my-2">
+						<h5>OTROS DATOS</h5>
+					</div>
+				</div>
+				<div class="row py-2" id="infoOtrosDatos">
+					<div class="col-12">
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							DEBE SELECCIONAR EL TIPO DE USUARIO
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">×</span>
+    						</button>
+  						</div>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col-12" id="infoRegistroUsuario"></div>
 				</div>
 			</div>

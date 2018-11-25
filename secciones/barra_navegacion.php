@@ -1,20 +1,22 @@
 <?php
 if(!isset($_SESSION))
 {session_start();}
+$dir = '';
+if($_SERVER['PHP_SELF']=='/hmapp/index.php')
+{$dir = './';}
+else
+{$dir = '../';}
 echo '
 <nav class="navbar navbar-expand-md navbar-dark';
   if($_SERVER['PHP_SELF']=='/hmapp/login/index.php')
-    echo ' fixed-top transparente';
+  {echo ' fixed-top transparente1';}
+  elseif($_SERVER['PHP_SELF']=='/hmapp/index.php')
+  {echo ' fixed-top transparente2';}
   else
-    {echo' bg-dark';}
+  {echo' bg-dark';}
   echo '">
 
-  <a class="navbar-brand" href="';
-  if($_SERVER['PHP_SELF']=='/hmapp/index.php')
-  {echo './';}
-  else
-  {echo '../';}
-  echo '"><span>Help Me App</span></a>
+  <a class="navbar-brand" href="'.$dir.'"><span>Help Me App</span></a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#barra_nav" aria-controls="barra_nav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -24,16 +26,17 @@ echo '
     <ul class="navbar-nav">';
       if(isset($_SESSION['id_usuario']))
       {
-        echo '
+        echo '<li class="nav-item';
+        if($_SERVER['PHP_SELF']=='/hmapp/index.php')
+        {echo ' active';}
+        echo '"><a class="nav-link" href="'.$dir.'">Inicio</a></li>
+        <li class="nav-item';
+        if($_SERVER['PHP_SELF']=='/hmapp/home/index.php')
+        {echo ' active';}
+        echo '"><a class="nav-link" href="'.$dir.'home/">Dashboard</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mis opciones</a>
           <div class="dropdown-menu dropdown-menu-right scrollable-menu">';
-            $dir = '';
-            if($_SERVER['PHP_SELF']=='/hmapp/index.php')
-            {$dir = './';}
-            else
-            {$dir = '../';}
-            echo '<a class="dropdown-item" href="'.$dir.'home/">Dashboard</a>';
             if($_SESSION['tipo_usuario']=='ADMINISTRADOR SUPERIOR')
             {
               echo '
@@ -67,11 +70,14 @@ echo '
             {$img = 'img/perfil_usuarios/'.$_SESSION['img'];}
             else
             {$img = '/hmapp/img/perfil_usuarios/'.$_SESSION['img'];}
-            echo '<img class="avatar_img" src="'.$img.'"> ';
+            echo '<img class="navbar-avatar" src="'.$img.'"> ';
           }
           echo $_SESSION['nombre'].'</a>
           <div class="dropdown-menu dropdown-menu-right scrollable-menu">
-            <a class="dropdown-item" href="#">Mis datos</a>
+            <a class="dropdown-item" href="#">Mis datos</a>';
+            if($_SESSION['tipo_usuario']=='ADMINISTRADOR SUPERIOR')
+            { echo '<a class="dropdown-item" href="'.$dir.'herramientas/">Herramientas</a>'; }
+            echo'
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal_cerrar_sesion">Cerrar sesión</a>
           </div>

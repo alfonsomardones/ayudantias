@@ -1,0 +1,36 @@
+/* BARRA */
+.navbar{font-weight: bold;}
+.nav-item{text-align: center;}
+.transparente1{background-color: rgba(0,0,0,.0);}
+.navbar-avatar {width: 25px;}
+.dropdown-item:hover{background-color: #17a2b8;color: white}
+
+/* LOGIN */
+.formLoginCont{background-color: rgb(40,40,40); background-image: url('../img/fondos/f4.jpg');background-repeat: no-repeat;background-position: center center;background-attachment: fixed;background-size: cover;background-position: cover;height: 1000px;}
+.formLogin{background-color: rgba(30,30,30,.2);height: 1000px;}
+#formLog {width: 100%;}
+
+/* FORMULARIOS */
+.from-1{background-color: rgba(0,0,0,0);border:0;border-bottom: 1px solid rgba(255,255,255,.0);border-radius: 0px;color: white}
+.from-1:focus{background-color: rgba(0,0,0,0);border:none;border-bottom: 2px solid white;color: white}
+.from-1::placeholder{color: rgba(255,255,255,0.8);text-align: center;}
+.from-1:focus::placeholder{color: rgba(255,255,255,0.4);}
+.error{border: 1px solid red;background-color: rgba(255, 200, 200,.5)}
+/* SECCIONES */
+.titulo-seccion{padding: 10px;text-align: center;}
+.contenido-seccion{padding-top: 10px;padding-bottom: 10px;}
+.sub-seccion{padding-top: 5px;padding-bottom: 5px;}
+/* BOTONES */
+.place-letras-separadas::placeholder{letter-spacing: 2px;}
+/* OTROS */
+@media only screen and (max-width: 1500px) {
+	.formLogin{height: 700px;}
+	.formLoginCont{height: 700px;}
+}
+
+
+@media only screen and (max-width: 767px) {
+	.formLogin{height: 600px;}
+	.formLoginCont{height: 600px;}
+	.transparente1{background-color: rgba(0,0,0,.8);}
+}

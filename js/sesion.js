@@ -1,13 +1,9 @@
 $(document).ready(function() {
-    $("#btn-ini-sesion").click(function() {
-        iniciar_sesion();
-    });
 });
 
 
 function iniciar_sesion()
 {
-    $('#infosesion').innerHTML = '<img src="../img/iconos/loading.gif" title="CARGANDO" width="50px" style="margin:auto">';
     u = '', c = '';
     if($("#usuario").length)
     {u = $("#usuario").val();}
@@ -22,15 +18,14 @@ function iniciar_sesion()
         data:{usuario:u, clave:c},
         success: function(data)
         {
-            $('#infosesion').html(mostrarMensaje(listadoMensajes(data)));
             if(data == 1)
-            {
-                setTimeout(redireccion_inicio,2000);
-            }
+            {setTimeout(redireccion_inicio,2000);}
             else
             {
             	$('#formLog').html(form);
-            	$("#usuario").val(u); $("#password").val(c);
+                $('#infosesion').html(mostrarMensaje(listadoMensajes(data)));
+                $("#usuario").val(u); $("#password").val(c);
+                focusUsuario();
             }
         } 
     });

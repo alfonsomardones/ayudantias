@@ -48,6 +48,7 @@ if(isset($_SESSION['id_usuario']))
 						<tr>
 							<th>ID</th>
 							<th>NOMBRE</th>
+							<th>REGISTRADO POR</th>
 							<th>FECHA DE REGISTRO</th>
 							<th>OPERACIONES</th>
 						</tr>
@@ -58,11 +59,29 @@ if(isset($_SESSION['id_usuario']))
 			{
 				$id_institucion 	= $lista["id_institucion"];
 				$nombre 			= $lista["nombre"];
+				$id_usuario 			= $lista["id_usuario"];
 				$fecha_registro 			= $lista["fecha_registro"];
+
+				$sql2 = 'SELECT nombres,apellidos FROM usuarios WHERE id_usuario='.$id_usuario;
+				$resultados2 = mysqli_query($db, $sql2);
+				$contador2 = mysqli_num_rows($resultados2);
+				if($contador2>0)
+				{
+					$lista2 = mysqli_fetch_assoc($resultados2);
+					$nom = $lista2['nombres'];
+					$ape = $lista2['apellidos'];
+					$nom = explode(' ', $nom);
+					$ape = explode(' ', $ape);
+					$nombre_usuario = $nom[0].' '.$ape[0];
+				}
+				else
+				{$nombre_usuario = 'PROCESO AUTOMÁTICO';}
+
 				echo '
 				<tr id="filaTablaInstituciones'.$id_institucion.'">
 					<td>'.$id_institucion.'</td>
 					<td id="tdNombre'.$id_institucion.'">'.$nombre.'</td>
+					<td id="tdUsuario'.$id_institucion.'">'.$nombre_usuario.'</td>
 					<td id="tdFechReg'.$id_institucion.'">'.$fecha_registro.'</td>
 					<td>
 						<button class="btn btn-info" title="EDITAR INSTITUCIÓN" data-toggle="modal" data-target="#modalInstitucion" onclick="modalInstitucion(2,'.$id_institucion.')">EDITAR</button>';

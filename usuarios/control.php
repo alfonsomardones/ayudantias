@@ -84,19 +84,20 @@ if(isset($_SESSION['id_usuario']))
 			echo '
 			<div class="col-12">
 			<div class="table-responsive">
-				<table id="TablaUsuarios" class="table table-striped table-hover tablesorter table-sm">
+				<table id="TablaUsuarios" class="table table-striped table-hover tablesorter table-sm text-center">
 					<thead>
 						<tr>
 							<th>ID</th>
-								<th>NOMBRE</th>
-								<th>RUT</th>
-								<th>CORREO</th>
-								<th>TIPO</th>
-								<th>ESTADO</th>
-								<th>OPERACIONES</th>
-							</tr>
-						</thead>
-						<tbody>
+							<th>IMG</th>
+							<th>NOMBRE</th>
+							<th>RUT</th>
+							<th>CORREO</th>
+							<th>TIPO</th>
+							<th>ESTADO</th>
+							<th>OPERACIONES</th>
+						</tr>
+					</thead>
+					<tbody>
 			';
 			while ($lista = mysqli_fetch_assoc($resultados))
 			{
@@ -104,12 +105,23 @@ if(isset($_SESSION['id_usuario']))
 				$nombres 		= $lista["nombres"];
 				$apellidos		= $lista["apellidos"];
 				$rut			= $lista["rut"];
+				$sexo			= $lista["sexo"];
 				$correo			= $lista["correo"];
 				$tipo			= $lista["id_tipo_usuario"];
+				if($tipo==1)		{ $tipo = 'AMINISTRADOR SUPERIOR';}
+				elseif($tipo==2)	{ $tipo = 'ADMINISTRADOR DE INSTITUCIÓN';}
+				elseif($tipo==3)	{ $tipo = 'SUB-ADMINISTRADOR DE INSTITUCIÓN';}
+				elseif($tipo==4)	{ $tipo = 'USUARIO';}
+				elseif($tipo==5)	{ $tipo = 'AYUDANTE';}
+
 				$estado			= $lista["estado"];
+				$img 			= trim($lista["imagen"]);
+				if($img=='')
+				{$img = '../img/perfil_usuarios/DEFAULT-'.todoMayuscula($sexo).'.png';}
 				echo '
 				<tr id="filaTablaUsuarios'.$id_usuario.'">
 					<td>'.$id_usuario.'</td>
+					<td id="tdImg'.$id_usuario.'"><img src="'.$img.'" style="width:30px;"></td>
 					<td id="tdNombres'.$id_usuario.'">'.$nombres.' '.$apellidos.'</td>
 					<td id="tdRut'.$id_usuario.'">'.$rut.'</td>
 					<td id="tdCorreo'.$id_usuario.'">'.$correo.'</td>

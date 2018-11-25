@@ -13,6 +13,7 @@ else
 	<html lang="es">
 	<head>
 		<title>HelpMeApp - Carreras</title>
+		<link rel="shortcut icon" href="../img/logos/favicon.ico" type="image/x-icon">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- VERSIÓN MOVIL -->
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -37,7 +38,7 @@ else
 			<div class="row contenido-seccion">
 				<div class="col-0 col-md-8"></div>
 				<div class="col-6 col-md-2">
-					<button type="button" class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#modalCarrera" onclick="modalCarrera(1)" title="REGISTRAR NUEVA CARRERA"><span class="glyphicon glyphicon-user d-block d-md-none"></span><span class="d-none d-md-block"> NUEVA</span></button></div>
+					<button type="button" class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#modalCarrera" onclick="modalCarrera(1)" title="REGISTRAR NUEVA CARRERA"><span class="glyphicon glyphicon-education d-block d-md-none"></span><span class="d-none d-md-block"> NUEVA</span></button></div>
 				<div class="col-6 col-md-2">
 					<button type="button" class="btn btn-outline-info btn-block"  data-toggle="collapse" data-target="#menuCarreras" aria-expanded="false" aria-controls="menuCarreras" title="FILTROS DE BÚSQUEDA"><span class="glyphicon glyphicon-filter d-block d-md-none"></span><span class="d-none d-md-block"> FILTROS</span></button>
 				</div>
@@ -46,7 +47,6 @@ else
 				<?php include('menu.php');?>
 			</div>
 			<div class="row sub-seccion" id="controlCarreras">
-				<?php include('control.php');?>
 			</div>
 		</div>			
 		<?php

@@ -99,6 +99,7 @@ function actualizarCarrera(x){
 
 function mostrarCarreras(){
 	id = ''; nombre = ''
+	$('#controlCarreras').html('<div class="container-fluid text-center d-flex align-items-center" style="height:150px;"><img src="../img/iconos/loading.gif" title="CARGANDO" width="100px" style="margin:auto"></div>');
 	if($('#b_id').length)				{	id 			= $('#b_id').val();}
 	if($('#b_nombre').length)			{	nombre 	= $('#b_nombre').val();}
 	url = 'control.php';

@@ -1,24 +1,52 @@
 /* BARRA */
+.navbar{
+	font-weight: bold;
+	-webkit-font-weight: bold;
+	-moz-font-weight: bold;
+	-o-font-weight: bold;
+	-ms-font-weight: bold;
+	
+}
 .nav-item{text-align: center;
 	-webkit-text-align: center;
 	-moz-text-align: center;
 	-o-text-align: center;
 	-ms-text-align: center;}
-.transparente{
-	background-color: rgba(0,0,0,.2);
-	-webkit-background-color: rgba(0,0,0,.2);
-	-moz-background-color: rgba(0,0,0,.2);
-	-o-background-color: rgba(0,0,0,.2);
-	-ms-background-color: rgba(0,0,0,.2);}
+.transparente1{
+	background-color: rgba(0,0,0,.0);
+	-webkit-background-color: rgba(0,0,0,.0);
+	-moz-background-color: rgba(0,0,0,.0);
+	-o-background-color: rgba(0,0,0,.0);
+	-ms-background-color: rgba(0,0,0,.0);
+}
 
+.navbar-avatar {
+	width: 25px;
+	-webkit-width: 25px;
+	-moz-width: 25px;
+	-o-width: 25px;
+	-ms-width: 25px;
+}
 
+.dropdown-item:hover{
+	background-color: #17a2b8;
+	-webkit-background-color: #17a2b8;
+	-moz-background-color: #17a2b8;
+	-o-background-color: #17a2b8;
+	-ms-background-color: #17a2b8;
+
+	color: white;
+	-webkit-color: white;
+	-moz-color: white;
+	-o-color: white;
+	-ms-color: white;}
 /* LOGIN */
 .formLoginCont{
-	background-image: url('../img/fondos/tree-838667.jpg');
-	-webkit-background-image: url('../img/fondos/tree-838667.jpg');
-	-moz-background-image: url('../img/fondos/tree-838667.jpg');
-	-o-background-image: url('../img/fondos/tree-838667.jpg');
-	-ms-background-image: url('../img/fondos/tree-838667.jpg');
+	background-image: url('../img/fondos/f4.jpg');
+	-webkit-background-image: url('../img/fondos/f4.jpg');
+	-moz-background-image: url('../img/fondos/f4.jpg');
+	-o-background-image: url('../img/fondos/f4.jpg');
+	-ms-background-image: url('../img/fondos/f4.jpg');
 
 	background-repeat: no-repeat;
 	-webkit-background-repeat: no-repeat;
@@ -38,41 +66,43 @@
 	-o-background-attachment: fixed;
 	-ms-background-attachment: fixed;
 
-	background-size: auto;
-	-webkit-background-size: auto;
-	-moz-background-size: auto;
-	-o-background-size: auto;
-	-ms-background-size: auto;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-ms-background-size: cover;
 
 	background-position: cover;
 	-webkit-background-position: cover;
 	-moz-background-position: cover;
 	-o-background-position: cover;
-	-ms-background-position: cover;}
+	-ms-background-position: cover;
+
+	height: 1000px;
+	-webkit-height: 1000px;
+	-moz-height: 1000px;
+	-o-height: 1000px;
+	-ms-height: 1000px;
+}
 .formLogin{
-	height: 900px;
-	-webkit-height: 900px;
-	-moz-height: 900px;
-	-o-height: 900px;
-	-ms-height: 900px;
+	background-color: rgba(30,30,30,.2);
+	-webkit-background-color: rgba(30,30,30,.2);
+	-moz-background-color: rgba(30,30,30,.2);
+	-o-background-color: rgba(30,30,30,.2);
+	-ms-background-color: rgba(30,30,30,.2);
 
-	display: table;
-	-webkit-display: table;
-	-moz-display: table;
-	-o-display: table;
-	-ms-display: table;}
-.vertical-center {
-	display: table-cell;
-	-webkit-display: table-cell;
-	-moz-display: table-cell;
-	-o-display: table-cell;
-	-ms-display: table-cell;
-
-	 vertical-align: middle;
-	-webkit- vertical-align: middle;
-	-moz- vertical-align: middle;
-	-o- vertical-align: middle;
-	-ms- vertical-align: middle;
+	height: 1000px;
+	-webkit-height: 1000px;
+	-moz-height: 1000px;
+	-o-height: 1000px;
+	-ms-height: 1000px;
+}
+#formLog {
+	width: 100%;
+	-webkit-width: 100%;
+	-moz-width: 100%;
+	-o-width: 100%;
+	-ms-width: 100%;
 }
 
 
@@ -152,9 +182,95 @@
 
 
 /* BOTONES */
-.place-letras-separadas::placeholder{letter-spacing: 2px;}
+.place-letras-separadas::placeholder{
+	letter-spacing: 2px;
+	-webkit-letter-spacing: 2px;
+	-moz-letter-spacing: 2px;
+	-o-letter-spacing: 2px;
+	-ms-letter-spacing: 2px;
+}
+
+.error{
+
+	border: 1px solid red;
+	-webkit-border: 1px solid red;
+	-moz-border: 1px solid red;
+	-o-border: 1px solid red;
+	-ms-border: 1px solid red;
+
+	background-color: rgba(255,200,200,.5);
+	-webkit-background-color: rgba(255,200,200,.5);
+	-moz-background-color: rgba(255,200,200,.5);
+	-o-background-color: rgba(255,200,200,.5);
+	-ms-background-color: rgba(255,200,200,.5);
+}
+/* SECCIONES */
+.titulo-seccion{
+	padding: 10px;
+	-webkit-padding: 10px;
+	-moz-padding: 10px;
+	-o-padding: 10px;
+	-ms-padding: 10px;
+
+	text-align: center;
+	-webkit-text-align: center;
+	-moz-text-align: center;
+	-o-text-align: center;
+	-ms-text-align: center;
+}
+.contenido-seccion{
+	padding-top: 10px;
+	-webkit-padding-top: 10px;
+	-moz-padding-top: 10px;
+	-o-padding-top: 10px;
+	-ms-padding-top: 10px;
+
+	padding-bottom: 10px;
+	-webkit-padding-bottom: 10px;
+	-moz-padding-bottom: 10px;
+	-o-padding-bottom: 10px;
+	-ms-padding-bottom: 10px;
+}
+.sub-seccion{
+
+	padding-top: 5px;
+	-webkit-padding-top: 5px;
+	-moz-padding-top: 5px;
+	-o-padding-top: 5px;
+	-ms-padding-top: 5px;
+
+	padding-bottom: 5px;
+	-webkit-padding-bottom: 5px;
+	-moz-padding-bottom: 5px;
+	-o-padding-bottom: 5px;
+	-ms-padding-bottom: 5px;
+	}
+
 /* OTROS */
 @media only screen and (max-width: 1500px) {
+	.formLogin{
+	height: 700px;
+	-webkit-height: 700px;
+	-moz-height: 700px;
+	-o-height: 700px;
+	-ms-height: 700px;
+
+	display: table;
+	-webkit-display: table;
+	-moz-display: table;
+	-o-display: table;
+	-ms-display: table;
+}
+	.formLoginCont{
+	height: 700px;
+	-webkit-height: 700px;
+	-moz-height: 700px;
+	-o-height: 700px;
+	-ms-height: 700px;
+}
+}
+
+@media only screen and (max-width: 767px) {
 	.formLogin{
 	height: 600px;
 	-webkit-height: 600px;
@@ -166,27 +282,21 @@
 	-webkit-display: table;
 	-moz-display: table;
 	-o-display: table;
-	-ms-display: table;}
+	-ms-display: table;
 }
 
-
-@media only screen and (max-width: 767px) {
-	.formLogin{
-	height: 500px;
-	-webkit-height: 500px;
-	-moz-height: 500px;
-	-o-height: 500px;
-	-ms-height: 500px;
-
-	display: table;
-	-webkit-display: table;
-	-moz-display: table;
-	-o-display: table;
-	-ms-display: table;}
+.formLoginCont{
+	height: 600px;
+	-webkit-height: 600px;
+	-moz-height: 600px;
+	-o-height: 600px;
+	-ms-height: 600px;
+}
 	.transparente{
 	background-color: rgba(0,0,0,.8);
 	-webkit-background-color: rgba(0,0,0,.8);
 	-moz-background-color: rgba(0,0,0,.8);
 	-o-background-color: rgba(0,0,0,.8);
-	-ms-background-color: rgba(0,0,0,.8);}
+	-ms-background-color: rgba(0,0,0,.8);
+}
 }

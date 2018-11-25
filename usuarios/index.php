@@ -13,6 +13,7 @@ else
 	<html lang="es">
 	<head>
 		<title>HelpMeApp - Usuarios</title>
+		<link rel="shortcut icon" href="../img/logos/favicon.ico" type="image/x-icon">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- VERSIÓN MOVIL -->
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -46,7 +47,6 @@ else
 				<?php include('menu.php');?>
 			</div>
 			<div class="row sub-seccion" id="controlUsuarios">
-				<?php include('control.php');?>
 			</div>
 		</div>			
 		<?php

@@ -51,10 +51,8 @@ function verificarRut(rut) {
         
         // Formatear RUN
         rut = cuerpo + '-'+ dv
-        console.log(cuerpo);
         // Si no cumple con el mínimo ej. (n.nnn.nnn)
         if(cuerpo.length < 7) {
-            console.log("RUT Incompleto");
             return false;
         }
         

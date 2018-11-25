@@ -50,7 +50,7 @@ if(isset($_SESSION['id_usuario']))
 
             $clave = '';
             if(isset($_POST['clave']))
-            {$clave = $_POST['clave'];}
+            {$clave = md5($_POST['clave']);}
             else
             {
                 // TODO MAYUSCULA NOMBRE1 + 4 DIGITOS DE RUT + APELLIDOS1
@@ -61,10 +61,15 @@ if(isset($_SESSION['id_usuario']))
                     $c2             = substr(str_replace(['.','-'], '', $rut), -4);
                     $c3             = explode(' ', $apellidos);
                     $c3             = $c3[0];
-                    $clave          = $c1.''.$c2.''.$c3;
+                    $clave          = md5($c1.''.$c2.''.$c3);
                 }
             }
-            
+            $institucion = '';
+            if(isset($_POST['institucion']))
+            {$institucion         = trim($_POST['institucion']);}
+            $unidad = '';
+            if(isset($_POST['unidad']))
+            {$unidad         = trim($_POST['unidad']);}
             if(validarNombre($nombres) && validarNombre($apellidos) && validarRut($rut) && validarCorreo($correo) && validarTipoUsuario($tipo))
             {
                 $sql  = "SELECT rut,correo FROM usuarios WHERE rut='".$rut."' OR correo='".$correo."'";
@@ -87,13 +92,49 @@ if(isset($_SESSION['id_usuario']))
                 }
                 else
                 {
-                    $actual = date("Y-m-d H:i:s");
-                	$sql = 'INSERT INTO usuarios (nombres, apellidos, rut, fecha_nacimiento, sexo, telefono, correo, clave, id_tipo_usuario, direccion, region, comuna, imagen, estado, fecha_registro)';
-                    $sql.= "VALUES ('".$nombres."','".$apellidos."','".$rut."', '".$fecha_nac."', '".$sexo."', '".$telefono."', '".$correo."', '".$clave."',".$tipo.", '".$direccion."', '".$region."', '".$comuna."', '".$img."', '".$estado."', '".$actual."')";
-                    if($insertar = mysqli_query($db,$sql))
-                    { $e = 2; }
+                    if($tipo==2 || $tipo==3)
+                    {
+                        if($institucion!='' && $unidad!='')
+                        {
+                            $actual = date("Y-m-d H:i:s");
+                            $sql = 'INSERT INTO usuarios (nombres, apellidos, rut, fecha_nacimiento, sexo, telefono, correo, clave, id_tipo_usuario, direccion, region, comuna, imagen, estado, fecha_registro)';
+                            $sql.= "VALUES ('".$nombres."','".$apellidos."','".$rut."', '".$fecha_nac."', '".$sexo."', '".$telefono."', '".$correo."', '".$clave."',".$tipo.", '".$direccion."', '".$region."', '".$comuna."', '".$img."', '".$estado."', '".$actual."')";
+                            if($insertar = mysqli_query($db,$sql))
+                            {
+                                $sql  = "SELECT id_usuario FROM usuarios WHERE rut='".$rut."' AND correo='".$correo."' AND fecha_registro='".$actual."'";
+                                $resultado    = mysqli_query($db,$sql);
+                                $contador     = mysqli_num_rows($resultado);
+                                if($contador==1)
+                                {
+                                    $lista = mysqli_fetch_array($resultado);
+                                    $id_usuario = $lista["id_usuario"];
+
+                                    $sql = 'INSERT INTO administradores_instituciones (id_usuario, id_institucion, id_unidad, fecha_registro)';
+                                    $sql.= "VALUES (".$id_usuario.",".$institucion.",".$unidad.", '".$actual."')";
+                                    if($insertar = mysqli_query($db,$sql))
+                                    {$e = 2;}
+                                    else
+                                    {$e = -102;}
+                                }
+                                else
+                                {$e = -102;}
+                            }
+                            else
+                            {$e=-102;}
+                        }
+                        else
+                        {$e = -2;}
+                    }
                     else
-                    {$e = -102;}
+                    {
+                        $actual = date("Y-m-d H:i:s");
+                        $sql = 'INSERT INTO usuarios (nombres, apellidos, rut, fecha_nacimiento, sexo, telefono, correo, clave, id_tipo_usuario, direccion, region, comuna, imagen, estado, fecha_registro)';
+                        $sql.= "VALUES ('".$nombres."','".$apellidos."','".$rut."', '".$fecha_nac."', '".$sexo."', '".$telefono."', '".$correo."', '".$clave."',".$tipo.", '".$direccion."', '".$region."', '".$comuna."', '".$img."', '".$estado."', '".$actual."')";
+                        if($insertar = mysqli_query($db,$sql))
+                        {$e = 2;}
+                        else
+                        {$e = -102;}
+                    }
                 }
             }
             else

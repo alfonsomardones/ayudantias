@@ -7,51 +7,39 @@ function formRegistroUsuario()
 	bandera = true;
 	if($('#nombres').length){
 		if (validarNombre($('#nombres').val()) == false)
-		{
-			bandera = false;
-			$('#nombres').addClass('error');
-		}
+		{bandera = false; agregarError('#nombres');}
 		else
-		{
-			if($('#nombres').hasClass('error'))
-			{$('#nombres').removeClass('error');}
-		}
+		{quitarError('#nombres');}
 	}
 	if($('#apellidos').length){
 		if (validarNombre($('#apellidos').val()) == false)
-		{
-			bandera = false;
-			$('#apellidos').addClass('error');}
+		{bandera = false; agregarError('#apellidos');}
 		else
-		{
-			if($('#apellidos').hasClass('error'))
-			{$('#apellidos').removeClass('error');
-	}
-		}
+		{quitarError('#apellidos');	}
 	}
 	if($('#rut').length){
 		if (verificarRut($('#rut').val()) == false)
-		{
-			bandera = false;
-			$('#rut').addClass('error');
-		}
+		{bandera = false; agregarError('#rut');}
 		else
-		{
-			if($('#rut').hasClass('error'))
-			{$('#rut').removeClass('error');}
-		}
+		{quitarError('#rut');}
 	}
 	if($('#correo').length){
 		if (validarCorreo($('#correo').val()) == false)
-		{
-			bandera = false;
-			$('#correo').addClass('error');
-		}
+		{bandera = false; agregarError('#correo');}
 		else
-		{
-			if($('#correo').hasClass('error'))
-			{$('#correo').removeClass('error');}
-		}
+		{quitarError('#correo');}
+	}
+	if($('#sexo').length){
+		if (validarTitulo($('#sexo').val()) && ($('#sexo').val()=='MASCULINO' || $('#sexo').val()=='FEMENINO'))
+		{bandera = false; agregarError('#sexo');}
+		else
+		{quitarError('#sexo');}
+	}
+	if($('#tipo').length){
+		if (validarNumero($('#tipo').val()) && ($('#tipo').val()==1 || $('#tipo').val()==2 || $('#tipo').val()==3 || $('#tipo').val()==4 || $('#tipo').val()==5))
+		{bandera = false; agregarError('#tipo');}
+		else
+		{quitarError('#tipo');}
 	}
 	$('#infoRegistroUsuario').html(mostrarMensaje(listadoMensajes(-2)));
 	return bandera
@@ -61,15 +49,9 @@ function formRegistroInstitucion(){
 	bandera = true;
 	if($('#nombre').length){
 		if (validarNombre($('#nombre').val()) == false)
-		{
-			bandera = false;
-			$('#nombre').addClass('error');
-		}
+		{bandera = false; agregarError('#nombre');}
 		else
-		{
-			if($('#nombre').hasClass('error'))
-			{$('#nombre').removeClass('error');}
-		}
+		{quitarError('#nombre');}
 	}
 	return bandera;
 }
@@ -78,15 +60,9 @@ function formRegistroFacultad(){
 	bandera = true;
 	if($('#nombre').length){
 		if (validarNombre($('#nombre').val()) == false)
-		{
-			bandera = false;
-			$('#nombre').addClass('error');
-		}
+		{ bandera = false; agregarError('#nombre');}
 		else
-		{
-			if($('#nombre').hasClass('error'))
-			{$('#nombre').removeClass('error');}
-		}
+		{quitarError('#nombre');}
 	}
 	return bandera;
 }
@@ -95,17 +71,21 @@ function formRegistroCarrera(){
 	bandera = true;
 	if($('#nombre').length){
 		if (validarNombre($('#nombre').val()) == false)
-		{
-			bandera = false;
-			$('#nombre').addClass('error');
-		}
+		{ bandera = false; agregarError('#nombre');}
 		else
-		{
-			if($('#nombre').hasClass('error'))
-			{$('#nombre').removeClass('error');}
-		}
+		{quitarError('#nombre');}
 	}
 	return bandera;
+}
+
+function quitarError(x){
+	if($(x).hasClass('error'))
+	{$(x).removeClass('error');}
+}
+
+function agregarError(x){
+	if(!$(x).hasClass('error'))
+	{$(x).addClass('error');}
 }
 
 function soloLetras(e){
@@ -140,7 +120,7 @@ function soloTelefono(e){
 
 
 function validarNombre(x){
-	if(x == null || x.length < 3 || x.length > 50 || /^\s+$/.test(x))
+	if(x == null || x.length < 3 || x.length > 100 || /^\s+$/.test(x))
 	{return false;}
  	else
  	{return true;}

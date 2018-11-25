@@ -51,9 +51,9 @@ function modalUsuario(tipo,dato){
 
 function registrarUsuario(){
 	nombres = ''; apellidos = ''; rut = ''; correo = ''; telefono = ''; fecha_nac = ''; sexo = '';
-	estado = ''; tipo = ''; direccion = ''; region = ''; comuna = '';
+	estado = ''; tipo = ''; direccion = ''; region = ''; comuna = ''; institucion = ''; unidad = '';
 
-	if(formRegistroUsuario())
+	if(formRegistroUsuario() && formAdminInstitucion())
 	{
 		if($('#nombres').length)		{	nombres 	= $('#nombres').val();}
 		if($('#apellidos').length)		{	apellidos 	= $('#apellidos').val();}
@@ -67,6 +67,8 @@ function registrarUsuario(){
 		if($('#direccion').length)		{	direccion 	= $('#direccion').val();}
 		if($('#region').length)			{	region 		= $('#region').val();}
 		if($('#comuna').length)			{	comuna 		= $('#comuna').val();}
+		if($('#instituciones').length)	{	institucion = $('#instituciones').val();}
+		if($('#unidades').length)		{	unidad 		= $('#unidades').val();}
 
 		url = '../datos/registrar_usuario.php';
 		$.ajax({
@@ -76,10 +78,11 @@ function registrarUsuario(){
 				nombres:nombres, apellidos:apellidos,
 				rut:rut, correo:correo, telefono:telefono, fecha_nac:fecha_nac,
 				sexo:sexo, estado:estado, tipo:tipo,
-				direccion:direccion, region:region, comuna:comuna},
+				direccion:direccion, region:region, comuna:comuna,
+				institucion:institucion, unidad:unidad
+			},
 			success: function(data)
 			{
-
 				$('#infoRegistroUsuario').html(mostrarMensaje(listadoMensajes(data)));
 				if(data == 2){
             		mostrarUsuarios();
@@ -134,6 +137,7 @@ function actualizarUsuario(x){
 function mostrarUsuarios(){
 	id = ''; nombres = ''; apellidos = ''; rut = ''; correo = ''; sexo = '';
 	estado = ''; tipo = ''; region = ''; comuna = '';
+	$('#controlUsuarios').html('<div class="container-fluid text-center d-flex align-items-center" style="height:150px;"><img src="../img/iconos/loading.gif" title="CARGANDO" width="100px" style="margin:auto"></div>');
 	if($('#b_id').length)				{	id 			= $('#b_id').val();}
 	if($('#b_nombres').length)			{	nombres 	= $('#b_nombres').val();}
 	if($('#b_apellidos').length)		{	apellidos 	= $('#b_apellidos').val();}
@@ -162,8 +166,7 @@ function borrarUsuario(x){
 	$.ajax({
 		type:"POST",
 		url:url,
-		data:{
-			id:x},
+		data:{id:x},
 		success: function(data)
 		{
 			$('.modal-body').html(mostrarMensaje(listadoMensajes(data)));
@@ -176,3 +179,27 @@ function borrarUsuario(x){
 }
 
 function ocultarModal1(){$('#modalUsuario').modal('toggle');}
+
+
+/*
+function subirOrden(x){
+	var inputFileImage = document.getElementById("imagen");
+	var file = inputFileImage.files[0];
+	var datos = new FormData();
+	datos.append("archivo",file);
+	var url = "datos/subir_orden.php";
+	$.ajax({
+		url:url,
+		type:"POST",
+		contentType:false,
+		data:datos,
+		processData:false,
+		cache:false,
+		success: function(data)
+		{
+			
+		}
+	});
+}
+*/
+

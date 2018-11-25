@@ -1,0 +1,45 @@
+.navbar{font-weight: bold}
+.transparente2{background-color: rgba(0,0,0,.2);}
+.seccion{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+#seccion1{
+	height: 500px;
+	background-image: url('../img/fondos/f5.jpg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: cover;
+}
+
+#seccion2 h1, #seccion4 h1{
+	color: #66abb5;
+	font-weight: bold;
+}
+#seccion3{
+	background-color: #e4b75a;
+	color: white;
+}
+
+#seccion4 img{height: 250px;}
+#seccion4 h3{color: #f7931e;}
+
+#seccion4 a{text-decoration: none;color: #66abb5;}
+#seccion4 a:link{text-decoration: none;color: #66abb5;}
+#seccion4 a:hover{text-decoration: none;color: #66abb5;}
+
+@media only screen and (max-width: 1500px) {
+	#seccion4 img{height: 200px;}
+}
+
+#seccion5{
+	background-color: #66abb5;
+	color: white;
+}
+
+@media only screen and (max-width: 767px) {
+	#seccion4 img{height: 150px;}
+	.transparente2{background-color: rgba(0,0,0,.8);}
+}
